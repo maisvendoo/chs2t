@@ -218,7 +218,7 @@ void Km21KR2::stepExternalControl(double t, double dt)
     controlState.k33 = k33;
 }
 
-void Km21KR2::connectSignals(ControllerSignals cs, bool k)
+void Km21KR2::connectSignals(ControllerSignals cs, bool &k)
 {
     if (control_signals.analogSignal[cs].is_active)
         k = static_cast<bool>(control_signals.analogSignal[cs].value);

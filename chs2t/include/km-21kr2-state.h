@@ -25,6 +25,11 @@ struct ControllerState
         , zero(0)
         , down1(0)
         , down(0)
+        , k01(false)
+        , k02(false)
+        , k31(false)
+        , k32(false)
+        , k33(false)
     {
 
     }
