@@ -5,42 +5,23 @@ QT += xml
 
 TARGET = chs2t
 
-DESTDIR = ../../../../modules/$$join(TARGET,,,)
+DESTDIR = ../../modules/$$join(TARGET,,,)
 
-CONFIG(debug, debug|release) {
+DESTDIR = ../../modules/$$join(TARGET,,,)
 
-    LIBS += -L../../../../lib -lCfgReader_d
-    LIBS += -L../../../../lib -lphysics_d
-    LIBS += -L../../../../lib -lvehicle_d
-    LIBS += -L../../../../lib -ldevice_d
-    LIBS += -L../../../lib -lfilesystem_d
-    LIBS += -L../../../lib -lJournal_d
+LIBS += -L$$(RRS_DEV_ROOT)/bin -lCfgReader
+LIBS += -L$$(RRS_DEV_ROOT)/bin -lphysics
+LIBS += -L$$(RRS_DEV_ROOT)/bin -lvehicle
+LIBS += -L$$(RRS_DEV_ROOT)/bin -ldevice
+LIBS += -L$$(RRS_DEV_ROOT)/bin -lfilesystem
+LIBS += -L$$(RRS_DEV_ROOT)/bin -lJournal
 
-} else {
-
-    LIBS += -L../../../../lib -lCfgReader
-    LIBS += -L../../../../lib -lphysics
-    LIBS += -L../../../../lib -lvehicle
-    LIBS += -L../../../../lib -ldevice
-    LIBS += -L../../../lib -lfilesystem
-    LIBS += -L../../../lib -lJournal
-}
 
 INCLUDEPATH += ./include
 INCLUDEPATH += ../chs2t-equipment/include
-
-INCLUDEPATH += ../../../CfgReader/include
-INCLUDEPATH += ../../../simulator/solver/include
-INCLUDEPATH += ../../../simulator/physics/include
-INCLUDEPATH += ../../../simulator/vehicle/include
-INCLUDEPATH += ../../../simulator/device/include
-INCLUDEPATH += ../../../filesystem/include
-INCLUDEPATH += ../../../libJournal/include
+INCLUDEPATH += $$(RRS_DEV_ROOT)/sdk/include
 
 HEADERS += $$files(./include/*.h)
 HEADERS += $$files(../chs2t-equipment/include/*.h)
 SOURCES += $$files(./src/*.cpp)
 SOURCES += $$files(../chs2t-equipment/src/*.cpp)
-
-#CONFIG += force_debug_info
-#QMAKE_CXXFLAGS += -Werror -pedantic-errors -Wall -Wextra -Wpedantic -Wmaybe-uninitialized -Wreturn-type -Warray-bounds=1

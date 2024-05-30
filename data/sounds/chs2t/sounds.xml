@@ -1,0 +1,564 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Config>
+	
+	<!-- Подъем токоприемника -->
+	<Sound>
+		<Name>Pantograph_Up</Name>
+		<Path>TPUp.wav</Path>
+		<InitVolume>100</InitVolume>
+		<MaxVolume>100</MaxVolume>
+		<InitPitch>1.0</InitPitch>
+		<Loop>0</Loop>
+		<PlayOnStart>0</PlayOnStart>
+	</Sound>
+
+
+	<!-- Опускание токоприемника -->
+	<Sound>
+		<Name>Pantograph_Down</Name>
+		<Path>TPDown.wav</Path>
+		<InitVolume>100</InitVolume>
+		<MaxVolume>100</MaxVolume>
+		<InitPitch>1.0</InitPitch>
+		<Loop>0</Loop>
+		<PlayOnStart>0</PlayOnStart>
+	</Sound>
+
+	<!-- Звуки работы мотор-вертиляторов -->
+	
+	<!-- МВ охлаждения ПТР -->
+	<Sound>
+		<Name>PTR_fan</Name>
+		<Path>mv_ptr.wav</Path>
+		<InitVolume>75</InitVolume>
+		<MaxVolume>75</MaxVolume>
+		<InitPitch>1.0</InitPitch>
+		<Loop>1</Loop>
+		<PlayOnStart>0</PlayOnStart>
+	</Sound>
+
+	<!-- МВ охлаждения тяговых двигателей -->
+	<Sound>
+		<Name>Motor_Fan1</Name>
+		<Path>mv_ted.wav</Path>
+		<InitVolume>60</InitVolume>
+		<MaxVolume>60</MaxVolume>
+		<InitPitch>1.0</InitPitch>
+		<Loop>1</Loop>
+		<PlayOnStart>0</PlayOnStart>
+	</Sound>
+
+	<Sound>
+		<Name>Motor_Fan2</Name>
+		<Path>mv_ted.wav</Path>
+		<InitVolume>25</InitVolume>
+		<MaxVolume>25</MaxVolume>
+		<InitPitch>1.0</InitPitch>
+		<Loop>1</Loop>
+		<PlayOnStart>0</PlayOnStart>
+	</Sound>
+
+	<!-- Щелчек рукоятки крана 254 -->
+	<Sound>
+		<Name>254-chelk</Name>
+		<Path>254-chelk.wav</Path>
+		<InitVolume>70</InitVolume>
+		<MaxVolume>70</MaxVolume>
+		<InitPitch>1.0</InitPitch>
+		<Loop>0</Loop>
+		<PlayOnStart>0</PlayOnStart>
+	</Sound>
+
+	<!-- Щелчек рукоятки крана 395 -->
+	<Sound>
+		<Name>Kran_395_ruk</Name>
+		<Path>395-chelk.wav</Path>
+		<InitVolume>70</InitVolume>
+		<MaxVolume>70</MaxVolume>
+		<InitPitch>1.0</InitPitch>
+		<Loop>0</Loop>
+		<PlayOnStart>0</PlayOnStart>
+	</Sound>
+
+	<!-- Тяговый двигатель -->
+	<Sound>
+		<Name>TED</Name>
+		<Path>ted_60-62.wav</Path>
+		<InitVolume>100</InitVolume>
+		<MaxVolume>100</MaxVolume>
+		<InitPitch>1.0</InitPitch>
+		<Loop>0</Loop>
+		<PlayOnStart>0</PlayOnStart>
+	</Sound>		
+
+	<!-- Свисток -->
+	<Sound>
+		<Name>Svistok</Name>
+		<Path>svistok.wav</Path>
+		<InitVolume>100</InitVolume>
+		<MaxVolume>100</MaxVolume>
+		<InitPitch>1.0</InitPitch>
+		<Loop>1</Loop>
+		<PlayOnStart>0</PlayOnStart>
+	</Sound>
+
+	<!-- Свисток -->
+	<Sound>
+		<Name>Tifon</Name>
+		<Path>tifon.wav</Path>
+		<InitVolume>100</InitVolume>
+		<MaxVolume>100</MaxVolume>
+		<InitPitch>1.0</InitPitch>
+		<Loop>1</Loop>
+		<PlayOnStart>0</PlayOnStart>
+	</Sound>
+
+	<!-- Звук наполнения крана 254 -->
+	<Sound>
+		<Name>254_vpusk</Name>
+		<Path>254_vpusk.wav</Path>
+		<InitVolume>0</InitVolume>
+		<MaxVolume>75</MaxVolume>
+		<InitPitch>1.0</InitPitch>
+		<Loop>0</Loop>
+		<PlayOnStart>0</PlayOnStart>
+	</Sound>
+	
+	<!-- Звук отпуска крана 254 -->
+	<Sound>
+		<Name>254_vypusk</Name>
+		<Path>254_vypusk.wav</Path>
+		<InitVolume>0</InitVolume>
+		<MaxVolume>75</MaxVolume>
+		<InitPitch>1.0</InitPitch>
+		<Loop>0</Loop>
+		<PlayOnStart>0</PlayOnStart>
+	</Sound>
+
+	<Sound>
+		<Name>KRM395_vpusk</Name>
+		<Path>395_vpusk.wav</Path>
+		<InitVolume>0</InitVolume>
+		<MaxVolume>100</MaxVolume>
+		<InitPitch>1.0</InitPitch>
+		<Loop>1</Loop>
+		<PlayOnStart>0</PlayOnStart>
+	</Sound>
+
+	<Sound>
+		<Name>KRM395_vipusk</Name>
+		<Path>395_vypusk.wav</Path>
+		<InitVolume>0</InitVolume>
+		<MaxVolume>100</MaxVolume>
+		<InitPitch>1.0</InitPitch>
+		<Loop>1</Loop>
+		<PlayOnStart>0</PlayOnStart>
+	</Sound>
+
+	<Sound>
+		<Name>KRM395_1</Name>
+		<Path>395_1.wav</Path>
+		<InitVolume>0</InitVolume>
+		<MaxVolume>100</MaxVolume>
+		<InitPitch>1.0</InitPitch>
+		<Loop>1</Loop>
+		<PlayOnStart>0</PlayOnStart>
+	</Sound>
+
+	<Sound>
+		<Name>KRM395_2</Name>
+		<Path>395_2.wav</Path>
+		<InitVolume>0</InitVolume>
+		<MaxVolume>25</MaxVolume>
+		<InitPitch>1.0</InitPitch>
+		<Loop>1</Loop>
+		<PlayOnStart>0</PlayOnStart>
+	</Sound>
+
+	<Sound>
+		<Name>KRM395_5</Name>
+		<Path>395_5.wav</Path>
+		<InitVolume>0</InitVolume>
+		<MaxVolume>100</MaxVolume>
+		<InitPitch>1.0</InitPitch>
+		<Loop>1</Loop>
+		<PlayOnStart>0</PlayOnStart>
+	</Sound>
+
+	<!-- Скоростемер -->
+	<Sound>
+		<Name>Skorostemer</Name>
+		<Path>skorostemer.wav</Path>
+		<InitVolume>0</InitVolume>
+		<MaxVolume>70</MaxVolume>
+		<InitPitch>1.0</InitPitch>
+		<Loop>1</Loop>
+		<PlayOnStart>0</PlayOnStart>
+	</Sound>
+	
+	<!-- Пакетник -->
+	<Sound>
+		<Name>tumbler</Name>
+		<Path>tumbler.wav</Path>
+		<InitVolume>100</InitVolume>
+		<MaxVolume>100</MaxVolume>
+		<InitPitch>1.0</InitPitch>
+		<Loop>0</Loop>
+		<PlayOnStart>0</PlayOnStart>
+	</Sound>
+	
+	<!-- Звук включения БВ -->
+	<Sound>
+		<Name>BV-on</Name>
+		<Path>bv_on.wav</Path>
+		<InitVolume>70</InitVolume>
+		<MaxVolume>70</MaxVolume>
+		<InitPitch>1.0</InitPitch>
+		<Loop>0</Loop>
+		<PlayOnStart>0</PlayOnStart>
+	</Sound>
+	
+	<!-- Звук выключения БВ -->
+	<Sound>
+		<Name>BV-off</Name>
+		<Path>bv_off.wav</Path>
+		<InitVolume>70</InitVolume>
+		<MaxVolume>70</MaxVolume>
+		<InitPitch>1.0</InitPitch>
+		<Loop>0</Loop>
+		<PlayOnStart>0</PlayOnStart>
+	</Sound>
+	
+	<!-- 21KR 0 + -->
+	<Sound>
+		<Name>21KR_0_+</Name>
+		<Path>21KR_stuk.wav</Path>
+		<InitVolume>70</InitVolume>
+		<MaxVolume>70</MaxVolume>
+		<InitPitch>1.0</InitPitch>
+		<Loop>0</Loop>
+		<PlayOnStart>0</PlayOnStart>
+	</Sound>
+	
+	<!-- 21KR 0 - -->
+	<Sound>
+		<Name>21KR_0_-</Name>
+		<Path>21KR_stuk.wav</Path>
+		<InitVolume>70</InitVolume>
+		<MaxVolume>70</MaxVolume>
+		<InitPitch>1.0</InitPitch>
+		<Loop>0</Loop>
+		<PlayOnStart>0</PlayOnStart>
+	</Sound>
+	
+	<!-- 21KR + 0 -->
+	<Sound>
+		<Name>21KR_+_0</Name>
+		<Path>21KR_stuk_rev.wav</Path>
+		<InitVolume>70</InitVolume>
+		<MaxVolume>70</MaxVolume>
+		<InitPitch>1.0</InitPitch>
+		<Loop>0</Loop>
+		<PlayOnStart>0</PlayOnStart>
+	</Sound>
+	
+	<!-- 21KR - 0 -->
+	<Sound>
+		<Name>21KR_-_0</Name>
+		<Path>21KR_stuk_rev.wav</Path>
+		<InitVolume>70</InitVolume>
+		<MaxVolume>70</MaxVolume>
+		<InitPitch>1.0</InitPitch>
+		<Loop>0</Loop>
+		<PlayOnStart>0</PlayOnStart>
+	</Sound>
+	
+	<!-- 21KR 0 -A -->
+	<Sound>
+		<Name>21KR_0_-A</Name>
+		<Path>21KR_0_-A.wav</Path>
+		<InitVolume>70</InitVolume>
+		<MaxVolume>70</MaxVolume>
+		<InitPitch>1.0</InitPitch>
+		<Loop>0</Loop>
+		<PlayOnStart>0</PlayOnStart>
+	</Sound>
+	
+	<!-- 21KR 0 +A -->
+	<Sound>
+		<Name>21KR_0_+A</Name>
+		<Path>21KR_stuk.wav</Path>
+		<InitVolume>70</InitVolume>
+		<MaxVolume>70</MaxVolume>
+		<InitPitch>1.0</InitPitch>
+		<Loop>0</Loop>
+		<PlayOnStart>0</PlayOnStart>
+	</Sound>
+	
+	<!-- 21KR -A 0 -->
+	<Sound>
+		<Name>21KR_-A_0</Name>
+		<Path>21KR_-A_0.wav</Path>
+		<InitVolume>70</InitVolume>
+		<MaxVolume>70</MaxVolume>
+		<InitPitch>1.0</InitPitch>
+		<Loop>0</Loop>
+		<PlayOnStart>0</PlayOnStart>
+	</Sound>
+	
+	<!-- 21KR +A 0 -->
+	<Sound>
+		<Name>21KR_+A_0</Name>
+		<Path>21KR_stuk_rev.wav</Path>
+		<InitVolume>70</InitVolume>
+		<MaxVolume>70</MaxVolume>
+		<InitPitch>1.0</InitPitch>
+		<Loop>0</Loop>
+		<PlayOnStart>0</PlayOnStart>
+	</Sound>
+	
+		<!-- 21KR -шунты+ -->
+	<Sound>
+		<Name>21KR_op+</Name>
+		<Path>21KR_sunty.wav</Path>
+		<InitVolume>70</InitVolume>
+		<MaxVolume>70</MaxVolume>
+		<InitPitch>1.0</InitPitch>
+		<Loop>0</Loop>
+		<PlayOnStart>0</PlayOnStart>
+	</Sound>
+	
+	<!-- 21KR шунты - -->
+	<Sound>
+		<Name>21KR_op-</Name>
+		<Path>21KR_sunty.wav</Path>
+		<InitVolume>70</InitVolume>
+		<MaxVolume>70</MaxVolume>
+		<InitPitch>1.0</InitPitch>
+		<Loop>0</Loop>
+		<PlayOnStart>0</PlayOnStart>
+	</Sound>
+	
+	<!-- Звук реверсивной рукоятки - -->
+	<Sound>
+		<Name>revers</Name>
+		<Path>revers.wav</Path>
+		<InitVolume>70</InitVolume>
+		<MaxVolume>70</MaxVolume>
+		<InitPitch>1.0</InitPitch>
+		<Loop>0</Loop>
+		<PlayOnStart>0</PlayOnStart>
+	</Sound>
+	
+	<!-- Звук работы компрессора №1 - -->
+	<Sound>
+		<Name>kompressor1</Name>
+		<Path>kompressor.wav</Path>
+		<InitVolume>75</InitVolume>
+		<MaxVolume>75</MaxVolume>
+		<InitPitch>1.0</InitPitch>
+		<Loop>1</Loop>
+		<PlayOnStart>0</PlayOnStart>
+	</Sound>
+	
+	<!-- Звук работы компрессора №2 - -->
+	<Sound>
+		<Name>kompressor2</Name>
+		<Path>kompressor.wav</Path>
+		<InitVolume>25</InitVolume>
+		<MaxVolume>25</MaxVolume>
+		<InitPitch>1.0</InitPitch>
+		<Loop>1</Loop>
+		<PlayOnStart>0</PlayOnStart>
+	</Sound>
+	
+	<Sound>
+		<Name>tap_5-10</Name>
+		<Path>5-10.wav</Path>
+		<InitVolume>0</InitVolume>
+		<MaxVolume>100</MaxVolume>
+		<InitPitch>1.0</InitPitch>
+		<Loop>1</Loop>
+		<PlayOnStart>1</PlayOnStart>
+		<VolumeCurve>
+			0.000	0
+			5.000	100
+			11.000	0
+		</VolumeCurve>
+	</Sound>
+	
+	<Sound>
+		<Name>tap_10-20</Name>
+		<Path>10-20.wav</Path>
+		<InitVolume>0</InitVolume>
+		<MaxVolume>100</MaxVolume>
+		<InitPitch>1.0</InitPitch>
+		<Loop>1</Loop>
+		<PlayOnStart>1</PlayOnStart>
+		<VolumeCurve>
+			0.000	0
+			11.000	100
+			21.000	0
+		</VolumeCurve>
+	</Sound>
+	
+	<Sound>
+		<Name>tap_20-30</Name>
+		<Path>20-30.wav</Path>
+		<InitVolume>0</InitVolume>
+		<MaxVolume>100</MaxVolume>
+		<InitPitch>1.0</InitPitch>
+		<Loop>1</Loop>
+		<PlayOnStart>1</PlayOnStart>
+		<VolumeCurve>
+			0.000	0
+			21.000	100
+			31.000	0
+		</VolumeCurve>
+	</Sound>
+	
+	<Sound>
+		<Name>tap_30-40</Name>
+		<Path>30-40.wav</Path>
+		<InitVolume>0</InitVolume>
+		<MaxVolume>100</MaxVolume>
+		<InitPitch>1.0</InitPitch>
+		<Loop>1</Loop>
+		<PlayOnStart>1</PlayOnStart>
+		<VolumeCurve>
+			0.000	0
+			31.000	100
+			41.000	0
+		</VolumeCurve>
+	</Sound>
+	
+	<Sound>
+		<Name>tap_40-50</Name>
+		<Path>40-50.wav</Path>
+		<InitVolume>0</InitVolume>
+		<MaxVolume>100</MaxVolume>
+		<InitPitch>1.0</InitPitch>
+		<Loop>1</Loop>
+		<PlayOnStart>1</PlayOnStart>
+		<VolumeCurve>
+			0.000	0
+			41.000	100
+			51.000	0
+		</VolumeCurve>
+	</Sound>
+	
+	<Sound>
+		<Name>tap_50-60</Name>
+		<Path>50-60.wav</Path>
+		<InitVolume>0</InitVolume>
+		<MaxVolume>100</MaxVolume>
+		<InitPitch>1.0</InitPitch>
+		<Loop>1</Loop>
+		<PlayOnStart>1</PlayOnStart>
+		<VolumeCurve>
+			0.000	0
+			51.000	100
+			61.000	0
+		</VolumeCurve>
+	</Sound>
+	
+	<Sound>
+		<Name>tap_60-70</Name>
+		<Path>60-70.wav</Path>
+		<InitVolume>0</InitVolume>
+		<MaxVolume>100</MaxVolume>
+		<InitPitch>1.0</InitPitch>
+		<Loop>1</Loop>
+		<PlayOnStart>1</PlayOnStart>
+		<VolumeCurve>
+			0.000	0
+			61.000	100
+			71.000	0
+		</VolumeCurve>
+	</Sound>
+	
+	<Sound>
+		<Name>tap_70-80</Name>
+		<Path>70-80.wav</Path>
+		<InitVolume>0</InitVolume>
+		<MaxVolume>100</MaxVolume>
+		<InitPitch>1.0</InitPitch>
+		<Loop>1</Loop>
+		<PlayOnStart>1</PlayOnStart>
+		<VolumeCurve>
+			0.000	0
+			71.000	100
+			81.000	0
+		</VolumeCurve>
+	</Sound>
+	
+	<Sound>
+		<Name>tap_80-90</Name>
+		<Path>80-90.wav</Path>
+		<InitVolume>0</InitVolume>
+		<MaxVolume>100</MaxVolume>
+		<InitPitch>1.0</InitPitch>
+		<Loop>1</Loop>
+		<PlayOnStart>1</PlayOnStart>
+		<VolumeCurve>
+			0.000	0
+			81.000	100
+			91.000	0
+		</VolumeCurve>
+	</Sound>
+	
+	<Sound>
+		<Name>tap_90-100</Name>
+		<Path>90-100.wav</Path>
+		<InitVolume>0</InitVolume>
+		<MaxVolume>100</MaxVolume>
+		<InitPitch>1.0</InitPitch>
+		<Loop>1</Loop>
+		<PlayOnStart>1</PlayOnStart>
+		<VolumeCurve>
+			0.000	0
+			91.000	100
+			101.000	0
+		</VolumeCurve>
+	</Sound>
+	
+	<Sound>
+		<Name>tap_100-110</Name>
+		<Path>100-110.wav</Path>
+		<InitVolume>0</InitVolume>
+		<MaxVolume>100</MaxVolume>
+		<InitPitch>1.0</InitPitch>
+		<Loop>1</Loop>
+		<PlayOnStart>1</PlayOnStart>
+		<VolumeCurve>
+			0.000	0
+			101.000	100
+			111.000	0
+		</VolumeCurve>
+	</Sound>
+	
+	<Sound>
+		<Name>tap_110-~</Name>
+		<Path>110-~.wav</Path>
+		<InitVolume>0</InitVolume>
+		<MaxVolume>100</MaxVolume>
+		<InitPitch>1.0</InitPitch>
+		<Loop>1</Loop>
+		<PlayOnStart>1</PlayOnStart>
+		<VolumeCurve>
+			0.000	0
+			111.000	100
+		</VolumeCurve>
+	</Sound>
+
+	<Sound>
+		<Name>EPK</Name>
+		<Path>epk.wav</Path>
+		<InitVolume>100</InitVolume>
+		<MaxVolume>100</MaxVolume>
+		<InitPitch>1.0</InitPitch>
+		<Loop>1</Loop>
+		<PlayOnStart>0</PlayOnStart>
+	</Sound>
+
+</Config>

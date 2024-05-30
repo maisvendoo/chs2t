@@ -1,0 +1,39 @@
+Markers
+{
+	Marker
+	{
+		Name8=*
+		Comment8
+		Pos=19845
+		Type=6
+		Flags=0
+		Extra=0
+	}
+	Marker1
+	{
+		Name8=loop
+		Comment8
+		Pos=19845
+		Type=0
+		Flags=0
+		Extra=0
+	}
+	Marker2
+	{
+		Name8=*
+		Comment8
+		Pos=31857
+		Type=7
+		Flags=0
+		Extra=0
+	}
+	Marker3
+	{
+		Name8=stop
+		Comment8
+		Pos=31857
+		Type=0
+		Flags=8
+		Extra=0
+	}
+}
