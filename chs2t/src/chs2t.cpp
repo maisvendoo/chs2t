@@ -14,7 +14,6 @@
 #include    "chs2t.h"
 
 #include    "filesystem.h"
-#include    "Journal.h"
 
 //------------------------------------------------------------------------------
 // Конструктор
@@ -79,8 +78,6 @@ void CHS2T::initialization()
     Uks = WIRE_VOLTAGE;
     current_kind = 1;
 
-    Journal::instance()->info("Started DC electrical locomotive CS2t initialization...");
-
     initCouplings(modules_dir);
 
     initPantographs();
@@ -116,6 +113,14 @@ void CHS2T::initialization()
 
     for (size_t i = SWP2_POWER_1; i <= SWP2_POWER_10; ++i)
         feedback_signals.analogSignal[i].cur_value = 1;
+}
+
+//------------------------------------------------------------------------------
+//
+//------------------------------------------------------------------------------
+void CHS2T::preStep(double t)
+{
+    preStepCouplings(t);
 }
 
 //------------------------------------------------------------------------------

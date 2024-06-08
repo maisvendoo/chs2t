@@ -2,15 +2,11 @@
 
 #include    <QDir>
 
-#include    "Journal.h"
-
 //------------------------------------------------------------------------------
 // Инициализация токоприемников
 //------------------------------------------------------------------------------
 void CHS2T::initPantographs()
 {
-    //Journal::instance()->info("Init pantographs");
-
     for (size_t i = 0; i < NUM_PANTOGRAPHS; ++i)
     {
         pantographs[i] = new Pantograph();
@@ -36,8 +32,6 @@ void CHS2T::initPantographs()
 //------------------------------------------------------------------------------
 void CHS2T::initFastSwitch()
 {
-    //Journal::instance()->info("Init fast switch");
-
     bv = new ProtectiveDevice();
     bv->read_custom_config(config_dir + QDir::separator() + "bv");
 
@@ -52,8 +46,6 @@ void CHS2T::initFastSwitch()
 //------------------------------------------------------------------------------
 void CHS2T::initProtection()
 {
-    //Journal::instance()->info("Init protection devices");
-
     overload_relay = new OverloadRelay();
     overload_relay->read_custom_config(config_dir + QDir::separator() + "1RPD6");
 }
@@ -63,8 +55,6 @@ void CHS2T::initProtection()
 //------------------------------------------------------------------------------
 void CHS2T::initTractionControl()
 {
-    //Journal::instance()->info("Init traction control");
-
     km21KR2 = new Km21KR2();
     connect(km21KR2, &Km21KR2::soundPlay, this, &CHS2T::soundPlay);
 
@@ -86,8 +76,6 @@ void CHS2T::initTractionControl()
 //------------------------------------------------------------------------------
 void CHS2T::initEDT()
 {
-    //Journal::instance()->info("Init electrical brake system");
-
     generator = new Generator();
     generator->setCustomConfigDir(config_dir);
     generator->read_custom_config(config_dir + QDir::separator() + "AL-4846dT");
@@ -109,8 +97,6 @@ void CHS2T::initEDT()
 //------------------------------------------------------------------------------
 void CHS2T::initOtherEquipment()
 {
-    //Journal::instance()->info("Init whistle and typhoid");
-
     horn = new TrainHorn();
     connect(horn, &TrainHorn::soundPlay, this, &CHS2T::soundPlay);
     connect(horn, &TrainHorn::soundStop, this, &CHS2T::soundStop);
@@ -127,8 +113,6 @@ void CHS2T::initOtherEquipment()
 //------------------------------------------------------------------------------
 void CHS2T::initSupportEquipment()
 {
-    //Journal::instance()->info("Init support equipment");
-
     motor_fan_ptr = new DCMotorFan();
     motor_fan_ptr->read_custom_config(config_dir + QDir::separator() + "dc-motor-fan");
     connect(motor_fan_ptr, &DCMotorFan::soundPlay, this, &CHS2T::soundPlay);
@@ -166,8 +150,6 @@ void CHS2T::initSupportEquipment()
 //------------------------------------------------------------------------------
 void CHS2T::initModbus()
 {
-    //Journal::instance()->info("Init modbus");
-
     QString modbusCfgDir = config_dir + QDir::separator() + "modbus";
 
     TM_manometer = new PhysToModbus();
@@ -192,10 +174,12 @@ void CHS2T::initModbus()
 //------------------------------------------------------------------------------
 void CHS2T::initRegistrator()
 {
-    //Journal::instance()->info("Init registraion subsystem");
-
     reg = nullptr;
-    //reg = new Registrator("motor", 1e-3, Q_NULLPTR);
+/*
+    reg = new Registrator(0.1);
+    reg->setFileName("motor");
+    reg->init();
+*/
 }
 
 //------------------------------------------------------------------------------

@@ -19,7 +19,6 @@
 #include    "stepswitch.h"
 #include    "pusk-rez.h"
 #include    "motor.h"
-#include    "registrator.h"
 #include    "overload-relay.h"
 #include    "electropneumovalve-emergency.h"
 #include    "electropneumovalve-release.h"
@@ -386,6 +385,12 @@ private:
 
     /// Подпрограмма изменения положения пакетника
     void setSwitcherState(Switcher *sw, signal_t signal);
+
+    /// Предварительные расчёты перед симуляцией
+    void preStep(double t);
+
+    /// Предварительный расчёт координат сцепных устройств
+    void preStepCouplings(double t);
 
     /// Шаг моделирования всех систем локомотива в целом
     void step(double t, double dt);

@@ -2,15 +2,11 @@
 
 #include    "filesystem.h"
 
-#include    "Journal.h"
-
 //------------------------------------------------------------------------
 //
 //------------------------------------------------------------------------
 void CHS2T::initBrakeDevices(double p0, double pBP, double pFL)
 {
-    //Journal::instance()->info("Init brake devices: callback form TrainEngine");
-
     // Инициализация давления в питательной магистрали
     main_reservoir->setY(0, pFL);
     anglecock_fl_fwd->setPipePressure(pFL);

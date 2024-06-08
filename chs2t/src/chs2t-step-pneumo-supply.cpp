@@ -37,8 +37,13 @@ void CHS2T::stepPneumoSupply(double t, double dt)
     FL_flow += epk->getFLflow();
     FL_flow += dako->getFLflow();
     FL_flow += bc_pressure_relay->getFLflow();
+
+    anglecock_fl_fwd->setHoseFlow(hose_fl_fwd->getFlow());
     FL_flow += anglecock_fl_fwd->getFlowToPipe();
+
+    anglecock_fl_bwd->setHoseFlow(hose_fl_bwd->getFlow());
     FL_flow += anglecock_fl_bwd->getFlowToPipe();
+
     main_reservoir->setFlow(FL_flow);
     main_reservoir->step(t, dt);
 

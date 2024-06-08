@@ -2,15 +2,11 @@
 
 #include    "chs2t.h"
 
-#include    "Journal.h"
-
 //------------------------------------------------------------------------
 //
 //------------------------------------------------------------------------
 void CHS2T::initBrakesControl(QString modules_dir)
 {
-    //Journal::instance()->info("Init brake control devices");
-
     // Поездной кран машиниста
     brake_crane = loadBrakeCrane(
                 modules_dir + QDir::separator() + brake_crane_module_name);

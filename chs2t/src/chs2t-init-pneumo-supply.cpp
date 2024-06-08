@@ -2,16 +2,12 @@
 
 #include    "chs2t.h"
 
-#include    "Journal.h"
-
 //------------------------------------------------------------------------
 //
 //------------------------------------------------------------------------
 void CHS2T::initPneumoSupply(QString modules_dir)
 {
     Q_UNUSED(modules_dir)
-
-    //Journal::instance()->info("Init air suplly subsystem");
 
     // Регулятор давления в ГР
     press_reg = new PressureRegulator();
