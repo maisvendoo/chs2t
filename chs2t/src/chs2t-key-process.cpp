@@ -5,7 +5,7 @@
 //------------------------------------------------------------------------------
 void CHS2T::keyProcess()
 {
-    if (getKeyState(KEY_9))
+    if (getKeyState(KEY_Slash))
     {
         if (isShift())
             EDTSwitch.set();
