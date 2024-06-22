@@ -1,11 +1,11 @@
-#include    "filesystem.h"
-
 #include    "chs2t.h"
+
+#include    <QDir>
 
 //------------------------------------------------------------------------
 //
 //------------------------------------------------------------------------
-void CHS2T::initBrakesControl(QString modules_dir)
+void CHS2T::initBrakesControl(const QString &modules_dir, const QString &custom_cfg_dir)
 {
     // Поездной кран машиниста
     brake_crane = loadBrakeCrane(
@@ -24,7 +24,7 @@ void CHS2T::initBrakesControl(QString modules_dir)
 
     // Рукоятка задатчика тормозного усилия
     handleEDT = new HandleEDT();
-    handleEDT->read_custom_config(config_dir + QDir::separator() + "handle-edt");
+    handleEDT->read_config("handle-edt", custom_cfg_dir);
     handleEDT->setBrakeKey(KEY_Period);
     handleEDT->setReleaseKey(KEY_Comma);
 
@@ -36,11 +36,11 @@ void CHS2T::initBrakesControl(QString modules_dir)
 
     // Электропневматический вентиль экстренного торможения
     emergency_valve = new ElectroPneumoValveEmergency();
-    emergency_valve->read_custom_config(config_dir + QDir::separator() + "valve-emergency");
+    emergency_valve->read_config("valve-emergency", custom_cfg_dir);
 
     // Электропневматический вентиль отпуска тормозов
     release_valve = new ElectroPneumoValveRelease();
-    release_valve->read_custom_config(config_dir + QDir::separator() + "valve-release");
+    release_valve->read_config("valve-release", custom_cfg_dir);
 
     // Управляющая камера воздухораспределителя (ложный ТЦ)
     brake_ref_res = new Reservoir(0.01);
@@ -52,14 +52,14 @@ void CHS2T::initBrakesControl(QString modules_dir)
     // Скоростной клапан ДАКО
     dako = new Dako();
     dako->setWheelRadius(rk[5]);
-    dako->read_custom_config(config_dir + QDir::separator() + "dako");
+    dako->read_config("dako", custom_cfg_dir);
 
     // Переключательный клапан магистрали тормозных цилиндров
     bc_switch_valve[TROLLEY_FWD] = new SwitchingValve();
-//    bc_switch_valve[TROLLEY_FWD]->read_custom_config(config_dir + QDir::separator() + "zpk");
+//    bc_switch_valve[TROLLEY_FWD]->read_config("zpk", custom_cfg_dir);
     bc_switch_valve[TROLLEY_FWD]->read_config("zpk");
     bc_switch_valve[TROLLEY_BWD] = new SwitchingValve();
-//    bc_switch_valve[TROLLEY_BWD]->read_custom_config(config_dir + QDir::separator() + "zpk");
+//    bc_switch_valve[TROLLEY_BWD]->read_config("zpk", custom_cfg_dir);
     bc_switch_valve[TROLLEY_BWD]->read_config("zpk");
 
     // Повторительное реле давления

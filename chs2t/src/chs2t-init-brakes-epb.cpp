@@ -1,13 +1,12 @@
-#include    "filesystem.h"
-
 #include    "chs2t.h"
 
 //------------------------------------------------------------------------
 //
 //------------------------------------------------------------------------
-void CHS2T::initEPB(QString modules_dir)
+void CHS2T::initEPB(const QString &modules_dir, const QString &custom_cfg_dir)
 {
-    Q_UNUSED(modules_dir)
+    (void) modules_dir;
+    (void) custom_cfg_dir;
 
     // Преобразователь напряжения для ЭПТ
     epb_converter = new EPBConverter();

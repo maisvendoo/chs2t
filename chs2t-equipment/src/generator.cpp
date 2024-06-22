@@ -1,5 +1,6 @@
 #include "generator.h"
-#include <QDir>
+
+#include    "filesystem.h"
 
 //------------------------------------------------------------------------------
 //
@@ -80,7 +81,10 @@ void Generator::load_config(CfgReader& cfg)
 
     cfg.getString(secName, "cPhi", cPhiFileName);
 
-    cPhi.load((custom_config_dir + QDir::separator() + cPhiFileName).toStdString());
+    FileSystem &fs = FileSystem::getInstance();
+    QString cfg_dir(fs.getVehiclesDir().c_str());
+    cfg_dir += QDir::separator() + custom_cfg_dir;
+    cPhi.load((cfg_dir + QDir::separator() + cPhiFileName).toStdString());
 }
 
 //------------------------------------------------------------------------------

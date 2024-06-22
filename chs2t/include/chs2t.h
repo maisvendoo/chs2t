@@ -336,52 +336,52 @@ private:
     void initialization();
 
     /// Инициализация сцепных устройств
-    void initCouplings(QString modules_dir);
+    void initCouplings(const QString &modules_dir, const QString &custom_cfg_dir);
 
     /// Инициализация токоприемников
-    void initPantographs();
+    void initPantographs(const QString &modules_dir, const QString &custom_cfg_dir);
 
     /// Инициадизация рычажки
-    void initBrakesMech();
+    void initBrakesMech(const QString &modules_dir, const QString &custom_cfg_dir);
 
     /// Инициализация БВ
-    void initFastSwitch();
+    void initFastSwitch(const QString &modules_dir, const QString &custom_cfg_dir);
 
     /// Инициализация защит
-    void initProtection();
+    void initProtection(const QString &modules_dir, const QString &custom_cfg_dir);
 
     /// Инициализация питательной магистрали
-    void initPneumoSupply(QString modules_dir);
+    void initPneumoSupply(const QString &modules_dir, const QString &custom_cfg_dir);
 
     /// Инициализация приборов управления тормозами
-    void initBrakesControl(QString modules_dir);
+    void initBrakesControl(const QString &modules_dir, const QString &custom_cfg_dir);
 
     /// Инициализация тормозного оборудования
-    void initBrakesEquipment(QString modules_dir);
+    void initBrakesEquipment(const QString &modules_dir, const QString &custom_cfg_dir);
 
     /// Инициализация ЭПТ
-    void initEPB(QString modules_dir);
+    void initEPB(const QString &modules_dir, const QString &custom_cfg_dir);
 
     /// Инициализация схемы управления тягой
-    void initTractionControl();
+    void initTractionControl(const QString &modules_dir, const QString &custom_cfg_dir);
 
     /// Инициализация ЭДТ
-    void initEDT();
+    void initEDT(const QString &modules_dir, const QString &custom_cfg_dir);
 
     /// Инициализация вспомогательного оборудования
-    void initSupportEquipment();
+    void initSupportEquipment(const QString &modules_dir, const QString &custom_cfg_dir);
 
     /// Инициализация прочего оборудования
-    void initOtherEquipment();
+    void initOtherEquipment(const QString &modules_dir, const QString &custom_cfg_dir);
 
     ///
-    void initModbus();
+    void initModbus(const QString &modules_dir, const QString &custom_cfg_dir);
 
     /// Инициализация списка звуков перестука
     void initTapSounds();
 
     /// Инициализация регистратора
-    void initRegistrator();
+    void initRegistrator(const QString &modules_dir, const QString &custom_cfg_dir);
 
     /// Подпрограмма изменения положения пакетника
     void setSwitcherState(Switcher *sw, signal_t signal);

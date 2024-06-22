@@ -1,12 +1,14 @@
-#include    "filesystem.h"
-
 #include    "chs2t.h"
+
+#include    <QDir>
 
 //------------------------------------------------------------------------
 //
 //------------------------------------------------------------------------
-void CHS2T::initCouplings(QString modules_dir)
+void CHS2T::initCouplings(const QString &modules_dir, const QString &custom_cfg_dir)
 {
+    (void) custom_cfg_dir;
+
     // Сцепные устройства
     coupling_fwd = loadCoupling(modules_dir + QDir::separator() + coupling_module_name);
     coupling_fwd->read_config(coupling_config_name);

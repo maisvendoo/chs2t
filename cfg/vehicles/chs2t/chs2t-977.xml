@@ -11,6 +11,7 @@
 		<NumAxis>6</NumAxis>
 		<WheelInertia>100.0</WheelInertia>
 		<SoundDir>chs2t</SoundDir>
+		<AnimationsConfigDir>chs2t</AnimationsConfigDir>
 
 		<ExtModelName>chs2t/chs2t.osgt</ExtModelName>
 		<ModelShift>0.0 0.0 0.312</ModelShift>
