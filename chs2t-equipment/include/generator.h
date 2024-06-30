@@ -2,7 +2,6 @@
 #define GENERATOR_H
 
 #include "device.h"
-#include "motor-magnetic-char.h"
 
 class Generator : public Device
 {
@@ -59,7 +58,7 @@ private:
     double Rdp;
     double omega_nom;
 
-    MotorMagneticChar cPhi;
+    LinearInterpolation cPhi;
 
     void preStep(state_vector_t &Y, double t);
 

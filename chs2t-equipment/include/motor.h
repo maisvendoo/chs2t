@@ -2,7 +2,6 @@
 #define     ENGINE_H
 
 #include    "device.h"
-#include    "motor-magnetic-char.h"
 #include    "ampermeters-state.h"
 
 //------------------------------------------------------------------------------
@@ -89,7 +88,7 @@ private:
     /// Направление
     int     direction;
 
-    MotorMagneticChar cPhi;
+    LinearInterpolation cPhi;
 
     QMap<int, double> fieldStep;
 
