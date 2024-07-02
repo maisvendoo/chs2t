@@ -164,18 +164,18 @@ void CHS2T::step(double t, double dt)
 
     stepDecodeAlsn();
 
-    stepTapSound();
-
-    registrate(t, dt);
-
+    horn->setFLpressure(main_reservoir->getPressure());
     horn->setControl(keys, control_signals);
     horn->step(t, dt);
 
     speed_meter->setOmega(wheel_omega[0]);
     speed_meter->setWheelDiameter(wheel_diameter[0]);
     speed_meter->step(t, dt);
-}
 
+    stepTapSound();
+
+    registrate(t, dt);
+}
 
 //------------------------------------------------------------------------------
 // Загрузка данных из конфигурационного файла
@@ -200,8 +200,6 @@ void CHS2T::loadConfig(QString cfg_path)
         cfg.getString(secName, "ElectroAirDistConfig", electro_airdist_config_name);
     }
 }
-
-
 
 //------------------------------------------------------------------------------
 //

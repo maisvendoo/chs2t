@@ -31,7 +31,8 @@ void CHS2T::stepPneumoSupply(double t, double dt)
         FL_flow += motor_compressor[i]->getFLflow();
     }
 
-    // Главные резервуары
+    // Питательная магистраль
+    FL_flow += horn->getFLflow();
     FL_flow += brake_crane->getFLflow();
     FL_flow += loco_crane->getFLflow();
     FL_flow += epk->getFLflow();

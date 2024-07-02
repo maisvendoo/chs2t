@@ -26,7 +26,7 @@ void CHS2T::stepBrakesControl(double t, double dt)
     epk->setFLpressure(main_reservoir->getPressure());
     epk->setBPpressure(brakepipe->getPressure());
     epk->setControl(keys);
-    epk->powerOn(safety_device->getEPKstate());
+    epk->setPowered(safety_device->getEPKstate());
     epk->step(t, dt);
 
     // Электропневматический вентиль экстренного торможения

@@ -94,7 +94,7 @@ void CHS2T::stepTractionControl(double t, double dt)
     puskRez->setPoz(stepSwitch->getPoz());
     puskRez->step(t, dt);
 
-    if (EDT || (!epk->getStateKey()) || (!emergency_valve->isTractionAllow()))
+    if (EDT || (!epk->isKeyOn()) || (!emergency_valve->isTractionAllow()))
     {
         allowTrac.reset();
     }
@@ -186,7 +186,7 @@ void CHS2T::stepSupportEquipment(double t, double dt)
     safety_device->setRBSstate(state_RBS);
     safety_device->setAlsnCode(alsn_info.code_alsn);
     safety_device->setVelocity(velocity);
-    safety_device->setKeyEPK(epk->getStateKey());
+    safety_device->setKeyEPK(epk->isKeyOn());
     safety_device->step(t, dt);
 }
 

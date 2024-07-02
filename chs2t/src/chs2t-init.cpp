@@ -110,7 +110,9 @@ void CHS2T::initOtherEquipment(const QString &modules_dir, const QString &custom
     (void) modules_dir;
 
     horn = new TrainHorn();
+    horn->read_config("train-horn");
     connect(horn, &TrainHorn::soundPlay, this, &CHS2T::soundPlay);
+    connect(horn, &TrainHorn::soundSetVolume, this, &CHS2T::soundSetVolume);
     connect(horn, &TrainHorn::soundStop, this, &CHS2T::soundStop);
 
     speed_meter = new SL2M();

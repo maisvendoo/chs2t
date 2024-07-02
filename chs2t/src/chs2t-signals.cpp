@@ -84,7 +84,7 @@ void CHS2T::stepSignals()
 
     analogSignal[SW_EDT] = EDTSwitch.getState();
 
-    analogSignal[EPK] = static_cast<float>(epk->getStateKey());
+    analogSignal[EPK] = static_cast<float>(epk->isKeyOn());
 
     analogSignal[WHEEL_1] = static_cast<float>(wheel_rotation_angle[0] / 2.0 / Physics::PI);
     analogSignal[WHEEL_2] = static_cast<float>(wheel_rotation_angle[1] / 2.0 / Physics::PI);
