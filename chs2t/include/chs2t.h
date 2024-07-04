@@ -245,6 +245,9 @@ private:
     /// Свисток и тифон
     TrainHorn   *horn;
 
+    /// Система подачи песка
+    SandingSystem   *sand_system;
+
     /// Схема реостатного тормоза
     Generator   *generator;
 
@@ -424,6 +427,8 @@ private:
     void stepEDT2(double t, double dt);
 
     void stepSupportEquipment(double t, double dt);
+
+    void stepOtherEquipment(double t, double dt);
 
     void stepDebugMsg(double t, double dt);
 

@@ -156,6 +156,8 @@ void CHS2T::step(double t, double dt)
 
     stepSupportEquipment(t, dt);
 
+    stepOtherEquipment(t, dt);
+
     stepDebugMsg(t, dt);
 
     stepSignals();
@@ -163,14 +165,6 @@ void CHS2T::step(double t, double dt)
     stepSwitcherPanel();
 
     stepDecodeAlsn();
-
-    horn->setFLpressure(main_reservoir->getPressure());
-    horn->setControl(keys, control_signals);
-    horn->step(t, dt);
-
-    speed_meter->setOmega(wheel_omega[0]);
-    speed_meter->setWheelDiameter(wheel_diameter[0]);
-    speed_meter->step(t, dt);
 
     stepTapSound();
 

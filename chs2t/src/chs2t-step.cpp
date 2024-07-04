@@ -193,6 +193,33 @@ void CHS2T::stepSupportEquipment(double t, double dt)
 //------------------------------------------------------------------------------
 //
 //------------------------------------------------------------------------------
+void CHS2T::stepOtherEquipment(double t, double dt)
+{
+    horn->setFLpressure(main_reservoir->getPressure());
+    horn->setControl(keys, control_signals);
+    horn->step(t, dt);
+
+    // Система подачи песка
+    sand_system->setFLpressure(main_reservoir->getPressure());
+    sand_system->setControl(keys);
+    sand_system->step(t, dt);
+    for (size_t i = 0; i < num_axis; ++i)
+    {
+        // Пересчёт трения колесо-рельс
+        psi[i] = sand_system->getWheelRailFrictionCoeff(psi[i]);
+    }
+    // Пересчёт массы локомотива
+    payload_coeff = sand_system->getSandLevel();
+    setPayloadCoeff(payload_coeff);
+
+    speed_meter->setOmega(wheel_omega[0]);
+    speed_meter->setWheelDiameter(wheel_diameter[0]);
+    speed_meter->step(t, dt);
+}
+
+//------------------------------------------------------------------------------
+//
+//------------------------------------------------------------------------------
 bool CHS2T::getHoldingCoilState() const
 {
     bool no_overload = (!static_cast<bool>(overload_relay->getState()));

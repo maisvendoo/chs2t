@@ -33,6 +33,7 @@ void CHS2T::stepPneumoSupply(double t, double dt)
 
     // Питательная магистраль
     FL_flow += horn->getFLflow();
+    FL_flow += sand_system->getFLflow();
     FL_flow += brake_crane->getFLflow();
     FL_flow += loco_crane->getFLflow();
     FL_flow += epk->getFLflow();
