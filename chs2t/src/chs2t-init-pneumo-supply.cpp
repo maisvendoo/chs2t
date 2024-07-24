@@ -17,14 +17,8 @@ void CHS2T::initPneumoSupply(const QString &modules_dir, const QString &custom_c
     {
         motor_compressor[i] = new DCMotorCompressor();
         motor_compressor[i]->read_config("motor-compressor-dc");
-        motor_compressor[i]->setSoundName(QString("kompressor%1").arg(i+1));
-        connect(motor_compressor[i], &DCMotorCompressor::soundPlay, this, &CHS2T::soundPlay);
-        connect(motor_compressor[i], &DCMotorCompressor::soundStop, this, &CHS2T::soundStop);
-        connect(motor_compressor[i], &DCMotorCompressor::soundSetPitch, this, &CHS2T::soundSetPitch);
 
-        mk_switcher[i] = new CHS2TSwitcher(Q_NULLPTR, 0, 4);
-        mk_switcher[i]->setSoundName("tumbler");
-        connect(mk_switcher[i], &Switcher::soundPlay, this, &CHS2T::soundPlay);
+        mk_switcher[i] = new Switcher(Q_NULLPTR, 0, 4);
     }
 
     mk_switcher[0]->setKeyCode(KEY_7);

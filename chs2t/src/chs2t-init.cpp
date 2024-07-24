@@ -14,15 +14,12 @@ void CHS2T::initPantographs(const QString &modules_dir, const QString &custom_cf
         pantographs[i] = new Pantograph();
         pantographs[i]->read_config("pantograph", custom_cfg_dir);
         pantographs[i]->setUks(Uks);
-        connect(pantographs[i], &Pantograph::soundPlay, this, &CHS2T::soundPlay);
     }
 
     for (size_t i = 0; i < NUM_PANTOGRAPHS; ++i)
     {
-        pantoSwitcher[i] = new CHS2TSwitcher(Q_NULLPTR, 0, 4);
-        pantoSwitcher[i]->setSpring(3,2);
-        pantoSwitcher[i]->setSoundName("tumbler");
-        connect(pantoSwitcher[i], &Switcher::soundPlay, this, &CHS2T::soundPlay);
+        pantoSwitcher[i] = new Switcher(Q_NULLPTR, 0, 4);
+        pantoSwitcher[i]->setSpringLast();
     }
 
     pantoSwitcher[0]->setKeyCode(KEY_I);
@@ -39,10 +36,8 @@ void CHS2T::initFastSwitch(const QString &modules_dir, const QString &custom_cfg
     bv = new ProtectiveDevice();
     bv->read_config("bv", custom_cfg_dir);
 
-    fastSwitchSw = new CHS2TSwitcher(Q_NULLPTR, KEY_P, 4);
-    fastSwitchSw->setSpring(3, 2);
-    fastSwitchSw->setSoundName("tumbler");
-    connect(fastSwitchSw, &Switcher::soundPlay, this, &CHS2T::soundPlay);
+    fastSwitchSw = new Switcher(Q_NULLPTR, KEY_P, 4);
+    fastSwitchSw->setSpringLast();
 }
 
 //------------------------------------------------------------------------------
@@ -111,9 +106,6 @@ void CHS2T::initOtherEquipment(const QString &modules_dir, const QString &custom
 
     horn = new TrainHorn();
     horn->read_config("train-horn");
-    connect(horn, &TrainHorn::soundPlay, this, &CHS2T::soundPlay);
-    connect(horn, &TrainHorn::soundSetVolume, this, &CHS2T::soundSetVolume);
-    connect(horn, &TrainHorn::soundStop, this, &CHS2T::soundStop);
 
     // Система подачи песка
     sand_system = new SandingSystem();
@@ -123,7 +115,6 @@ void CHS2T::initOtherEquipment(const QString &modules_dir, const QString &custom
 
     speed_meter = new SL2M();
     speed_meter->read_config("3SL-2M", custom_cfg_dir);
-    connect(speed_meter, &SL2M::soundSetVolume, this, &CHS2T::soundSetVolume);
 
     safety_device = new SafetyDevice();
 }
@@ -137,31 +128,25 @@ void CHS2T::initSupportEquipment(const QString &modules_dir, const QString &cust
 
     motor_fan_ptr = new DCMotorFan();
     motor_fan_ptr->read_config("dc-motor-fan", custom_cfg_dir);
-    connect(motor_fan_ptr, &DCMotorFan::soundPlay, this, &CHS2T::soundPlay);
+/*    connect(motor_fan_ptr, &DCMotorFan::soundPlay, this, &CHS2T::soundPlay);
     connect(motor_fan_ptr, &DCMotorFan::soundStop, this, &CHS2T::soundStop);
-    motor_fan_ptr->setSoundName("PTR_fan");
+    motor_fan_ptr->setSoundName("PTR_fan");*/
 
     for (size_t i = 0; i < motor_fan.size(); ++i)
     {
         motor_fan[i] = new DCMotorFan();
         motor_fan[i]->read_config("motor-fan", custom_cfg_dir);
-        connect(motor_fan[i], &DCMotorFan::soundPlay, this, &CHS2T::soundPlay);
+/*        connect(motor_fan[i], &DCMotorFan::soundPlay, this, &CHS2T::soundPlay);
         connect(motor_fan[i], &DCMotorFan::soundStop, this, &CHS2T::soundStop);
-        motor_fan[i]->setSoundName(QString("Motor_Fan%1").arg(i+1));
+        motor_fan[i]->setSoundName(QString("Motor_Fan%1").arg(i+1));*/
     }
 
-    motor_fan_switcher = new CHS2TSwitcher(Q_NULLPTR, KEY_F, 3);
-    motor_fan_switcher->setSoundName("tumbler");
-    connect(motor_fan_switcher, &Switcher::soundPlay, this, &CHS2T::soundPlay);
-
-    connect(motor_fan_ptr, &DCMotorFan::soundSetPitch, this, &CHS2T::soundSetPitch);
+    motor_fan_switcher = new Switcher(Q_NULLPTR, KEY_F, 3);
 
     blinds = new Blinds();
     blinds->read_config("blinds", custom_cfg_dir);
 
-    blindsSwitcher = new CHS2TSwitcher(Q_NULLPTR, KEY_G, 5);
-    blindsSwitcher->setSoundName("tumbler");
-    connect(blindsSwitcher, &Switcher::soundPlay, this, &CHS2T::soundPlay);
+    blindsSwitcher = new Switcher(Q_NULLPTR, KEY_G, 5);
 
     energy_counter = new EnergyCounter();
     energy_counter->read_config("energy-counter", custom_cfg_dir);

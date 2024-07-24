@@ -27,13 +27,12 @@
 #include    "pulse-converter.h"
 #include    "brake-regulator.h"
 #include    "handle-edt.h"
-#include    "dc-motor-fan.h"
+#include    "motor-fan-dc.h"
 #include    "blinds.h"
 #include    "hardware-signals.h"
 #include    "convert-physics-to-modbus.h"
 #include    "sl2m.h"
 #include    "energy-counter.h"
-#include    "chs2t-switcher.h"
 #include    "alsn-ukbm.h"
 
 /*!
@@ -140,7 +139,7 @@ private:
     Trigger     mk_tumbler;
 
     /// Галетники управления МК
-    std::array<CHS2TSwitcher *, 2> mk_switcher;
+    std::array<Switcher *, 2> mk_switcher;
 
     /// Мотор-компрессоры (МК)
     std::array<DCMotorCompressor *, 2> motor_compressor;
@@ -258,16 +257,19 @@ private:
     BrakeRegulator  *BrakeReg;
 
     /// Галетники управления токоприемниками
-    std::array<CHS2TSwitcher *, NUM_PANTOGRAPHS> pantoSwitcher;
+    std::array<Switcher *, NUM_PANTOGRAPHS> pantoSwitcher;
 
     /// Галетник управления БВ
-    CHS2TSwitcher    *fastSwitchSw;
+    Switcher    *fastSwitchSw;
 
+    /// Мотор-вентиляторы
     std::array<DCMotorFan*, 2> motor_fan;
 
-    CHS2TSwitcher *motor_fan_switcher;
+    /// Галетник управления мотор-вентиляторами
+    Switcher *motor_fan_switcher;
 
-    CHS2TSwitcher *blindsSwitcher;
+    /// Галетник управления жалюзи
+    Switcher *blindsSwitcher;
 
     /// Зарядное давление
     double charging_press;
@@ -433,6 +435,9 @@ private:
     void stepDebugMsg(double t, double dt);
 
     void stepSignals();
+
+    /// Вывод сигналов звучки
+    void stepSoundSignalsOutput(double t, double dt);
 
     void stepSwitcherPanel();
 
