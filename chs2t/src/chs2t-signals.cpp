@@ -57,21 +57,21 @@ void CHS2T::stepSignals()
     analogSignal[PANT1] = static_cast<float>(pantographs[0]->getHeight());
     analogSignal[PANT2] = static_cast<float>(pantographs[1]->getHeight());
 
-    analogSignal[SW_PNT1] = pantoSwitcher[0]->getHandlePos();
-    analogSignal[SW_PNT2] = pantoSwitcher[1]->getHandlePos();
+    analogSignal[SW_PNT1] = pantoSwitcher[0]->getHandlePosition();
+    analogSignal[SW_PNT2] = pantoSwitcher[1]->getHandlePosition();
 
     analogSignal[SIGLIGHT_RAZED] = static_cast<float>( !pant_switch[0].getState() && !pant_switch[1].getState() );
 
     analogSignal[INDICATOR_BV] = static_cast<float>(bv->getLampState());
 
-    analogSignal[SW_BV] = fastSwitchSw->getHandlePos();
-    analogSignal[SW_MV] = motor_fan_switcher->getHandlePos();
-    analogSignal[SW_MK1] = mk_switcher[0]->getHandlePos();
-    analogSignal[SW_MK2] = mk_switcher[1]->getHandlePos();
+    analogSignal[SW_BV] = fastSwitchSw->getHandlePosition();
+    analogSignal[SW_MV] = motor_fan_switcher->getHandlePosition();
+    analogSignal[SW_MK1] = mk_switcher[0]->getHandlePosition();
+    analogSignal[SW_MK2] = mk_switcher[1]->getHandlePosition();
 
     analogSignal[SW_EPT] = static_cast<float>(epb_switch.getState());
 
-    analogSignal[SW_VK] = blindsSwitcher->getHandlePos();
+    analogSignal[SW_VK] = blindsSwitcher->getHandlePosition();
 
     analogSignal[BLINDS] = blinds->getPosition();
     analogSignal[SIGLIGHT_GALYZI] = static_cast<float>(blinds->isOpened());

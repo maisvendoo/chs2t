@@ -11,16 +11,11 @@ void CHS2T::initBrakesControl(const QString &modules_dir, const QString &custom_
     brake_crane = loadBrakeCrane(
                 modules_dir + QDir::separator() + brake_crane_module_name);
     brake_crane->read_config(brake_crane_config_name);
-    connect(brake_crane, &BrakeCrane::soundPlay, this, &CHS2T::soundPlay);
-    connect(brake_crane, &BrakeCrane::soundSetVolume, this, &CHS2T::soundSetVolume);
 
     // Кран вспомогательного тормоза
     loco_crane = loadLocoCrane(
                 modules_dir + QDir::separator() + loco_crane_module_name);
     loco_crane->read_config(loco_crane_config_name);
-    connect(loco_crane, &LocoCrane::soundPlay, this, &CHS2T::soundPlay);
-    connect(loco_crane, &LocoCrane::soundStop, this, &CHS2T::soundStop);
-    connect(loco_crane, &LocoCrane::soundSetVolume, this, &CHS2T::soundSetVolume);
 
     // Рукоятка задатчика тормозного усилия
     handleEDT = new HandleEDT();
@@ -31,8 +26,6 @@ void CHS2T::initBrakesControl(const QString &modules_dir, const QString &custom_
     // Электропневматический клапан автостопа
     epk = loadAutoTrainStop(modules_dir + QDir::separator() + "epk150");
     epk->read_config("epk150");
-    connect(epk, &AutoTrainStop::soundPlay, this, &CHS2T::soundPlay);
-    connect(epk, &AutoTrainStop::soundStop, this, &CHS2T::soundStop);
 
     // Электропневматический вентиль экстренного торможения
     emergency_valve = new ElectroPneumoValveEmergency();

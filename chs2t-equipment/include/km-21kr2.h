@@ -31,6 +31,17 @@ public:
 
     double getHandleHeight() const { return getY(0); }
 
+    enum {
+        NUM_SOUNDS = 2,
+        REVERS_CHANGE_POS_SOUND = 0,    ///< Звук переключения реверсора
+        MAIN_CHANGE_POS_SOUND = 1       ///< Звук переключения контроллера
+    };
+    /// Состояние звука
+    sound_state_t getSoundState(size_t idx = REVERS_CHANGE_POS_SOUND) const;
+
+    /// Сигнал состояния звука
+    float getSoundSignal(size_t idx = REVERS_CHANGE_POS_SOUND) const;
+
 private:
 
     void ode_system(const state_vector_t &Y, state_vector_t &dYdt, double t);
@@ -77,6 +88,9 @@ private:
     bool is_dec;
 
     ControllerState controlState;
+
+    /// Счётчик и состояние звуков
+    std::array <sound_state_t, NUM_SOUNDS> sounds;
 };
 
 #define TO_INT(variable) static_cast<int>(variable)

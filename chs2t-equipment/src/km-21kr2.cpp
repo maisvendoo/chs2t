@@ -45,6 +45,26 @@ Km21KR2::~Km21KR2()
 //------------------------------------------------------------------------------
 //
 //------------------------------------------------------------------------------
+sound_state_t Km21KR2::getSoundState(size_t idx) const
+{
+    if (idx < sounds.size())
+        return sounds[idx];
+    return Device::getSoundState();
+}
+
+//------------------------------------------------------------------------------
+//
+//------------------------------------------------------------------------------
+float Km21KR2::getSoundSignal(size_t idx) const
+{
+    if (idx < sounds.size())
+        return sounds[idx].createSoundSignal();
+    return Device::getSoundSignal();
+}
+
+//------------------------------------------------------------------------------
+//
+//------------------------------------------------------------------------------
 void Km21KR2::ode_system(const state_vector_t& Y, state_vector_t& dYdt, double t)
 {
     Q_UNUSED(t)

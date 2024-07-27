@@ -10,16 +10,16 @@ void CHS2T::stepPantographs(double t, double dt)
     {
         pantoSwitcher[i]->setControl(keys);
 
-        if (pantoSwitcher[i]->getState() == 3)
+        if (pantoSwitcher[i]->getPosition() == 3)
             pant_switch[i].set();
 
-        if (pantoSwitcher[i]->getState() == 0)
+        if (pantoSwitcher[i]->getPosition() == 0)
             pant_switch[i].reset();
 
-        if (pantoSwitcher[i]->getState() == 2 && pant_switch[i].getState())
+        if (pantoSwitcher[i]->getPosition() == 2 && pant_switch[i].getState())
             pantup_trigger[i].set();
 
-        if (pantoSwitcher[i]->getState() == 1)
+        if (pantoSwitcher[i]->getPosition() == 1)
             pantup_trigger[i].reset();
 
         pantoSwitcher[i]->step(t, dt);
@@ -48,7 +48,7 @@ void CHS2T::stepFastSwitch(double t, double dt)
     bv->setState(fast_switch_trigger.getState());
     bv->step(t, dt);
 
-    if (fastSwitchSw->getState() == 3)
+    if (fastSwitchSw->getPosition() == 3)
     {
         fast_switch_trigger.set();
         if (!bv_return)
@@ -56,7 +56,7 @@ void CHS2T::stepFastSwitch(double t, double dt)
         bv_return = true;
     }
 
-    if (fastSwitchSw->getState() == 1)
+    if (fastSwitchSw->getPosition() == 1)
     {
         fast_switch_trigger.reset();
         bv_return = false;
@@ -131,27 +131,27 @@ void CHS2T::stepSupportEquipment(double t, double dt)
     bool hod = stepSwitch->getHod();
 
     // Мотор-вентилятор ПТР
-    motor_fan_ptr->setU(R * (motor->getIa() * !hod + abs(generator->getIa())));
+    motor_fan_ptr->setPowerVoltage(R * (motor->getIa() * !hod + abs(generator->getIa())));
     motor_fan_ptr->step(t, dt);
 
     motor_fan_switcher->setControl(keys);
 
-    if (motor_fan_switcher->getState() == 0)
+    if (motor_fan_switcher->getPosition() == 0)
     {
-        motor_fan[0]->setU(0.0);
-        motor_fan[1]->setU(0.0);
+        motor_fan[0]->setPowerVoltage(0.0);
+        motor_fan[1]->setPowerVoltage(0.0);
     }
 
-    if (motor_fan_switcher->getState() == 1)
+    if (motor_fan_switcher->getPosition() == 1)
     {
-        motor_fan[0]->setU((bv->getU_out() / 2.0) * (stepSwitch->getPoz() > 0 || motor_fan[0]->getU() > 0));
-        motor_fan[1]->setU((bv->getU_out() / 2.0) * (stepSwitch->getPoz() > 0 || motor_fan[1]->getU() > 0));
+        motor_fan[0]->setPowerVoltage((bv->getU_out() / 2.0) * (stepSwitch->getPoz() > 0 || motor_fan[0]->isPowered()));
+        motor_fan[1]->setPowerVoltage((bv->getU_out() / 2.0) * (stepSwitch->getPoz() > 0 || motor_fan[1]->isPowered()));
     }
 
-    if (motor_fan_switcher->getState() == 2)
+    if (motor_fan_switcher->getPosition() == 2)
     {
-        motor_fan[0]->setU(bv->getU_out() / 2.0);
-        motor_fan[1]->setU(bv->getU_out() / 2.0);
+        motor_fan[0]->setPowerVoltage(bv->getU_out() / 2.0);
+        motor_fan[1]->setPowerVoltage(bv->getU_out() / 2.0);
     }
 
     motor_fan_switcher->step(t, dt);
@@ -160,17 +160,17 @@ void CHS2T::stepSupportEquipment(double t, double dt)
 
     blindsSwitcher->setControl(keys);
 
-    if (blindsSwitcher->getState() == 0 || blindsSwitcher->getState() == 1)
+    if (blindsSwitcher->getPosition() == 0 || blindsSwitcher->getPosition() == 1)
     {
         blinds->setState(false);
     }
 
-    if (blindsSwitcher->getState() == 2)
+    if (blindsSwitcher->getPosition() == 2)
     {
         blinds->setState(true);
     }
 
-    if (blindsSwitcher->getState() == 3 || blindsSwitcher->getState() == 4)
+    if (blindsSwitcher->getPosition() == 3 || blindsSwitcher->getPosition() == 4)
     {
         blinds->setState((!hod && !stepSwitch->isZero()) || EDT);
     }

@@ -19,8 +19,8 @@ void CHS2T::stepPneumoSupply(double t, double dt)
 
         double U_power = 0.0;
 
-        if (    (mk_switcher[i]->getState() == 3)
-            || ((mk_switcher[i]->getState() == 2) && (press_reg->getState() )) )
+        if (    (mk_switcher[i]->getPosition() == 3)
+            || ((mk_switcher[i]->getPosition() == 2) && (press_reg->getState() )) )
         {
             U_power = bv->getU_out();
         }

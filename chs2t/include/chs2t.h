@@ -171,8 +171,11 @@ private:
     /// Рукоятка задатчика тормозного усилия
     HandleEDT   *handleEDT;
 
+
     /// Электропневматический клапан автостопа усл.№150
     AutoTrainStop   *epk;
+    /// Ключ ЭПК
+    Trigger   key_epk;
 
     /// Электропневматический вентиль экстренного торможения (при ТМ < 0.3 МПа)
     ElectroPneumoValveEmergency *emergency_valve;

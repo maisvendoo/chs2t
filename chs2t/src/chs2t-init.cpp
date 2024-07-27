@@ -128,17 +128,11 @@ void CHS2T::initSupportEquipment(const QString &modules_dir, const QString &cust
 
     motor_fan_ptr = new DCMotorFan();
     motor_fan_ptr->read_config("dc-motor-fan", custom_cfg_dir);
-/*    connect(motor_fan_ptr, &DCMotorFan::soundPlay, this, &CHS2T::soundPlay);
-    connect(motor_fan_ptr, &DCMotorFan::soundStop, this, &CHS2T::soundStop);
-    motor_fan_ptr->setSoundName("PTR_fan");*/
 
     for (size_t i = 0; i < motor_fan.size(); ++i)
     {
         motor_fan[i] = new DCMotorFan();
         motor_fan[i]->read_config("motor-fan", custom_cfg_dir);
-/*        connect(motor_fan[i], &DCMotorFan::soundPlay, this, &CHS2T::soundPlay);
-        connect(motor_fan[i], &DCMotorFan::soundStop, this, &CHS2T::soundStop);
-        motor_fan[i]->setSoundName(QString("Motor_Fan%1").arg(i+1));*/
     }
 
     motor_fan_switcher = new Switcher(Q_NULLPTR, KEY_F, 3);
