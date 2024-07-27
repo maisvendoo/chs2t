@@ -645,74 +645,74 @@
 
 	<!-- Тяговый двигатель 1 -->
 	<Sound>
-		<SignalID>291</SignalID>
+		<SignalID>265</SignalID>
 		<Filename>ted_60-62.wav</Filename>
 		<InitVolume>0.0</InitVolume>
 		<MaxVolume>1.0</MaxVolume>
 		<InitPitch>0.0</InitPitch>
-		<Loop>0</Loop>
+		<Loop>1</Loop>
 		<PlayOnStart>0</PlayOnStart>
-		<LocalPosition>0.0 7.5 0.625</LocalPosition>
+		<LocalPosition>0.0 6.48 0.625</LocalPosition>
 	</Sound>
 
 	<!-- Тяговый двигатель 2 -->
 	<Sound>
-		<SignalID>295</SignalID>
+		<SignalID>265</SignalID>
 		<Filename>ted_60-62.wav</Filename>
 		<InitVolume>0.0</InitVolume>
 		<MaxVolume>1.0</MaxVolume>
 		<InitPitch>0.0</InitPitch>
-		<Loop>0</Loop>
+		<Loop>1</Loop>
 		<PlayOnStart>0</PlayOnStart>
-		<LocalPosition>0.0 5.2 0.625</LocalPosition>
+		<LocalPosition>0.0 4.08 0.625</LocalPosition>
 	</Sound>
 
 	<!-- Тяговый двигатель 3 -->
 	<Sound>
-		<SignalID>293</SignalID>
+		<SignalID>265</SignalID>
 		<Filename>ted_60-62.wav</Filename>
 		<InitVolume>0.0</InitVolume>
 		<MaxVolume>1.0</MaxVolume>
 		<InitPitch>0.0</InitPitch>
-		<Loop>0</Loop>
+		<Loop>1</Loop>
 		<PlayOnStart>0</PlayOnStart>
-		<LocalPosition>0.0 2.9 0.625</LocalPosition>
+		<LocalPosition>0.0 1.87 0.625</LocalPosition>
 	</Sound>
 
 	<!-- Тяговый двигатель 4 -->
 	<Sound>
-		<SignalID>294</SignalID>
+		<SignalID>265</SignalID>
 		<Filename>ted_60-62.wav</Filename>
 		<InitVolume>0.0</InitVolume>
 		<MaxVolume>1.0</MaxVolume>
 		<InitPitch>0.0</InitPitch>
-		<Loop>0</Loop>
+		<Loop>1</Loop>
 		<PlayOnStart>0</PlayOnStart>
-		<LocalPosition>0.0 -2.9 0.625</LocalPosition>
+		<LocalPosition>0.0 -1.87 0.625</LocalPosition>
 	</Sound>
 
 	<!-- Тяговый двигатель 5 -->
 	<Sound>
-		<SignalID>295</SignalID>
+		<SignalID>265</SignalID>
 		<Filename>ted_60-62.wav</Filename>
 		<InitVolume>0.0</InitVolume>
 		<MaxVolume>1.0</MaxVolume>
 		<InitPitch>0.0</InitPitch>
-		<Loop>0</Loop>
+		<Loop>1</Loop>
 		<PlayOnStart>0</PlayOnStart>
-		<LocalPosition>0.0 -5.2 0.625</LocalPosition>
+		<LocalPosition>0.0 -4.08 0.625</LocalPosition>
 	</Sound>
 
 	<!-- Тяговый двигатель 6 -->
 	<Sound>
-		<SignalID>296</SignalID>
+		<SignalID>265</SignalID>
 		<Filename>ted_60-62.wav</Filename>
 		<InitVolume>0.0</InitVolume>
 		<MaxVolume>1.0</MaxVolume>
 		<InitPitch>0.0</InitPitch>
-		<Loop>0</Loop>
+		<Loop>1</Loop>
 		<PlayOnStart>0</PlayOnStart>
-		<LocalPosition>0.0 -7.5 0.625</LocalPosition>
+		<LocalPosition>0.0 -6.48 0.625</LocalPosition>
 	</Sound>
 
 </Config>

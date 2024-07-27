@@ -441,6 +441,7 @@ private:
 
     /// Вывод сигналов звучки
     void stepSoundSignalsOutput(double t, double dt);
+    float motorSoundSignal(double t, double dt);
 
     void stepSwitcherPanel();
 

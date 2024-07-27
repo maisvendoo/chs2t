@@ -38,6 +38,12 @@ public:
 
     double getUt() const { return  Ut; }
 
+    /// Состояние звука работы
+    virtual sound_state_t getSoundState(size_t idx = 0) const;
+
+    /// Сигнал состояния звука работы
+    virtual float getSoundSignal(size_t idx = 0) const;
+
 private:
 
     double Uf;
@@ -57,6 +63,9 @@ private:
     double Rgp;
     double Rdp;
     double omega_nom;
+
+    /// Состояние звука работы
+    sound_state_t sound_state = sound_state_t(true, 0.0f, 0.0f);
 
     LinearInterpolation cPhi;
 

@@ -89,15 +89,26 @@ void CHS2T::stepSoundSignalsOutput(double t, double dt)
     // Выключатель ЭДТ
     analogSignal[SOUND_SWITCHER_EDT] = EDTSwitch.getSoundSignal();
 
-
-/* ============ VL60 ==================
-
     // Тяговые электродвигатели
-    analogSignal[SOUND_TRACTION_ELETROENGINE_1] = motor[TED1]->getSoundSignal();
-    analogSignal[SOUND_TRACTION_ELETROENGINE_2] = motor[TED2]->getSoundSignal();
-    analogSignal[SOUND_TRACTION_ELETROENGINE_3] = motor[TED3]->getSoundSignal();
-    analogSignal[SOUND_TRACTION_ELETROENGINE_4] = motor[TED4]->getSoundSignal();
-    analogSignal[SOUND_TRACTION_ELETROENGINE_5] = motor[TED5]->getSoundSignal();
-    analogSignal[SOUND_TRACTION_ELETROENGINE_6] = motor[TED6]->getSoundSignal();
-*/
+    analogSignal[SOUND_TRACTION_ELECTROENGINE] = motorSoundSignal(t, dt);
+}
+
+//------------------------------------------------------------------------------
+//
+//------------------------------------------------------------------------------
+float CHS2T::motorSoundSignal(double t, double dt)
+{
+    (void) t;
+    (void) dt;
+
+    // Если есть ток в модуле motor - ТЭД в режиме тяги
+    if (motor->getY(0) > 100.0)
+        return motor->getSoundSignal();
+
+    // Если есть ток в модуле generator - ТЭД в режиме электродинамического торможения
+    if (generator->getY(0) > 100.0)
+        return generator->getSoundSignal();
+
+    // ТЭД на выбеге, без звука
+    return sound_state_t::createSoundSignal(false);
 }

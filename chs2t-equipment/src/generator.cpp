@@ -38,6 +38,24 @@ Generator::~Generator()
 //------------------------------------------------------------------------------
 //
 //------------------------------------------------------------------------------
+sound_state_t Generator::getSoundState(size_t idx) const
+{
+    (void) idx;
+    return sound_state;
+}
+
+//------------------------------------------------------------------------------
+//
+//------------------------------------------------------------------------------
+float Generator::getSoundSignal(size_t idx) const
+{
+    (void) idx;
+    return sound_state.createSoundSignal();
+}
+
+//------------------------------------------------------------------------------
+//
+//------------------------------------------------------------------------------
 void Generator::preStep(state_vector_t& Y, double t)
 {
     Q_UNUSED(t)
@@ -45,8 +63,8 @@ void Generator::preStep(state_vector_t& Y, double t)
     M = calcCPhi((Y[0])) * Y[1];
     Ut = Y[1] * Rt;
 
-    emit soundSetPitch("TED", static_cast<float>(abs(omega) / omega_nom));
-    emit soundSetVolume("TED", static_cast<int>(pf(abs(Y[0]) - 100)));
+    sound_state.volume = static_cast<float>(pf(abs(Y[0]) - 100.0)) / 100.0f;
+    sound_state.pitch = static_cast<float>(abs(omega) / omega_nom);
 }
 
 //------------------------------------------------------------------------------

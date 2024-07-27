@@ -81,6 +81,47 @@ double Motor::getI56() const
 //------------------------------------------------------------------------------
 //
 //------------------------------------------------------------------------------
+sound_state_t Motor::getSoundState(size_t idx) const
+{
+    (void) idx;
+    return sound_state;
+}
+
+//------------------------------------------------------------------------------
+//
+//------------------------------------------------------------------------------
+float Motor::getSoundSignal(size_t idx) const
+{
+    (void) idx;
+    return sound_state.createSoundSignal();
+}
+
+//------------------------------------------------------------------------------
+//
+//------------------------------------------------------------------------------
+void Motor::preStep(state_vector_t& Y, double t)
+{
+    Q_UNUSED(t)
+
+    torque = calcCPhi(Y[0] * beta * direction) * Y[0];
+
+    if (poz < 21)
+        n = 6;
+    else
+    {
+        if (poz < 34)
+            n = 3;
+        else
+            n = 2;
+    }
+
+    sound_state.volume = static_cast<float>(pf(abs(Y[0]) - 100.0)) / 100.0f;
+    sound_state.pitch = static_cast<float>(abs(omega) / omega_nom);
+}
+
+//------------------------------------------------------------------------------
+//
+//------------------------------------------------------------------------------
 void Motor::ode_system(const state_vector_t& Y, state_vector_t& dYdt, double t)
 {
     Q_UNUSED(t)
@@ -129,29 +170,6 @@ void Motor::load_config(CfgReader& cfg)
 
         secNode = cfg.getNextSection();
     }
-}
-
-//------------------------------------------------------------------------------
-//
-//------------------------------------------------------------------------------
-void Motor::preStep(state_vector_t& Y, double t)
-{
-    Q_UNUSED(t)
-
-    torque = calcCPhi(Y[0] * beta * direction) * Y[0];
-
-    if (poz < 21)
-        n = 6;
-    else
-    {
-        if (poz < 34)
-            n = 3;
-        else
-            n = 2;
-    }
-
-    emit soundSetPitch("TED", static_cast<float>(abs(omega) / omega_nom));
-    emit soundSetVolume("TED", static_cast<int>(pf(abs(Y[0]) - 100)));
 }
 
 //------------------------------------------------------------------------------

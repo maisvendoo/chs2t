@@ -49,6 +49,12 @@ public:
 
     double getI56() const;
 
+    /// Состояние звука работы
+    virtual sound_state_t getSoundState(size_t idx = 0) const;
+
+    /// Сигнал состояния звука работы
+    virtual float getSoundSignal(size_t idx = 0) const;
+
 private:
 
     /// Номер позиции
@@ -88,18 +94,21 @@ private:
     /// Направление
     int     direction;
 
+    /// Состояние звука работы
+    sound_state_t sound_state = sound_state_t(true, 0.0f, 0.0f);
+
     LinearInterpolation cPhi;
 
     QMap<int, double> fieldStep;
 
     ampermeters_state_t amp_state;
 
+    void preStep(state_vector_t &Y, double t);
+
     void ode_system(const state_vector_t &Y, state_vector_t &dYdt, double t);
 
     /// Загрузка данных из конфигурационных файлов
     void load_config(CfgReader &cfg);
-
-    void preStep(state_vector_t &Y, double t);    
 
     double calcCPhi(double I);
 };
