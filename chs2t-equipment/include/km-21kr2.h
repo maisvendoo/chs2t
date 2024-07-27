@@ -32,9 +32,13 @@ public:
     double getHandleHeight() const { return getY(0); }
 
     enum {
-        NUM_SOUNDS = 2,
+        NUM_SOUNDS = 6,
         REVERS_CHANGE_POS_SOUND = 0,    ///< Звук переключения реверсора
-        MAIN_CHANGE_POS_SOUND = 1       ///< Звук переключения контроллера
+        MAIN_NONFIXED_ON_SOUND = 1,     ///< Звук постановки контроллера в нефиксированные положения сброса/набора
+        MAIN_NONFIXED_OFF_SOUND = 2,    ///< Звук возврата контроллера из нефиксированных положения сброса/набора
+        MAIN_FIXED_RESET_ON_SOUND = 3,  ///< Звук постановки контроллера в фиксированное положение автоматического сброса
+        MAIN_FIXED_RESET_OFF_SOUND = 4, ///< Звук возврата контроллера из фиксированного положения автоматического сброса
+        MAIN_CHANGE_FIELDWEAK_SOUND = 5 ///< Звук переключения позиций ослабления поля во вдавленном положении контроллера
     };
     /// Состояние звука
     sound_state_t getSoundState(size_t idx = REVERS_CHANGE_POS_SOUND) const;
@@ -73,7 +77,6 @@ private:
 
     bool autoSet;
     bool autoReset;
-    bool lastControllerPositionIsZero;
     bool reverseIsPressedOneTime;
     bool hod;
 
@@ -86,6 +89,7 @@ private:
 
     bool is_inc;
     bool is_dec;
+    bool no_from_weak;
 
     ControllerState controlState;
 

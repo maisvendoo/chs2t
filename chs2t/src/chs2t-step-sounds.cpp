@@ -27,14 +27,15 @@ void CHS2T::stepSoundSignalsOutput(double t, double dt)
     // Свисток и тифон
     analogSignal[SOUND_SVISTOK] = horn->getSoundSignal(TrainHorn::SVISTOK_SOUND);
     analogSignal[SOUND_TIFON] = horn->getSoundSignal(TrainHorn::TIFON_SOUND);
-/* TODO озвучка в контроллере
+
     // Реверсор и контроллер
     analogSignal[SOUND_REVERSOR] = km21KR2->getSoundSignal(Km21KR2::REVERS_CHANGE_POS_SOUND);
-    analogSignal[SOUND_CONTROLLER1] = km21KR2->getSoundSignal(Km21KR2::MAIN_CHANGE_POS_SOUND);
-    analogSignal[SOUND_CONTROLLER2] = km21KR2->getSoundSignal(Km21KR2::MAIN_CHANGE_POS_SOUND);
-    analogSignal[SOUND_CONTROLLER3] = km21KR2->getSoundSignal(Km21KR2::MAIN_CHANGE_POS_SOUND);
-    analogSignal[SOUND_CONTROLLER4] = km21KR2->getSoundSignal(Km21KR2::MAIN_CHANGE_POS_SOUND);
-*/
+    analogSignal[SOUND_CONTROLLER1] = km21KR2->getSoundSignal(Km21KR2::MAIN_NONFIXED_ON_SOUND);
+    analogSignal[SOUND_CONTROLLER2] = km21KR2->getSoundSignal(Km21KR2::MAIN_NONFIXED_OFF_SOUND);
+    analogSignal[SOUND_CONTROLLER3] = km21KR2->getSoundSignal(Km21KR2::MAIN_FIXED_RESET_ON_SOUND);
+    analogSignal[SOUND_CONTROLLER4] = km21KR2->getSoundSignal(Km21KR2::MAIN_FIXED_RESET_OFF_SOUND);
+    analogSignal[SOUND_CONTROLLER5] = km21KR2->getSoundSignal(Km21KR2::MAIN_CHANGE_FIELDWEAK_SOUND);
+
     // Кран поездного тормоза
     analogSignal[SOUND_BRAKE_CRANE_CHANGE_POS] = brake_crane->getSoundSignal(BrakeCrane::CHANGE_POS_SOUND);
     analogSignal[SOUND_BRAKE_CRANE_ER_STAB_FLOW] = brake_crane->getSoundSignal(BrakeCrane::ER_STAB_SOUND);

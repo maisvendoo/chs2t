@@ -21,7 +21,6 @@ Km21KR2::Km21KR2(QObject* parent) : Device(parent)
 
   , autoSet(false)
   , autoReset(false)
-  , lastControllerPositionIsZero(false)
   , reverseIsPressedOneTime(false)
   , hod(false)
   , reverseState(0)
@@ -30,6 +29,7 @@ Km21KR2::Km21KR2(QObject* parent) : Device(parent)
   , mainShaftHeight(0.0)
   , is_inc(true)
   , is_dec(true)
+  , no_from_weak(true)
 {
     y.resize(1);
 }
@@ -107,9 +107,7 @@ void Km21KR2::preStep(state_vector_t& Y, double t)
     k33 = (fieldWeakShaft == 6 || fieldWeakShaft == 10);
 
     if ((k01 != controlState.k01) || (k02 != controlState.k02))
-        emit soundPlay("revers");
-//    DebugMsg = QString(" km-fWS %1")
-//            .arg(fieldWeakShaft);
+        sounds[REVERS_CHANGE_POS_SOUND].play();
 }
 
 //------------------------------------------------------------------------------
@@ -120,111 +118,168 @@ void Km21KR2::stepKeysControl(double t, double dt)
     Q_UNUSED(t)
     Q_UNUSED(dt)
 
-    if (!reverseIsPressedOneTime && (TO_INT(mainShaftPos) == 0) && (TO_INT(fieldWeakShaft) == 0))
-        reverseState += ((getKeyState(KEY_W) && reverseState != 1) -
-                         (getKeyState(KEY_S) && reverseState != -1));
-
+    // Реверсор
+    if (!reverseIsPressedOneTime && (mainShaftPos == 0) && (fieldWeakShaft == 0))
+        reverseState += ((getKeyState(KEY_W) && (reverseState != 1)) -
+                         (getKeyState(KEY_S) && (reverseState != -1)));
+    // Запрещаем управлять реверсором дальше, пока не отпустим клавишу
     reverseIsPressedOneTime = (getKeyState(KEY_W) || getKeyState(KEY_S));
 
+    // При реверсоре в нуле контроллер заблокирован, дальше делать нечего
     if (reverseState == 0)
         return;
 
-    if (fieldWeakShaft == 0)
-        mainShaftHeight = 0.0;
+    // Здесь страшным образом описывается состояние контроллера
+    mainShaftPos = (-10 * autoReset) + (4 * autoSet) +
+                   (!autoReset && !autoSet && !isShift() && !isControl()) *
+                       (-5 * getKeyState(KEY_D) +
+                        2 * getKeyState(KEY_A));
 
-    // Авт. сброс
-    if (getKeyState(KEY_D))
-    {
-        if (isControl())
-        {
-            if (autoReset)
-                emit soundPlay("21KR_-A_0");
-            autoReset = false;
-        }
-        if (!autoReset && isShift() && fieldWeakShaft != 0 && lastControllerPositionIsZero && is_dec)
-        {
-            fieldWeakShaft -= 2;
-            emit soundPlay("21KR_op-");
-            is_dec = false;
-        } else {
-            if(is_dec && fieldWeakShaft == 0 && !isControl())
-                emit soundPlay("21KR_0_-");
-            is_dec = false;
-        }
-    }
-    else
-    {
-        if (!is_dec && fieldWeakShaft == 0)
-            emit soundPlay("21KR_-_0");
-        //if (TO_INT(fieldWeakShaft) == 0)
-        is_dec = true;
-    }
+    mainShaftPos = mainShaftPos * TO_INT(hs_n(mainShaftHeight - 0.99));
 
+    // Отмена автоматического сброса позиций
     if (autoReset)
     {
-        autoReset = !getKeyState(KEY_A);
+        if ( (!getKeyState(KEY_E)) &&
+             ( getKeyState(KEY_A) || getKeyState(KEY_Q) || (isControl() && getKeyState(KEY_D)) ) )
+        {
+            autoReset = false;
+            sounds[MAIN_FIXED_RESET_OFF_SOUND].play();
+        }
         return;
     }
 
-    // 1 вниз
+    // Отмена автоматического набора позиций
+    if (autoSet)
+    {
+        if (!getKeyState(KEY_Q))
+        {
+            autoSet = false;
+            sounds[MAIN_NONFIXED_OFF_SOUND].play();
+        }
+        return;
+    }
+
+    // Автоматический набор-сброс, если не в позициях ослабления поля
+    if (fieldWeakShaft == 0)
+    {
+        // Автоматический сброс позиций
+        if (getKeyState(KEY_E))
+        {
+            if (!autoReset)
+            {
+                sounds[MAIN_NONFIXED_ON_SOUND].play();
+                sounds[MAIN_FIXED_RESET_ON_SOUND].play();
+            }
+            autoReset = true;
+            return;
+        }
+
+        // Автоматический набор позиций
+        if (getKeyState(KEY_Q))
+        {
+            if (!autoSet)
+                sounds[MAIN_NONFIXED_ON_SOUND].play();
+            autoSet = true;
+            return;
+        }
+    }
+
+    // Сброс одной позиции
+    if (getKeyState(KEY_D))
+    {
+        // Возврат контроллера - сброс ослабления поля полностью
+        if (isControl() && (fieldWeakShaft > 0))
+        {
+            fieldWeakShaft = 0;
+            mainShaftHeight = 0.0;
+            sounds[MAIN_CHANGE_FIELDWEAK_SOUND].play();
+            // Запрещаем озвучку обычного возврата
+            no_from_weak = false;
+            return;
+        }
+
+        // Ослабление поля
+        if (is_dec && isShift() && (fieldWeakShaft > 0))
+        {
+            // Сброс одной позиции ослабления поля
+            fieldWeakShaft -= 2;
+            sounds[MAIN_CHANGE_FIELDWEAK_SOUND].play();
+
+            // Сбрасываем вдавленное состояние контроллера
+            if (fieldWeakShaft == 0)
+            {
+                mainShaftHeight = 0.0;
+                // Запрещаем озвучку обычного возврата
+                no_from_weak = false;
+            }
+        }
+        else
+        {
+            // Озвучка сброса одной позиции
+            if (is_dec && (!isControl()) && (!isShift()) && (fieldWeakShaft == 0))
+                sounds[MAIN_NONFIXED_ON_SOUND].play();
+        }
+        // Запрещаем озвучку следующего сброса позиции, пока не отпустим клавишу
+        is_dec = false;
+
+        return;
+    }
+    else
+    {
+        // Озвучка возврата контроллера
+        if ((!is_dec) && (no_from_weak) && (!isControl()) && (!isShift()) && (fieldWeakShaft == 0))
+            sounds[MAIN_NONFIXED_OFF_SOUND].play();
+
+        // Клавиша отпущена, разрешаем озвучку следующего сброса позиции
+        is_dec = true;
+        no_from_weak = true;
+    }
+
+    // Набор одной позиции
     if (getKeyState(KEY_A))
     {
-        if(isShift() && fieldWeakShaft != 10 && lastControllerPositionIsZero && is_inc)
+        // Ослабление поля
+        if (is_inc && isShift())
         {
+            // Задаём вдавленное состояние контроллера
             if (fieldWeakShaft == 0)
                 mainShaftHeight = 1.0;
 
-            if (getY(0) > 0.99)
+            // Если контроллер вдавился, набор одной позиции ослабления поля
+            if ((getY(0) > 0.99) && (fieldWeakShaft != 10))
             {
                 fieldWeakShaft += 2;
-                emit soundPlay("21KR_op+");
+                sounds[MAIN_CHANGE_FIELDWEAK_SOUND].play();
+
+                // Запрещаем набор следующей позиции, пока не отпустим клавишу
                 is_inc = false;
             }
+        }
+        else
+        {
+            // Озвучка набора одной позиции
+            if (is_inc && (fieldWeakShaft == 0))
+                sounds[MAIN_NONFIXED_ON_SOUND].play();
 
-            lastControllerPositionIsZero = false;
-        } else {
-            if (is_inc && fieldWeakShaft == 0)
-                emit soundPlay("21KR_0_+");
+            // Запрещаем озвучку следующего набора позиции, пока не отпустим клавишу
             is_inc = false;
         }
     }
     else
     {
-        if (!is_inc && fieldWeakShaft == 0)
-            emit soundPlay("21KR_+_0");
+        // Озвучка возврата контроллера
+        if ((!is_inc) && (fieldWeakShaft == 0))
+            sounds[MAIN_NONFIXED_OFF_SOUND].play();
+
+        // Клавиша отпущена, разрешаем озвучку следующего набора позиции
         is_inc = true;
+
+        // Сбрасываем вдавленное состояние контроллера,
+        // если не успели набрать позиции ослабления поля пока нажата клавиша
+        if (fieldWeakShaft == 0)
+            mainShaftHeight = 0.0;
     }
-
-    // Авт. набор
-    if (getKeyState(KEY_Q))
-    {
-        if (!autoSet)
-            emit soundPlay("21KR_0_+A");
-        autoSet = true;
-    }
-    else
-    {
-        if (autoSet)
-            emit soundPlay("21KR_+A_0");
-        autoSet = false;
-    }
-
-    // 1 вверх
-    if (getKeyState(KEY_E))
-    {
-        if (!autoReset)
-            emit soundPlay("21KR_0_-A");
-        autoReset = true;
-    }
-
-    mainShaftPos = (-10 * autoReset) + (4 * autoSet) +
-                   (!autoReset && !autoSet && !isShift() && !isControl()) *
-                   (-5 * getKeyState(KEY_D) +
-                     2 * getKeyState(KEY_A));
-
-    mainShaftPos = mainShaftPos * TO_INT(hs_n(mainShaftHeight - 0.99));
-
-    lastControllerPositionIsZero = (TO_INT(mainShaftPos) == 0);
 }
 
 //------------------------------------------------------------------------------
