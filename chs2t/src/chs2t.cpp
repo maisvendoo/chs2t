@@ -33,15 +33,7 @@ CHS2T::CHS2T() : Vehicle()
   , coupling_bwd(nullptr)
   , oper_rod_fwd(nullptr)
   , oper_rod_bwd(nullptr)
-{/*
-    epb_switch.setOnSoundName("tumbler");
-    epb_switch.setOffSoundName("tumbler");
-    connect(&epb_switch, &Trigger::soundPlay, this, &CHS2T::soundPlay);
-
-    EDTSwitch.setOnSoundName("tumbler");
-    EDTSwitch.setOffSoundName("tumbler");
-    connect(&EDTSwitch, &Trigger::soundPlay, this, &CHS2T::soundPlay);*/
-
+{
     U_bat = 55.0;
 
     tracForce_kN = 0;

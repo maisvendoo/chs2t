@@ -9,20 +9,17 @@ Generator::Generator(QObject* parent) : Device(parent)
   , Uf(0.0)
   , Lf(0.01)
   , Rf(0.0)
-
   , omega(0.0)
   , E(0.0)
-
   , La(0.01)
   , Ra(0.0)
   , Rt(0.0)
-
   , M(0.0)
   , Ut(0.0)
-
   , Rgp(0.0)
   , Rdp(0.0)
-  , omega_nom(73.0)
+  , torque_max(2000.0)
+  , omega_nom(50.0)
 {
 
 }
@@ -63,8 +60,21 @@ void Generator::preStep(state_vector_t& Y, double t)
     M = calcCPhi((Y[0])) * Y[1];
     Ut = Y[1] * Rt;
 
-    sound_state.volume = static_cast<float>(pf(abs(Y[0]) - 100.0)) / 100.0f;
-    sound_state.pitch = static_cast<float>(abs(omega) / omega_nom);
+    // Озвучка
+    // Относительная громкость пропорциональна крутящему моменту
+    double relative_volume = abs(M) / torque_max;
+    // Плавное включение на низкой скорости
+    // Не нужно, на низких скоростях ЭДТ отключено
+    //relative_volume = relative_volume * max(abs(omega) / 2.0, 1.0);
+    sound_state.volume = static_cast<float>(relative_volume);
+
+    // Относительная частота вращения от номинальной, для которой записан звук
+    double relative_pitch = abs(omega) / omega_nom;
+    // Костыль - нелинейное преобразование частоты (0.5 x^2 + 0.5),
+    // чтобы охватить низкие скорости с частотой хотя бы 0.5
+    // Не нужно, на низких скоростях ЭДТ отключено
+    //relative_pitch = 0.5 * relative_pitch * relative_pitch + 0.5;
+    sound_state.pitch = static_cast<float>(relative_pitch);
 }
 
 //------------------------------------------------------------------------------
@@ -91,7 +101,8 @@ void Generator::load_config(CfgReader& cfg)
     cfg.getDouble(secName, "R_a", Ra);
     cfg.getDouble(secName, "R_gp", Rgp);
     cfg.getDouble(secName, "R_dp", Rdp);
-    cfg.getDouble(secName, "omega_nom", omega_nom);
+    cfg.getDouble(secName, "TorqueMax", torque_max);
+    cfg.getDouble(secName, "OmegaNom", omega_nom);
 
     Rf = Rgp + Rdp;
 

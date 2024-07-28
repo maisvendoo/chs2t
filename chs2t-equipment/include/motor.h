@@ -89,10 +89,11 @@ private:
     /// Напряжение
     double  U;
 
-    double  omega_nom;
-
     /// Направление
     int     direction;
+
+    double  torque_max;
+    double  omega_nom;
 
     /// Состояние звука работы
     sound_state_t sound_state = sound_state_t(true, 0.0f, 0.0f);

@@ -62,6 +62,8 @@ private:
 
     double Rgp;
     double Rdp;
+
+    double torque_max;
     double omega_nom;
 
     /// Состояние звука работы

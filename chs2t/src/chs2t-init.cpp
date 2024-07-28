@@ -59,7 +59,6 @@ void CHS2T::initTractionControl(const QString &modules_dir, const QString &custo
     (void) modules_dir;
 
     km21KR2 = new Km21KR2();
-    connect(km21KR2, &Km21KR2::soundPlay, this, &CHS2T::soundPlay);
 
     stepSwitch = new StepSwitch();
     stepSwitch->read_config("step-switch", custom_cfg_dir);
@@ -67,8 +66,6 @@ void CHS2T::initTractionControl(const QString &modules_dir, const QString &custo
     motor = new Motor();
     motor->setCustomConfigDir(config_dir);
     motor->read_config("AL-4846dT", custom_cfg_dir);
-    connect(motor, &Motor::soundSetVolume, this, &CHS2T::soundSetVolume);
-    connect(motor, &Motor::soundSetPitch, this, &CHS2T::soundSetPitch);
 
     puskRez = new PuskRez;
     puskRez->read_config("puskrez", custom_cfg_dir);
@@ -84,8 +81,6 @@ void CHS2T::initEDT(const QString &modules_dir, const QString &custom_cfg_dir)
     generator = new Generator();
     generator->setCustomConfigDir(config_dir);
     generator->read_config("AL-4846dT", custom_cfg_dir);
-    connect(generator, &Generator::soundSetPitch, this, &CHS2T::soundSetPitch);
-    connect(generator, &Generator::soundSetVolume, this, &CHS2T::soundSetVolume);
 
     pulseConv = new PulseConverter();
 
@@ -181,11 +176,10 @@ void CHS2T::initRegistrator(const QString &modules_dir, const QString &custom_cf
     (void) custom_cfg_dir;
 
     reg = nullptr;
-
+/*
     reg = new Registrator(0.1);
     reg->setFileName("motor");
-    reg->init();
-
+    reg->init();*/
 }
 
 //------------------------------------------------------------------------------
