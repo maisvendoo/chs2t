@@ -63,6 +63,8 @@ void CHS2T::stepSoundSignalsOutput(double t, double dt)
     analogSignal[SOUND_BV_ON] = bv->getSoundSignal(ProtectiveDevice::ON_SOUND);
     analogSignal[SOUND_BV_OFF] = bv->getSoundSignal(ProtectiveDevice::OFF_SOUND);
 
+    // Песочница
+    analogSignal[SOUND_SAND_DELIVERY] = sand_system->getSoundSignal();
     // Мотор-компрессоры
     analogSignal[SOUND_COMPRESSOR_1] = motor_compressor[0]->getSoundSignal();
     analogSignal[SOUND_COMPRESSOR_2] = motor_compressor[1]->getSoundSignal();

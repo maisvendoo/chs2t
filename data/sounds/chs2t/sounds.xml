@@ -430,6 +430,30 @@
 		<LocalPosition>-0.55 -0.07 3.0</LocalPosition>
 	</Sound>
 
+	<!-- Подача песка спереди -->
+	<Sound>
+		<SignalID>240</SignalID>
+		<Filename>sand.wav</Filename>
+		<InitVolume>1.0</InitVolume>
+		<MaxVolume>1.0</MaxVolume>
+		<InitPitch>1.0</InitPitch>
+		<Loop>1</Loop>
+		<PlayOnStart>0</PlayOnStart>
+		<LocalPosition>0.0 6.5 0.0</LocalPosition>
+	</Sound>
+
+	<!-- Подача песка сзади -->
+	<Sound>
+		<SignalID>240</SignalID>
+		<Filename>sand.wav</Filename>
+		<InitVolume>1.0</InitVolume>
+		<MaxVolume>1.0</MaxVolume>
+		<InitPitch>1.0</InitPitch>
+		<Loop>1</Loop>
+		<PlayOnStart>0</PlayOnStart>
+		<LocalPosition>0.0 -6.5 0.0</LocalPosition>
+	</Sound>
+
 	<!-- Мотор-компрессор 1 -->
 	<Sound>
 		<SignalID>241</SignalID>
