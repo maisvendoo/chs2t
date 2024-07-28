@@ -18,7 +18,7 @@ Generator::Generator(QObject* parent) : Device(parent)
   , Ut(0.0)
   , Rgp(0.0)
   , Rdp(0.0)
-  , torque_max(2000.0)
+  , torque_max(10000.0)
   , omega_nom(50.0)
 {
 

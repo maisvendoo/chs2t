@@ -18,7 +18,7 @@ Motor::Motor(QObject* parent) : Device(parent)
   , torque(0.0)
   , U(0.0)
   , direction(1)
-  , torque_max(2000.0)
+  , torque_max(10000.0)
   , omega_nom(50.0)
 {
 
