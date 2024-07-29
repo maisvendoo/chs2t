@@ -8,14 +8,36 @@ void CHS2T::stepBrakesControl(double t, double dt)
     // Поездной кран машиниста
     brake_crane->setFLpressure(main_reservoir->getPressure());
     brake_crane->setBPpressure(brakepipe->getPressure());
-    brake_crane->setControl(keys);
+
+    // Управляем краном, учитывая возможное наличие внешнего пульта
+    if (control_signals.analogSignal[CS_BRAKE_CRANE].is_active)
+    {
+        int brake_crane_pos = static_cast<int>(control_signals.analogSignal[CS_BRAKE_CRANE].cur_value);
+        brake_crane->setHandlePosition(brake_crane_pos);
+    }
+    else
+    {
+        brake_crane->setControl(keys);
+    }
+
     brake_crane->step(t, dt);
 
     // Кран вспомогательного тормоза
     loco_crane->setFLpressure(main_reservoir->getPressure());
     loco_crane->setBCpressure(loco_crane_splitter->getInputPressure());
     loco_crane->setILpressure(0.0);
-    loco_crane->setControl(keys);
+
+    // Управляем, с учетом возможного наличия пульта
+    if (control_signals.analogSignal[CS_LOCO_CRANE].is_active)
+    {
+        double pos = control_signals.analogSignal[CS_LOCO_CRANE].cur_value;
+        loco_crane->setHandlePosition(pos);
+    }
+    else
+    {
+        loco_crane->setControl(keys);
+    }
+
     loco_crane->step(t, dt);
 
     // Рукоятка задатчика тормозного усилия

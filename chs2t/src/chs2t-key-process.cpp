@@ -31,5 +31,13 @@ void CHS2T::keyProcess()
     }
 
     state_RB = getKeyState(KEY_M);
-    state_RBS = getKeyState(KEY_Z);
+
+    if (control_signals.analogSignal[CS_RBS].is_active)
+    {
+        state_RBS = static_cast<bool>(control_signals.analogSignal[CS_RBS].cur_value);
+    }
+    else
+    {
+        state_RBS = getKeyState(KEY_Z);
+    }
 }
