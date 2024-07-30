@@ -385,9 +385,6 @@ private:
     ///
     void initModbus(const QString &modules_dir, const QString &custom_cfg_dir);
 
-    /// Инициализация списка звуков перестука
-    void initTapSounds();
-
     /// Инициализация регистратора
     void initRegistrator(const QString &modules_dir, const QString &custom_cfg_dir);
 
@@ -444,8 +441,6 @@ private:
     float motorSoundSignal(double t, double dt);
 
     void stepSwitcherPanel();
-
-    void stepTapSound();
 
     void stepDecodeAlsn();
 

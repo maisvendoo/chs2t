@@ -37,7 +37,6 @@ CHS2T::CHS2T() : Vehicle()
     U_bat = 55.0;
 
     tracForce_kN = 0;
-    bv_return = false;
     Uks = 3000;
 
     U_kr = 0;
@@ -100,8 +99,6 @@ void CHS2T::initialization()
 
     initRegistrator(modules_dir, custom_cfg_dir);
 
-    initTapSounds();
-
     for (size_t i = SWP1_POWER_1; i <= SWP1_POWER_10; ++i)
         feedback_signals.analogSignal[i].cur_value = 1;
 
@@ -159,8 +156,6 @@ void CHS2T::step(double t, double dt)
     stepSwitcherPanel();
 
     stepDecodeAlsn();
-
-    stepTapSound();
 
     registrate(t, dt);
 }

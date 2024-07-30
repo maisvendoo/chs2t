@@ -9,8 +9,6 @@ void CHS2T::setSwitcherState(Switcher *sw, signal_t signal)
     {
         int pos = signal.cur_value - 1;
 
-        emit soundPlay("tumbler");
-
         if (pos >= 0)
             sw->setState(pos);
     }
