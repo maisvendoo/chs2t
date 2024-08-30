@@ -1,5 +1,5 @@
 set ADDON_NAME=chs2t
-set VERSION=v5.0.0
+set VERSION=v5.0.1
 set DIR_NAME=%ADDON_NAME%-%VERSION%
 
 set PKG_DIR=..\..\package
