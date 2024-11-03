@@ -63,6 +63,14 @@ float SL2M::getShaftPos() const
 //------------------------------------------------------------------------------
 //
 //------------------------------------------------------------------------------
+double SL2M::getVelocity() const
+{
+    return velocity;
+}
+
+//------------------------------------------------------------------------------
+//
+//------------------------------------------------------------------------------
 sound_state_t SL2M::getSoundState(size_t idx) const
 {
     (void) idx;
@@ -88,7 +96,7 @@ void SL2M::preStep(state_vector_t &Y, double t)
 
     omega_s = ip * omega;
 
-    double velocity = abs(omega) * Dk / 2.0 + min(1000.0 * abs(omega), wear_gap) * sin(Y[1]);
+    velocity = abs(omega) * Dk / 2.0 + min(1000.0 * abs(omega), wear_gap) * sin(Y[1]);
 
     arrow_pos = static_cast<float>(min(velocity * Physics::kmh / max_speed, 1.0));
 

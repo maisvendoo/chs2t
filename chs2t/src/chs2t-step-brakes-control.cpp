@@ -44,14 +44,6 @@ void CHS2T::stepBrakesControl(double t, double dt)
     handleEDT->setControl(keys, control_signals);
     handleEDT->step(t, dt);
 
-    // Электропневматический клапан автостопа
-    epk->setFLpressure(main_reservoir->getPressure());
-    epk->setBPpressure(brakepipe->getPressure());
-    epk->setPowered(safety_device->getEPKstate());
-//    epk->setControl(keys);
-    epk->setKeyOn(key_epk.getState());
-    epk->step(t, dt);
-
     // Электропневматический вентиль экстренного торможения
     emergency_valve->setFLpressure(main_reservoir->getPressure());
     emergency_valve->setBPpressure(brakepipe->getPressure());

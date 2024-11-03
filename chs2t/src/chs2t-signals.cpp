@@ -84,6 +84,12 @@ void CHS2T::stepSignals()
 
     analogSignal[SW_EDT] = EDTSwitch.getState();
 
+    // Лампы локомотивного светофора
+    analogSignal[LS_W] = safety_device->getWhiteLamp();
+    analogSignal[LS_YR] = safety_device->getRedYellowLamp();
+    analogSignal[LS_R] = safety_device->getRedLamp();
+    analogSignal[LS_Y] = safety_device->getYellowLamp();
+    analogSignal[LS_G] = safety_device->getGreenLamp();
     analogSignal[EPK] = static_cast<float>(epk->isKeyOn());
 
     analogSignal[WHEEL_1] = static_cast<float>(wheel_rotation_angle[0] / 2.0 / Physics::PI);

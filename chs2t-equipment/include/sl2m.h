@@ -22,6 +22,8 @@ public:
 
     float getShaftPos() const;
 
+    double getVelocity() const;
+
     /// Состояние звука работы
     virtual sound_state_t getSoundState(size_t idx = 0) const;
 
@@ -59,6 +61,8 @@ private:
     float shaft_pos;
 
     double freq_coeff;
+
+    double velocity = 0.0;
 
     void preStep(state_vector_t &Y, double t);
 

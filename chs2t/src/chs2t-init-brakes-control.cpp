@@ -23,10 +23,6 @@ void CHS2T::initBrakesControl(const QString &modules_dir, const QString &custom_
     handleEDT->setBrakeKey(KEY_Period);
     handleEDT->setReleaseKey(KEY_Comma);
 
-    // Электропневматический клапан автостопа
-    epk = loadAutoTrainStop(modules_dir + QDir::separator() + "epk150");
-    epk->read_config("epk150");
-
     // Электропневматический вентиль экстренного торможения
     emergency_valve = new ElectroPneumoValveEmergency();
     emergency_valve->read_config("valve-emergency", custom_cfg_dir);

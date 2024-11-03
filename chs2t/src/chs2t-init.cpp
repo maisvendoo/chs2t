@@ -107,11 +107,6 @@ void CHS2T::initOtherEquipment(const QString &modules_dir, const QString &custom
     sand_system->read_config("sanding-system");
     sand_system->setSandMassMax(payload_mass);
     sand_system->setSandLevel(payload_coeff);
-
-    speed_meter = new SL2M();
-    speed_meter->read_config("3SL-2M", custom_cfg_dir);
-
-    safety_device = new SafetyDevice();
 }
 
 //------------------------------------------------------------------------------
@@ -174,8 +169,6 @@ void CHS2T::initRegistrator(const QString &modules_dir, const QString &custom_cf
 {
     (void) modules_dir;
     (void) custom_cfg_dir;
-
-    reg = nullptr;
 /*
     reg = new Registrator(0.1);
     reg->setFileName("motor");

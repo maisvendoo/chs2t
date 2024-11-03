@@ -111,12 +111,9 @@ void CHS2T::stepTractionControl(double t, double dt)
     motor->setAmpermetersState(stepSwitch->getAmpermetersState());
     motor->step(t, dt);
 
-    tracForce_kN = 0;
-
     for (size_t i = 1; i < Q_a.size(); ++i)
     {
         Q_a[i] = (motor->getTorque() + generator->getTorque()) * ip;
-        tracForce_kN += 2.0 * Q_a[i] / wheel_diameter[i - 1] / 1000.0;
     }
 }
 
@@ -179,13 +176,6 @@ void CHS2T::stepSupportEquipment(double t, double dt)
     energy_counter->setFullPower(Uks * (motor->getI12() + motor->getI34() + motor->getI56()) );
     energy_counter->setResistorsPower( puskRez->getR() * ( pow(motor->getI12(), 2) + pow(motor->getI34(), 2) + pow(motor->getI56(), 2) ) );
     energy_counter->step(t, dt);
-
-    safety_device->setRBstate(state_RB);
-    safety_device->setRBSstate(state_RBS);
-    safety_device->setAlsnCode(alsn_info.code_alsn);
-    safety_device->setVelocity(velocity);
-    safety_device->setKeyEPK(epk->isKeyOn());
-    safety_device->step(t, dt);
 }
 
 //------------------------------------------------------------------------------
@@ -209,10 +199,6 @@ void CHS2T::stepOtherEquipment(double t, double dt)
     // Пересчёт массы локомотива
     payload_coeff = sand_system->getSandLevel();
     setPayloadCoeff(payload_coeff);
-
-    speed_meter->setOmega(wheel_omega[0]);
-    speed_meter->setWheelDiameter(wheel_diameter[0]);
-    speed_meter->step(t, dt);
 }
 
 //------------------------------------------------------------------------------
