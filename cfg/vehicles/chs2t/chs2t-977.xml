@@ -13,10 +13,10 @@
 		<SoundDir>chs2t</SoundDir>
 		<AnimationsConfigDir>chs2t</AnimationsConfigDir>
 
-		<ExtModelName>chs2t/chs2t.osgt</ExtModelName>
+		<ExtModelName>chs2t/chs2t.gltf</ExtModelName>
 		<ModelShift>0.0 0.0 0.312</ModelShift>
 
-		<CabineModel>chs2t/chs2t-cabview.osgt</CabineModel>
+		<CabineModel>chs2t/chs2t-cabview.gltf</CabineModel>
 		<CabineShift>0.0 0.0 0.312</CabineShift>
 
 		<DriverPos>0.492 7.776 3.98</DriverPos>
