@@ -96,6 +96,7 @@ void CHS2T::stepSignals()
     analogSignal[RBS] = static_cast<float>(state_RBS);
 
     analogSignal[BUTTON_SBROS_CPC] = static_cast<float>(button_sbros_cpc.getState());
+    analogSignal[BUTTON_LOCO_RELEASE] = static_cast<float>(button_loco_release.getState());
 
     analogSignal[WHEEL_1] = static_cast<float>(wheel_rotation_angle[0] / 2.0 / Physics::PI);
     analogSignal[WHEEL_2] = static_cast<float>(wheel_rotation_angle[1] / 2.0 / Physics::PI);

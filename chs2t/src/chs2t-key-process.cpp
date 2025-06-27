@@ -49,4 +49,13 @@ void CHS2T::keyProcess()
     {
         button_sbros_cpc.reset();
     }
+
+    if (getKeyState(KEY_R))
+    {
+        button_loco_release.set();
+    }
+    else
+    {
+        button_loco_release.reset();
+    }
 }

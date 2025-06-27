@@ -674,7 +674,7 @@
 		},
 		{
 			"mesh":50,
-			"name":"otp_el",
+			"name":"button_loco_release",
 			"rotation":[
 				-0.7071068286895752,
 				0,
