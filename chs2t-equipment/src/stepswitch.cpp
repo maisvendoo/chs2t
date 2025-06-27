@@ -174,7 +174,7 @@ void StepSwitch::stepDiscrete(double t, double dt)
         ableToGainPositions = true;
     }
 
-    if (getKeyState(KEY_K))
+    if (drop_state)
     {
         prevPos2 = poz;
         dropPositionsWithZ = true;

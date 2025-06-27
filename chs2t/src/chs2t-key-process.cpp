@@ -40,4 +40,13 @@ void CHS2T::keyProcess()
     {
         state_RBS = getKeyState(KEY_Z);
     }
+
+    if (getKeyState(KEY_X))
+    {
+        button_sbros_cpc.set();
+    }
+    else
+    {
+        button_sbros_cpc.reset();
+    }
 }

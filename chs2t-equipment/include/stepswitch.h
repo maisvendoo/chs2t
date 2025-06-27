@@ -41,6 +41,12 @@ public:
 
     bool isParallel() const;
 
+    /// Задать состояние кнопки сброса позиций
+    void setDropButtonState(bool drop_state)
+    {
+        this->drop_state = drop_state;
+    }
+
     ampermeters_state_t getAmpermetersState();
 
 private:
@@ -77,6 +83,9 @@ private:
     bool dropPosition;
 
     bool hod;
+
+    /// Состояние кнопки сброса позиций
+    bool drop_state;
 
     ControllerState ctrlState;
     bool ableToChangeOnePosition;

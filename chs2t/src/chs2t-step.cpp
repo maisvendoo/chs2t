@@ -85,6 +85,7 @@ void CHS2T::stepTractionControl(double t, double dt)
     km21KR2->step(t, dt);
 
     stepSwitch->setDropPosition(dropPosition);
+    stepSwitch->setDropButtonState(button_sbros_cpc.getState());
     stepSwitch->setCtrlState(km21KR2->getCtrlState());
     stepSwitch->setControl(keys);
     stepSwitch->step(t, dt);
