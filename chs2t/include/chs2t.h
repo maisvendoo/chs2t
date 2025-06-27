@@ -330,6 +330,12 @@ private:
 
     bool state_RBS = false;
 
+    /// Кнопка "Отпуск электровоза"
+    Trigger button_loco_release;
+
+    /// Кнопка "Сброс СП-С"
+    Trigger button_sbros_cpc;
+
     /// Загрузка данных из конфигурационных файлов
     void loadConfig(QString cfg_path);
 

@@ -92,6 +92,9 @@ void CHS2T::stepSignals()
     analogSignal[LS_G] = safety_device->getGreenLamp();
     analogSignal[EPK] = static_cast<float>(epk->isKeyOn());
 
+    analogSignal[RB1] = static_cast<float>(state_RB);
+    analogSignal[RBS] = static_cast<float>(state_RBS);
+
     analogSignal[WHEEL_1] = static_cast<float>(wheel_rotation_angle[0] / 2.0 / Physics::PI);
     analogSignal[WHEEL_2] = static_cast<float>(wheel_rotation_angle[1] / 2.0 / Physics::PI);
     analogSignal[WHEEL_3] = static_cast<float>(wheel_rotation_angle[2] / 2.0 / Physics::PI);

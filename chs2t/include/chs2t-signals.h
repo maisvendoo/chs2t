@@ -84,6 +84,12 @@ enum
 
     EPK = 67,
 
+    BUTTON_SBROS_CPC = 68,
+    BUTTON_LOCO_RELEASE = 69,
+
+    RB1 = 70,
+    RBS = 71,
+
     WHEEL_1 = 194,
     WHEEL_2 = 195,
     WHEEL_3 = 196,
