@@ -76,11 +76,12 @@ void SafetyDevice::preStep(state_vector_t &Y, double t)
 
     if (code_alsn == 0)
     {
-        if (v_kmh > 40.0)
+        // Отключено, до выяснения реальной логики работы
+        /*if (v_kmh > 40.0)
         {
             epk_state.reset();
             return;
-        }
+        }*/
 
         if ( (!safety_timer->isStarted()) && (v_kmh > 5) )
         {
