@@ -1,8 +1,11 @@
 * text=auto
 
-*.osgt binary
-*.jpeg binary
+*.gltf binary
+*.bin binary
+
 *.png binary
-*.jpg binary
 *.bmp binary
 *.tga binary
+*.jpg binary
+*.jpeg binary
+*.wav binary
