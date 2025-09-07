@@ -13,12 +13,15 @@ void CHS2T::initBrakeDevices(double p0, double pBP, double pFL)
     hose_fl_bwd->setPressure(pFL);
 
     // Инициализация давления в приборах управления тормозами
-    brake_crane->init(pBP, pFL);
-    brake_crane->setChargePressure(p0);
+    for (size_t cab_idx : {CAB1, CAB2})
+    {
+        brake_crane[cab_idx]->init(pBP, pFL);
+        brake_crane[cab_idx]->setChargePressure(p0);
 
-    loco_crane->init(pBP, pFL);
+        loco_crane[cab_idx]->init(pBP, pFL);
 
-    epk->init(pBP, pFL);
+        epk[cab_idx]->init(pBP, pFL);
+    }
 
     // Инициализация давления в тормозной магистрали
     brakepipe->setY(0, pBP);

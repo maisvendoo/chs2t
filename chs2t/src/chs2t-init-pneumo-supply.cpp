@@ -3,7 +3,7 @@
 //------------------------------------------------------------------------
 //
 //------------------------------------------------------------------------
-void CHS2T::initPneumoSupply(const QString &modules_dir, const QString &custom_cfg_dir)
+void CHS2T::initPneumoSupply(const QString& modules_dir, const QString& custom_cfg_dir)
 {
     (void) modules_dir;
     (void) custom_cfg_dir;
@@ -17,12 +17,7 @@ void CHS2T::initPneumoSupply(const QString &modules_dir, const QString &custom_c
     {
         motor_compressor[i] = new DCMotorCompressor();
         motor_compressor[i]->read_config("motor-compressor-dc");
-
-        mk_switcher[i] = new Switcher(Q_NULLPTR, 0, 4);
     }
-
-    mk_switcher[0]->setKeyCode(KEY_7);
-    mk_switcher[1]->setKeyCode(KEY_8);
 
     // Главный резервуар
     double volume_main = 1.0;

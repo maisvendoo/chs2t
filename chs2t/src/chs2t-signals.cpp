@@ -5,8 +5,11 @@
 //------------------------------------------------------------------------------
 //
 //------------------------------------------------------------------------------
-void CHS2T::stepSignals()
+void CHS2T::signalsOutput(const simulator_time_t& t, const double& dt)
 {
+    (void) t;
+    (void) dt;
+
     analogSignal[STRELKA_POS] = static_cast<float>(stepSwitch->getPoz()) / 42.0f;
 
     analogSignal[STRELKA_AMP1] = static_cast<float>(motor->getI12() / 1000.0);
@@ -25,7 +28,7 @@ void CHS2T::stepSignals()
     analogSignal[STRELKA_PM] = static_cast<float>(main_reservoir->getPressure() / 1.6);
     analogSignal[STRELKA_TC] = static_cast<float>(brake_mech[TROLLEY_FWD]->getBCpressure() / 1.0);
     analogSignal[STRELKA_EDT] = static_cast<float>(brake_ref_res->getPressure() / 1.0);
-    analogSignal[STRELKA_UR] = static_cast<float>(brake_crane->getERpressure() / 1.0);
+    analogSignal[STRELKA_UR] = static_cast<float>(brake_crane[CAB1]->getERpressure() / 1.0);
     analogSignal[STRELKA_TM] = static_cast<float>(brakepipe->getPressure() / 1.0);
 
     analogSignal[STRELKA_UKS] = static_cast<float>(U_kr / 4000.0);
@@ -33,12 +36,12 @@ void CHS2T::stepSignals()
     analogSignal[STRELKA_U_BAT] = static_cast<float>(U_bat / 100.0);
     analogSignal[STRELKA_U_EPT] = static_cast<float>(epb_converter->getOutputVoltage() / 100.0);
 
-    analogSignal[KRAN395_RUK] = static_cast<float>(brake_crane->getHandlePosition());
-    analogSignal[KRAN254_RUK] = static_cast<float>(loco_crane->getHandlePosition());
+    analogSignal[KRAN395_RUK] = static_cast<float>(brake_crane[CAB1]->getHandlePosition());
+    analogSignal[KRAN254_RUK] = static_cast<float>(loco_crane[CAB1]->getHandlePosition());
 
-    analogSignal[KONTROLLER] = static_cast<float>(km21KR2->getMainShaftPos());
+    analogSignal[KONTROLLER] = static_cast<float>(km21KR2[CAB1]->getMainShaftPos());
     analogSignal[REVERSOR] = static_cast<float>(stepSwitch->getReverseState());
-    analogSignal[SHTURVAL] = static_cast<float>(km21KR2->getHandleHeight());
+    analogSignal[SHTURVAL] = static_cast<float>(km21KR2[CAB1]->getHandleHeight());
     analogSignal[SHTUR_SVISTOK] = static_cast<float>(horn->isSvistok());
 
     analogSignal[SIGLIGHT_P] = static_cast<float>(stepSwitch->isParallel());
@@ -57,46 +60,46 @@ void CHS2T::stepSignals()
     analogSignal[PANT1] = static_cast<float>(pantographs[0]->getHeight());
     analogSignal[PANT2] = static_cast<float>(pantographs[1]->getHeight());
 
-    analogSignal[SW_PNT1] = pantoSwitcher[0]->getHandlePosition();
-    analogSignal[SW_PNT2] = pantoSwitcher[1]->getHandlePosition();
+    analogSignal[SW_PNT1] = pant_switcher[CAB1][0].getHandlePosition();
+    analogSignal[SW_PNT2] = pant_switcher[CAB1][1].getHandlePosition();
 
     analogSignal[SIGLIGHT_RAZED] = static_cast<float>( !pant_switch[0].getState() && !pant_switch[1].getState() );
 
     analogSignal[INDICATOR_BV] = static_cast<float>(bv->getLampState());
 
-    analogSignal[SW_BV] = fastSwitchSw->getHandlePosition();
-    analogSignal[SW_MV] = motor_fan_switcher->getHandlePosition();
-    analogSignal[SW_MK1] = mk_switcher[0]->getHandlePosition();
-    analogSignal[SW_MK2] = mk_switcher[1]->getHandlePosition();
+    analogSignal[SW_BV] = fastswitch_switcher[CAB1].getHandlePosition();
+    analogSignal[SW_MV] = motor_fan_switcher[CAB1].getHandlePosition();
+    analogSignal[SW_MK1] = mk_switcher[CAB1][0].getHandlePosition();
+    analogSignal[SW_MK2] = mk_switcher[CAB1][1].getHandlePosition();
 
-    analogSignal[SW_EPT] = static_cast<float>(epb_switch.getState());
+    analogSignal[SW_EPT] = static_cast<float>(epb_switch[CAB1].getState());
 
-    analogSignal[SW_VK] = blindsSwitcher->getHandlePosition();
+    analogSignal[SW_VK] = blinds_switcher[CAB1].getHandlePosition();
 
     analogSignal[BLINDS] = blinds->getPosition();
     analogSignal[SIGLIGHT_GALYZI] = static_cast<float>(blinds->isOpened());
 
-    analogSignal[HANDLE_RT] = handleEDT->getHandlePos();
+    analogSignal[HANDLE_RT] = handleEDT[CAB1]->getHandlePos();
 
-    analogSignal[STRELKA_SPEED] = speed_meter->getArrowPos();
-    analogSignal[VAL_PR_SKOR1] = speed_meter->getShaftPos();
-    analogSignal[VAL_PR_SKOR2] = speed_meter->getShaftPos();
+    analogSignal[STRELKA_SPEED] = speed_meter[CAB1]->getArrowPos();
+    analogSignal[VAL_PR_SKOR1] = speed_meter[CAB1]->getShaftPos();
+    analogSignal[VAL_PR_SKOR2] = speed_meter[CAB1]->getShaftPos();
 
-    analogSignal[SW_EDT] = EDTSwitch.getState();
+    analogSignal[SW_EDT] = EDT_switch[CAB1].getState();
 
     // Лампы локомотивного светофора
-    analogSignal[LS_W] = safety_device->getWhiteLamp();
-    analogSignal[LS_YR] = safety_device->getRedYellowLamp();
-    analogSignal[LS_R] = safety_device->getRedLamp();
-    analogSignal[LS_Y] = safety_device->getYellowLamp();
-    analogSignal[LS_G] = safety_device->getGreenLamp();
-    analogSignal[EPK] = static_cast<float>(epk->isKeyOn());
+    analogSignal[LS_W] = safety_device[CAB1]->getWhiteLamp();
+    analogSignal[LS_YR] = safety_device[CAB1]->getRedYellowLamp();
+    analogSignal[LS_R] = safety_device[CAB1]->getRedLamp();
+    analogSignal[LS_Y] = safety_device[CAB1]->getYellowLamp();
+    analogSignal[LS_G] = safety_device[CAB1]->getGreenLamp();
+    analogSignal[EPK] = static_cast<float>(epk[CAB1]->isKeyOn());
 
-    analogSignal[RB1] = static_cast<float>(state_RB);
-    analogSignal[RBS] = static_cast<float>(state_RBS);
+    analogSignal[CAB1_RBS] = static_cast<float>(rb[CAB1][RBS].getState());
+    analogSignal[CAB1_RB1] = static_cast<float>(rb[CAB1][RB1].getState());
 
-    analogSignal[BUTTON_SBROS_CPC] = static_cast<float>(button_sbros_cpc.getState());
-    analogSignal[BUTTON_LOCO_RELEASE] = static_cast<float>(button_loco_release.getState());
+    analogSignal[BUTTON_SBROS_CPC] = static_cast<float>(button_sbros_cpc[CAB1].getState());
+    analogSignal[BUTTON_LOCO_RELEASE] = static_cast<float>(button_loco_release[CAB1].getState());
 
     analogSignal[WHEEL_1] = static_cast<float>(wheel_rotation_angle[0] / 2.0 / Physics::PI);
     analogSignal[WHEEL_2] = static_cast<float>(wheel_rotation_angle[1] / 2.0 / Physics::PI);

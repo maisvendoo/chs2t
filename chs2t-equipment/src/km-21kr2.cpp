@@ -290,6 +290,9 @@ void Km21KR2::stepExternalControl(double t, double dt)
     Q_UNUSED(t)
     Q_UNUSED(dt)
 
+    if (!control_signals)
+        return;
+
     /*connectSignals(KM_K01, k01);
     connectSignals(KM_K02, k02);
     connectSignals(KM_K21, k21);
@@ -306,8 +309,8 @@ void Km21KR2::stepExternalControl(double t, double dt)
 //------------------------------------------------------------------------------
 void Km21KR2::connectSignals(ControllerSignals cs, bool &k)
 {
-    if (control_signals.analogSignal[cs].is_active)
-        k = static_cast<bool>(control_signals.analogSignal[cs].cur_value);
+    if (control_signals->analogSignal[cs].is_active)
+        k = static_cast<bool>(control_signals->analogSignal[cs].cur_value);
 }
 
 //------------------------------------------------------------------------------

@@ -4,7 +4,7 @@
 //------------------------------------------------------------------------------
 //
 //------------------------------------------------------------------------------
-void CHS2T::stepSoundSignalsOutput(double t, double dt)
+void CHS2T::soundsOutput(const simulator_time_t& t, const double& dt)
 {
     (void) t;
     (void) dt;
@@ -29,30 +29,30 @@ void CHS2T::stepSoundSignalsOutput(double t, double dt)
     analogSignal[SOUND_TIFON] = horn->getSoundSignal(TrainHorn::TIFON_SOUND);
 
     // Реверсор и контроллер
-    analogSignal[SOUND_REVERSOR] = km21KR2->getSoundSignal(Km21KR2::REVERS_CHANGE_POS_SOUND);
-    analogSignal[SOUND_CONTROLLER1] = km21KR2->getSoundSignal(Km21KR2::MAIN_NONFIXED_ON_SOUND);
-    analogSignal[SOUND_CONTROLLER2] = km21KR2->getSoundSignal(Km21KR2::MAIN_NONFIXED_OFF_SOUND);
-    analogSignal[SOUND_CONTROLLER3] = km21KR2->getSoundSignal(Km21KR2::MAIN_FIXED_RESET_ON_SOUND);
-    analogSignal[SOUND_CONTROLLER4] = km21KR2->getSoundSignal(Km21KR2::MAIN_FIXED_RESET_OFF_SOUND);
-    analogSignal[SOUND_CONTROLLER5] = km21KR2->getSoundSignal(Km21KR2::MAIN_CHANGE_FIELDWEAK_SOUND);
+    analogSignal[SOUND_REVERSOR] = km21KR2[CAB1]->getSoundSignal(Km21KR2::REVERS_CHANGE_POS_SOUND);
+    analogSignal[SOUND_CONTROLLER1] = km21KR2[CAB1]->getSoundSignal(Km21KR2::MAIN_NONFIXED_ON_SOUND);
+    analogSignal[SOUND_CONTROLLER2] = km21KR2[CAB1]->getSoundSignal(Km21KR2::MAIN_NONFIXED_OFF_SOUND);
+    analogSignal[SOUND_CONTROLLER3] = km21KR2[CAB1]->getSoundSignal(Km21KR2::MAIN_FIXED_RESET_ON_SOUND);
+    analogSignal[SOUND_CONTROLLER4] = km21KR2[CAB1]->getSoundSignal(Km21KR2::MAIN_FIXED_RESET_OFF_SOUND);
+    analogSignal[SOUND_CONTROLLER5] = km21KR2[CAB1]->getSoundSignal(Km21KR2::MAIN_CHANGE_FIELDWEAK_SOUND);
 
     // Кран поездного тормоза
-    analogSignal[SOUND_BRAKE_CRANE_CHANGE_POS] = brake_crane->getSoundSignal(BrakeCrane::CHANGE_POS_SOUND);
-    analogSignal[SOUND_BRAKE_CRANE_ER_STAB_FLOW] = brake_crane->getSoundSignal(BrakeCrane::ER_STAB_SOUND);
-    analogSignal[SOUND_BRAKE_CRANE_ER_FILL_FLOW] = brake_crane->getSoundSignal(BrakeCrane::ER_FILL_FLOW_SOUND);
-    analogSignal[SOUND_BRAKE_CRANE_ER_DRAIN_FLOW] = brake_crane->getSoundSignal(BrakeCrane::ER_DRAIN_FLOW_SOUND);
-    analogSignal[SOUND_BRAKE_CRANE_BP_FILL_FLOW] = brake_crane->getSoundSignal(BrakeCrane::BP_FILL_FLOW_SOUND);
-    analogSignal[SOUND_BRAKE_CRANE_BP_DRAIN_FLOW] = brake_crane->getSoundSignal(BrakeCrane::BP_DRAIN_FLOW_SOUND);
+    analogSignal[SOUND_BRAKE_CRANE_CHANGE_POS] = brake_crane[CAB1]->getSoundSignal(BrakeCrane::CHANGE_POS_SOUND);
+    analogSignal[SOUND_BRAKE_CRANE_ER_STAB_FLOW] = brake_crane[CAB1]->getSoundSignal(BrakeCrane::ER_STAB_SOUND);
+    analogSignal[SOUND_BRAKE_CRANE_ER_FILL_FLOW] = brake_crane[CAB1]->getSoundSignal(BrakeCrane::ER_FILL_FLOW_SOUND);
+    analogSignal[SOUND_BRAKE_CRANE_ER_DRAIN_FLOW] = brake_crane[CAB1]->getSoundSignal(BrakeCrane::ER_DRAIN_FLOW_SOUND);
+    analogSignal[SOUND_BRAKE_CRANE_BP_FILL_FLOW] = brake_crane[CAB1]->getSoundSignal(BrakeCrane::BP_FILL_FLOW_SOUND);
+    analogSignal[SOUND_BRAKE_CRANE_BP_DRAIN_FLOW] = brake_crane[CAB1]->getSoundSignal(BrakeCrane::BP_DRAIN_FLOW_SOUND);
     // Кран локомотивного тормоза
-    analogSignal[SOUND_LOCO_CRANE_CHANGE_POS] = loco_crane->getSoundSignal(LocoCrane::CHANGE_POS_SOUND);
-    analogSignal[SOUND_LOCO_CRANE_BC_FILL_FLOW] = loco_crane->getSoundSignal(LocoCrane::BC_FILL_FLOW_SOUND);
-    analogSignal[SOUND_LOCO_CRANE_BC_DRAIN_FLOW] = loco_crane->getSoundSignal(LocoCrane::BC_DRAIN_FLOW_SOUND);
+    analogSignal[SOUND_LOCO_CRANE_CHANGE_POS] = loco_crane[CAB1]->getSoundSignal(LocoCrane::CHANGE_POS_SOUND);
+    analogSignal[SOUND_LOCO_CRANE_BC_FILL_FLOW] = loco_crane[CAB1]->getSoundSignal(LocoCrane::BC_FILL_FLOW_SOUND);
+    analogSignal[SOUND_LOCO_CRANE_BC_DRAIN_FLOW] = loco_crane[CAB1]->getSoundSignal(LocoCrane::BC_DRAIN_FLOW_SOUND);
 
     // Скоростемер
-    analogSignal[SOUND_SPEED_METER_SL2M] = speed_meter->getSoundSignal();
+    analogSignal[SOUND_SPEED_METER_SL2M] = speed_meter[CAB1]->getSoundSignal();
     // ЭПК
-    analogSignal[SOUND_EPK_KEY] = key_epk.getSoundSignal();
-    analogSignal[SOUND_EPK_WHISTLE] = epk->getSoundSignal();
+    analogSignal[SOUND_EPK_KEY] = key_epk[CAB1].getSoundSignal();
+    analogSignal[SOUND_EPK_WHISTLE] = epk[CAB1]->getSoundSignal();
 
     // Токоприёмники
     analogSignal[SOUND_PANT_BWD_UP] = pantographs[1]->getSoundSignal(Pantograph::UP_SOUND);
@@ -75,35 +75,32 @@ void CHS2T::stepSoundSignalsOutput(double t, double dt)
 
     // Переключатели
     // Верхний ряд
-    analogSignal[SOUND_SWITCHER_EPB] = epb_switch.getSoundSignal();
-    analogSignal[SOUND_SWITCHER_COMPR_1] = mk_switcher[0]->getSoundSignal();
-    analogSignal[SOUND_SWITCHER_PANT_F] = pantoSwitcher[0]->getSoundSignal();
-    analogSignal[SOUND_SWITCHER_GV] = fastSwitchSw->getSoundSignal();
+    analogSignal[SOUND_SWITCHER_EPB] = epb_switch[CAB1].getSoundSignal();
+    analogSignal[SOUND_SWITCHER_COMPR_1] = mk_switcher[CAB1][0].getSoundSignal();
+    analogSignal[SOUND_SWITCHER_PANT_F] = pant_switcher[CAB1][0].getSoundSignal();
+    analogSignal[SOUND_SWITCHER_GV] = fastswitch_switcher[CAB1].getSoundSignal();
     // Средний ряд
-    analogSignal[SOUND_SWITCHER_FANS] = motor_fan_switcher->getSoundSignal();
-    analogSignal[SOUND_SWITCHER_COMPR_2] = mk_switcher[1]->getSoundSignal();
-    analogSignal[SOUND_SWITCHER_PANT_B] = pantoSwitcher[1]->getSoundSignal();
-    analogSignal[SOUND_SWITCHER_BLINDS] = blindsSwitcher->getSoundSignal();
-    // Нижний ряд - не реализован
-    //analogSignal[SOUND_SWITCHER_LIGHT];
-    //analogSignal[SOUND_SWITCHER_BUF_LIGHT_L];
-    //analogSignal[SOUND_SWITCHER_BUF_LIGHT_R];
-    //analogSignal[SOUND_SWITCHER_PROJECTOR];
+    analogSignal[SOUND_SWITCHER_FANS] = motor_fan_switcher[CAB1].getSoundSignal();
+    analogSignal[SOUND_SWITCHER_COMPR_2] = mk_switcher[CAB1][1].getSoundSignal();
+    analogSignal[SOUND_SWITCHER_PANT_B] = pant_switcher[CAB1][1].getSoundSignal();
+    analogSignal[SOUND_SWITCHER_BLINDS] = blinds_switcher[CAB1].getSoundSignal();
+    // Нижний ряд
+    analogSignal[SOUND_SWITCHER_LIGHT] = cab_light_switcher[CAB1].getSoundSignal();
+    analogSignal[SOUND_SWITCHER_BUF_LIGHT_L] = bufferlight_L_switcher[CAB1].getSoundSignal();
+    analogSignal[SOUND_SWITCHER_BUF_LIGHT_R] = bufferlight_R_switcher[CAB1].getSoundSignal();
+    analogSignal[SOUND_SWITCHER_PROJECTOR] = spotlight_switcher[CAB1].getSoundSignal();
     // Выключатель ЭДТ
-    analogSignal[SOUND_SWITCHER_EDT] = EDTSwitch.getSoundSignal();
+    analogSignal[SOUND_SWITCHER_EDT] = EDT_switch[CAB1].getSoundSignal();
 
     // Тяговые электродвигатели
-    analogSignal[SOUND_TRACTION_ELECTROENGINE] = motorSoundSignal(t, dt);
+    analogSignal[SOUND_TRACTION_ELECTROENGINE] = motorSoundSignal();
 }
 
 //------------------------------------------------------------------------------
 //
 //------------------------------------------------------------------------------
-float CHS2T::motorSoundSignal(double t, double dt)
+float CHS2T::motorSoundSignal()
 {
-    (void) t;
-    (void) dt;
-
     // Если есть ток в модуле motor - ТЭД в режиме тяги
     if (motor->getY(0) > 100.0)
         return motor->getSoundSignal();

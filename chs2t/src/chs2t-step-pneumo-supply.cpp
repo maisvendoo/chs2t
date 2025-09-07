@@ -3,7 +3,7 @@
 //------------------------------------------------------------------------
 //
 //------------------------------------------------------------------------
-void CHS2T::stepPneumoSupply(double t, double dt)
+void CHS2T::stepPneumoSupply(const double& t, const double& dt)
 {
     // Регулятор давления
     press_reg->setFLpressure(main_reservoir->getPressure());
@@ -14,13 +14,10 @@ void CHS2T::stepPneumoSupply(double t, double dt)
     // Мотор-компрессоры
     for (size_t i = 0; i < motor_compressor.size(); ++i)
     {
-        mk_switcher[i]->setControl(keys);
-        mk_switcher[i]->step(t, dt);
-
         double U_power = 0.0;
 
-        if (    (mk_switcher[i]->getPosition() == 3)
-            || ((mk_switcher[i]->getPosition() == 2) && (press_reg->getState() )) )
+        if (    (mk_switcher[CAB1][i].getPosition() == 3)
+            || ((mk_switcher[CAB1][i].getPosition() == 2) && (press_reg->getState() )) )
         {
             U_power = bv->getU_out();
         }
@@ -34,9 +31,12 @@ void CHS2T::stepPneumoSupply(double t, double dt)
     // Питательная магистраль
     FL_flow += horn->getFLflow();
     FL_flow += sand_system->getFLflow();
-    FL_flow += brake_crane->getFLflow();
-    FL_flow += loco_crane->getFLflow();
-    FL_flow += epk->getFLflow();
+    FL_flow += brake_crane[CAB1]->getFLflow();
+//    FL_flow += brake_crane[CAB2]->getFLflow();
+    FL_flow += loco_crane[CAB1]->getFLflow();
+//    FL_flow += loco_crane[CAB2]->getFLflow();
+    FL_flow += epk[CAB1]->getFLflow();
+//    FL_flow += epk[CAB2]->getFLflow();
     FL_flow += dako->getFLflow();
     FL_flow += bc_pressure_relay->getFLflow();
 
@@ -51,10 +51,8 @@ void CHS2T::stepPneumoSupply(double t, double dt)
 
     // Концевые краны питательной магистрали
     anglecock_fl_fwd->setPipePressure(main_reservoir->getPressure());
-    anglecock_fl_fwd->setControl(keys);
     anglecock_fl_fwd->step(t, dt);
     anglecock_fl_bwd->setPipePressure(main_reservoir->getPressure());
-    anglecock_fl_bwd->setControl(keys);
     anglecock_fl_bwd->step(t, dt);
 
     // Рукава питательной магистрали
@@ -62,12 +60,10 @@ void CHS2T::stepPneumoSupply(double t, double dt)
     hose_fl_fwd->setFlowCoeff(anglecock_fl_fwd->getFlowCoeff());
     hose_fl_fwd->setCoord(train_coord + dir * orient * (length / 2.0 - anglecock_fl_fwd->getShiftCoord()));
     hose_fl_fwd->setShiftSide(anglecock_fl_fwd->getShiftSide());
-    hose_fl_fwd->setControl(keys);
     hose_fl_fwd->step(t, dt);
     hose_fl_bwd->setPressure(anglecock_fl_bwd->getPressureToHose());
     hose_fl_bwd->setFlowCoeff(anglecock_fl_bwd->getFlowCoeff());
     hose_fl_bwd->setCoord(train_coord - dir * orient * (length / 2.0 - anglecock_fl_bwd->getShiftCoord()));
     hose_fl_bwd->setShiftSide(anglecock_fl_bwd->getShiftSide());
-    hose_fl_bwd->setControl(keys);
     hose_fl_bwd->step(t, dt);
 }

@@ -19,8 +19,6 @@
 		<CabineModel>chs2t/chs2t-cabview.gltf</CabineModel>
 		<CabineShift>0.0 0.0 0.312</CabineShift>
 
-		<DriverPos>0.492 7.776 3.98</DriverPos>
-
 		<CouplingModule>sa3</CouplingModule>
 		<CouplingConfig>sa3</CouplingConfig>
 
@@ -37,4 +35,14 @@
 		<ElectroAirDistConfig>evr305</ElectroAirDistConfig>
 
 	</Vehicle>
+	<Cabine>
+		<DriverPos>0.492 7.776 3.98</DriverPos>
+		<DriverDir>0.0</DriverDir>
+	</Cabine>
+<!--
+	<Cabine>
+		<DriverPos>-0.492 -7.776 3.98</DriverPos>
+		<DriverDir>180.0</DriverDir>
+	</Cabine>
+-->
 </Config>

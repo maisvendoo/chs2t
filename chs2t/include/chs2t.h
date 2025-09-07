@@ -53,9 +53,24 @@ public:
     ~CHS2T();
 
     /// Инициализация тормозных приборов
-    void initBrakeDevices(double p0, double pBP, double pFL);
+    void initBrakeDevices(double p0, double pBP, double pFL) override;
 
 private:
+
+    enum
+    {
+        NUM_PANTOGRAPHS = 2,
+        PANT1 = 0,
+        PANT2 = 1,
+        WIRE_VOLTAGE = 3000
+    };
+
+    enum
+    {
+        NUM_MOTOR_KOMPRESSORS = 2,
+        MK1 = 0,
+        MK2 = 1
+    };
 
     /// Имя модуля сцепного устройства
     QString coupling_module_name = "sa3";
@@ -93,126 +108,181 @@ private:
 
     enum
     {
-        NUM_PANTOGRAPHS = 2,
-        WIRE_VOLTAGE = 3000
+        CABS_NUM = 2,
+        CAB1 = 0,
+        CAB2 = 1
     };
+
+    /// Кнопка "Свисток"
+    TriggerControl button_svistok[CABS_NUM];
+
+    /// Кнопка "Тифон"
+    TriggerControl button_tifon[CABS_NUM];
+
+    /// Кнопка "Песок"
+    TriggerControl button_sand[CABS_NUM];
+
+    /// Кнопка "Отпуск электровоза"
+    TriggerControl button_loco_release[CABS_NUM];
+
+    /// Тумблер включения ЭПТ
+    TriggerControl epb_switch[CABS_NUM];
+
+    /// Галетник управления мотор-вентиляторами
+    SwitcherControl motor_fan_switcher[CABS_NUM];
+
+    /// Галетники управления мотор-компрессорами
+    SwitcherControl mk_switcher[CABS_NUM][NUM_MOTOR_KOMPRESSORS];
+
+    /// Галетники управления токоприемниками
+    SwitcherControl pant_switcher[CABS_NUM][NUM_PANTOGRAPHS];
+
+    /// Галетник управления БВ
+    SwitcherControl fastswitch_switcher[CABS_NUM];
+
+    /// Галетник управления жалюзи
+    SwitcherControl blinds_switcher[CABS_NUM];
+
+    /// Галетник управления освещением кабины и приборов
+    SwitcherControl cab_light_switcher[CABS_NUM];
+
+    /// Галетник управления левым буферным огнём
+    SwitcherControl bufferlight_L_switcher[CABS_NUM];
+
+    /// Галетник управления правым буферным огнём
+    SwitcherControl bufferlight_R_switcher[CABS_NUM];
+
+    /// Галетник управления прожектором
+    SwitcherControl spotlight_switcher[CABS_NUM];
+
+    enum
+    {
+        NUM_RB = 3,
+        RBS = 0,
+        RB1 = 1,
+        RBP = 2
+    };
+
+    /// Триггеры рукояток бдительности
+    TriggerControl rb[CABS_NUM][NUM_RB];
+
+    /// Ключ ЭПК
+    TriggerControl key_epk[CABS_NUM];
+
+    /// Выключатель ЭДТ
+    TriggerControl EDT_switch[CABS_NUM];
+
+    /// Кнопка "Сброс СП-С"
+    TriggerControl button_sbros_cpc[CABS_NUM];
+
+    /// Контроллер машиниста
+    Km21KR2* km21KR2[CABS_NUM] = {nullptr, nullptr};
+
 
     /// Напряжение аккумуляторной батареи
     double U_bat = 55.0;
 
     /// Схема тяги
-    Motor *motor = nullptr;
+    Motor* motor = nullptr;
 
     /// Токоприемники
     std::array<Pantograph*, NUM_PANTOGRAPHS> pantographs = {nullptr, nullptr};
 
     /// Быстрый выключатель
-    ProtectiveDevice *bv = nullptr;
+    ProtectiveDevice* bv = nullptr;
 
     /// Пусковой резистор
-    PuskRez *puskRez = nullptr;
-
-    /// Контроллер машиниста
-    Km21KR2 *km21KR2 = nullptr;
+    PuskRez* puskRez = nullptr;
 
     /// Переключатель ступеней
-    StepSwitch *stepSwitch = nullptr;
+    StepSwitch* stepSwitch = nullptr;
 
     /// Возврат защиты
     bool bv_return = false;
 
     /// Реле перегрузки ТЭД
-    OverloadRelay *overload_relay = nullptr;
+    OverloadRelay* overload_relay = nullptr;
 
-    PhysToModbus *TM_manometer = nullptr;
-    PhysToModbus *UR_manometer = nullptr;
-    PhysToModbus *ZT_manometer = nullptr;
-    PhysToModbus *GR_manometer = nullptr;
-    PhysToModbus *TC_manometer = nullptr;
-
-    /// Тумблер включенияМК
-    Trigger     mk_tumbler;
-
-    /// Галетники управления МК
-    std::array<Switcher *, 2> mk_switcher = {nullptr, nullptr};
+    PhysToModbus* TM_manometer = nullptr;
+    PhysToModbus* UR_manometer = nullptr;
+    PhysToModbus* ZT_manometer = nullptr;
+    PhysToModbus* GR_manometer = nullptr;
+    PhysToModbus* TC_manometer = nullptr;
 
     /// Мотор-компрессоры (МК)
-    std::array<DCMotorCompressor *, 2> motor_compressor = {nullptr, nullptr};
+    std::array<DCMotorCompressor*, 2> motor_compressor = {nullptr, nullptr};
 
     /// Регулятор давления ГР
-    PressureRegulator *press_reg = nullptr;
+    PressureRegulator* press_reg = nullptr;
 
     /// Главный резервуар
-    Reservoir   *main_reservoir = nullptr;
+    Reservoir*  main_reservoir = nullptr;
 
     /// Концевой кран питательной магистрали спереди
-    PneumoAngleCock *anglecock_fl_fwd = nullptr;
+    PneumoAngleCock* anglecock_fl_fwd = nullptr;
 
     /// Концевой кран питательной магистрали сзади
-    PneumoAngleCock *anglecock_fl_bwd = nullptr;
+    PneumoAngleCock* anglecock_fl_bwd = nullptr;
 
     /// Рукав питательной  магистрали спереди
-    PneumoHose      *hose_fl_fwd = nullptr;
+    PneumoHose* hose_fl_fwd = nullptr;
 
     /// Рукав питательной  магистрали сзади
-    PneumoHose      *hose_fl_bwd = nullptr;
+    PneumoHose* hose_fl_bwd = nullptr;
 
     /// Поездной кран машиниста усл.№395
-    BrakeCrane  *brake_crane = nullptr;
+    BrakeCrane* brake_crane[CABS_NUM] = {nullptr, nullptr};
 
     /// Кран впомогательного тормоза усл.№254
-    LocoCrane   *loco_crane = nullptr;
+    LocoCrane*  loco_crane[CABS_NUM] = {nullptr, nullptr};
 
     /// Рукоятка задатчика тормозного усилия
-    HandleEDT   *handleEDT = nullptr;
-
+    HandleEDT*  handleEDT[CABS_NUM] = {nullptr, nullptr};
 
     /// Электропневматический клапан автостопа усл.№150
-    AutoTrainStop   *epk = nullptr;
-    /// Ключ ЭПК
-    Trigger   key_epk;
+    AutoTrainStop*  epk[CABS_NUM] = {nullptr, nullptr};
 
     /// Электропневматический вентиль экстренного торможения (при ТМ < 0.3 МПа)
-    ElectroPneumoValveEmergency *emergency_valve = nullptr;
+    ElectroPneumoValveEmergency* emergency_valve = nullptr;
 
     /// Электропневматический вентиль отпуска пневматических тормозов
-    ElectroPneumoValveRelease   *release_valve = nullptr;
+    ElectroPneumoValveRelease*  release_valve = nullptr;
 
     /// Управляющая камера воздухораспределителя (ложный ТЦ)
-    Reservoir   *brake_ref_res = nullptr;
+    Reservoir*   brake_ref_res = nullptr;
 
     /// Тормозная магистраль
-    Reservoir   *brakepipe = nullptr;
+    Reservoir*   brakepipe = nullptr;
 
     /// Воздухораспределитель
-    AirDistributor  *air_dist = nullptr;
+    AirDistributor*  air_dist = nullptr;
 
     /// Электровоздухораспределитель
-    ElectroAirDistributor  *electro_air_dist = nullptr;
+    ElectroAirDistributor*  electro_air_dist = nullptr;
 
     /// Запасный резервуар
-    Reservoir   *supply_reservoir = nullptr;
+    Reservoir*   supply_reservoir = nullptr;
 
     /// Разветвитель потока воздуха от локомотивного крана к тележкам
-    PneumoSplitter  *loco_crane_splitter = nullptr;
+    PneumoSplitter*  loco_crane_splitter = nullptr;
 
     /// Скоростной клапан ДАКО
-    Dako *dako = nullptr;
+    Dako* dako = nullptr;
 
     /// Повторительное реле давления усл.№304
-    PneumoRelay     *bc_pressure_relay = nullptr;
+    PneumoRelay*     bc_pressure_relay = nullptr;
 
     /// Концевой кран тормозной магистрали спереди
-    PneumoAngleCock *anglecock_bp_fwd = nullptr;
+    PneumoAngleCock* anglecock_bp_fwd = nullptr;
 
     /// Концевой кран тормозной магистрали сзади
-    PneumoAngleCock *anglecock_bp_bwd = nullptr;
+    PneumoAngleCock* anglecock_bp_bwd = nullptr;
 
     /// Рукав тормозной магистрали спереди
-    PneumoHoseEPB   *hose_bp_fwd = nullptr;
+    PneumoHoseEPB*   hose_bp_fwd = nullptr;
 
     /// Рукав тормозной магистрали сзади
-    PneumoHoseEPB   *hose_bp_bwd = nullptr;
+    PneumoHoseEPB*   hose_bp_bwd = nullptr;
 
     enum
     {
@@ -223,66 +293,48 @@ private:
     };
 
     /// Переключательные клапаны ЗПК потока в тормозные цилиндры
-    std::array<SwitchingValve *, NUM_TROLLEYS> bc_switch_valve = {nullptr, nullptr};
+    std::array<SwitchingValve*, NUM_TROLLEYS> bc_switch_valve = {nullptr, nullptr};
 
     /// Тормозные механизмы тележек
-    std::array<BrakeMech *, NUM_TROLLEYS> brake_mech = {nullptr, nullptr};
-
-    /// Выключатель ЭПТ
-    Trigger     epb_switch;
+    std::array<BrakeMech*, NUM_TROLLEYS> brake_mech = {nullptr, nullptr};
 
     /// Преобразователь питания ЭПТ
-    EPBConverter *epb_converter = nullptr;
+    EPBConverter* epb_converter = nullptr;
 
     /// Блок управления ЭПТ
-    EPBControl *epb_control = nullptr;
+    EPBControl* epb_control = nullptr;
 
-    DCMotorFan *motor_fan_ptr = nullptr;
+    DCMotorFan* motor_fan_ptr = nullptr;
 
     /// Свисток и тифон
-    TrainHorn   *horn = nullptr;
+    TrainHorn*   horn = nullptr;
 
     /// Система подачи песка
-    SandingSystem   *sand_system = nullptr;
+    SandingSystem*   sand_system = nullptr;
 
     /// Схема реостатного тормоза
-    Generator   *generator = nullptr;
+    Generator*   generator = nullptr;
 
     /// Импульсный преобразователь возбуждения
-    PulseConverter  *pulseConv = nullptr;
+    PulseConverter*  pulseConv = nullptr;
 
     /// Регулятор тормозного усилия (САРТ)
-    BrakeRegulator  *BrakeReg = nullptr;
-
-    /// Галетники управления токоприемниками
-    std::array<Switcher *, NUM_PANTOGRAPHS> pantoSwitcher = {nullptr, nullptr};
-
-    /// Галетник управления БВ
-    Switcher    *fastSwitchSw = nullptr;
+    BrakeRegulator*  BrakeReg = nullptr;
 
     /// Мотор-вентиляторы
     std::array<DCMotorFan*, NUM_TROLLEYS> motor_fan = {nullptr, nullptr};
-
-    /// Галетник управления мотор-вентиляторами
-    Switcher *motor_fan_switcher = nullptr;
-
-    /// Галетник управления жалюзи
-    Switcher *blindsSwitcher = nullptr;
 
     /// Напряжение на крышевой шине токоприемников
     double U_kr = 0.0;
 
     /// Разъединители токоприемников
-    std::array<Trigger, NUM_PANTOGRAPHS> pant_switch = {nullptr, nullptr};
+    std::array<Trigger, NUM_PANTOGRAPHS> pant_switch;
 
     /// Тригеры поднятия/опускания ТП
-    std::array<Trigger, NUM_PANTOGRAPHS> pantup_trigger = {nullptr, nullptr};
+    std::array<Trigger, NUM_PANTOGRAPHS> pantup_trigger;
 
     /// Тригер включения БВ
     Trigger     fast_switch_trigger;
-
-    /// Выключатель ЭДТ
-    Trigger     EDTSwitch;
 
     /// Разрешение тяги
     Trigger     allowTrac;
@@ -301,163 +353,166 @@ private:
     bool        allowEDT = false;
 
     /// Жалюзи пуско-тормозных резисторов
-    Blinds      *blinds = nullptr;
+    Blinds*      blinds = nullptr;
 
     /// Скоростемер 3СЛ2М
-    SL2M        *speed_meter = nullptr;
+    SL2M*        speed_meter[CABS_NUM] = {nullptr, nullptr};
 
     /// Счетчик энергии
-    EnergyCounter   *energy_counter = nullptr;
+    EnergyCounter*   energy_counter = nullptr;
 
     /// Ограничения скорости на путевой инфраструктуре для кабины А
-    SpeedMap    *speedmap_fwd = nullptr;
+    SpeedMap*    speedmap_fwd = nullptr;
     /// Ограничения скорости на путевой инфраструктуре для кабины Б
-    SpeedMap    *speedmap_bwd = nullptr;
+    SpeedMap*    speedmap_bwd = nullptr;
 
     /// Приёмная катушка АЛСН для кабины А
-    CoilALSN    *coil_ALSN_fwd = nullptr;
+    CoilALSN*    coil_ALSN_fwd = nullptr;
     /// Приёмная катушка АЛСН для кабины Б
-    CoilALSN    *coil_ALSN_bwd = nullptr;
+    CoilALSN*    coil_ALSN_bwd = nullptr;
 
     /// Дешифратор сигнала АЛСН
-    DecoderALSN *alsn_decoder = nullptr;
+    DecoderALSN* alsn_decoder[CABS_NUM] = {nullptr, nullptr};
 
     /// Устройство безопасности
-    SafetyDevice    *safety_device = nullptr;
+    SafetyDevice*    safety_device[CABS_NUM] = {nullptr, nullptr};
 
-    /// Состояния РБ и РБС
-    bool state_RB = false;
-
-    bool state_RBS = false;
-
-    /// Кнопка "Отпуск электровоза"
-    Trigger button_loco_release;
-
-    /// Кнопка "Сброс СП-С"
-    Trigger button_sbros_cpc;
 
     /// Загрузка данных из конфигурационных файлов
-    void loadConfig(QString cfg_path);
+    void loadConfig(QString cfg_path) override;
 
-    /// Обработка клавиш
-    void keyProcess();
+
+    /// Общая инициализация локомотива
+    void initialization() override;
+
+    /// Инициализация управления тумблерами
+    void initTumblers(const QString &modules_dir, const QString &custom_cfg_dir);
+
+    /// Инициализация сцепных устройств
+    void initCouplings(const QString& modules_dir, const QString& custom_cfg_dir);
+
+    /// Инициализация токоприемников
+    void initPantographs(const QString& modules_dir, const QString& custom_cfg_dir);
+
+    /// Инициадизация рычажки
+    void initBrakesMech(const QString& modules_dir, const QString& custom_cfg_dir);
+
+    /// Инициализация БВ
+    void initFastSwitch(const QString& modules_dir, const QString& custom_cfg_dir);
+
+    /// Инициализация защит
+    void initProtection(const QString& modules_dir, const QString& custom_cfg_dir);
+
+    /// Инициализация питательной магистрали
+    void initPneumoSupply(const QString& modules_dir, const QString& custom_cfg_dir);
+
+    /// Инициализация приборов управления тормозами
+    void initBrakesControl(const QString& modules_dir, const QString& custom_cfg_dir);
+
+    /// Инициализация тормозного оборудования
+    void initBrakesEquipment(const QString& modules_dir, const QString& custom_cfg_dir);
+
+    /// Инициализация ЭПТ
+    void initEPB(const QString& modules_dir, const QString& custom_cfg_dir);
+
+    /// Инициализация схемы управления тягой
+    void initTractionControl(const QString& modules_dir, const QString& custom_cfg_dir);
+
+    /// Инициализация ЭДТ
+    void initEDT(const QString& modules_dir, const QString& custom_cfg_dir);
+
+    /// Инициализация вспомогательного оборудования
+    void initSupportEquipment(const QString& modules_dir, const QString& custom_cfg_dir);
+
+    /// Инициализация приборов безопасности
+    void initSafetyDevices(const QString& modules_dir, const QString& custom_cfg_dir);
+
+    /// Инициализация прочего оборудования
+    void initOtherEquipment(const QString& modules_dir, const QString& custom_cfg_dir);
+
+    ///
+    void initModbus(const QString& modules_dir, const QString& custom_cfg_dir);
+
+    /// Инициализация регистратора
+    void initRegistrator(const QString& modules_dir, const QString& custom_cfg_dir);
+
+
+
+    /// Процесс симуляции
+    void process(const simulator_time_t& t, const double& dt) override;
+
+    /// Управление
+    void keyProcess(const simulator_time_t& t, const double& dt);
+
+    /// Отладочная строка
+    void debugPrint(const simulator_time_t& t, const double& dt);
+
+    /// Сигналы для анимации
+    void signalsOutput(const simulator_time_t& t, const double& dt);
+
+    /// Сигналы для озвучки
+    void soundsOutput(const simulator_time_t& t, const double& dt);
+    float motorSoundSignal();
+
+    /// Изменение положений пакетников и тумблеров
+    void setSwitcherState(Switcher& sw, signal_t signal);
+    void setTriggerState(Trigger& trig, signal_t signal);
+    void stepSwitcherPanel(const simulator_time_t& t, const double& dt);
 
     /// Вывод данных на внешние СОИ
     void hardwareOutput();
 
+
+    /// Предварительные расчёты перед симуляцией
+    void preStep(const double& t) override;
+
+    /// Предварительный расчёт координат сцепных устройств
+    void preStepCouplings(const double& t);
+
+
+    /// Шаг симуляции всех систем электровоза
+    void step(const double& t, const double& dt) override;
+
+    /// Моделирование сцепных устройств
+    void stepCouplings(const double& t, const double& dt);
+
+    /// Моделирование работы токоприемников
+    void stepPantographs(const double& t, const double& dt);
+
+    void stepFastSwitch(const double& t, const double& dt);
+
+    void stepProtection(const double& t, const double& dt);
+
+    /// Моделирование питательной магистрали
+    void stepPneumoSupply(const double& t, const double& dt);
+
+    /// Моделирование приборов управления тормозами
+    void stepBrakesControl(const double& t, const double& dt);
+
+    /// Моделирование тормозного оборудования
+    void stepBrakesEquipment(const double& t, const double& dt);
+
+    /// Моделирование ЭПТ
+    void stepEPB(const double& t, const double& dt);
+
+    void stepTractionControl(const double& t, const double& dt);
+
+    void stepEDT(const double& t, const double& dt);
+
+    void stepEDT2(const double& t, const double& dt);
+
+    void stepSupportEquipment(const double& t, const double& dt);
+
+    /// Моделирование приборов безопасности
+    void stepSafetyDevices(const double& t, const double& dt);
+
+    void stepOtherEquipment(const double& t, const double& dt);
+
     /// Сброс данных в регистратор
-    void registrate(double t, double dt);
+    void registrate(const double& t, const double& dt);
 
     /// Состояние удерживающей катушки БВ
     bool getHoldingCoilState() const;
-
-    /// Общая инициализация локомотива
-    void initialization();
-
-    /// Инициализация сцепных устройств
-    void initCouplings(const QString &modules_dir, const QString &custom_cfg_dir);
-
-    /// Инициализация токоприемников
-    void initPantographs(const QString &modules_dir, const QString &custom_cfg_dir);
-
-    /// Инициадизация рычажки
-    void initBrakesMech(const QString &modules_dir, const QString &custom_cfg_dir);
-
-    /// Инициализация БВ
-    void initFastSwitch(const QString &modules_dir, const QString &custom_cfg_dir);
-
-    /// Инициализация защит
-    void initProtection(const QString &modules_dir, const QString &custom_cfg_dir);
-
-    /// Инициализация питательной магистрали
-    void initPneumoSupply(const QString &modules_dir, const QString &custom_cfg_dir);
-
-    /// Инициализация приборов управления тормозами
-    void initBrakesControl(const QString &modules_dir, const QString &custom_cfg_dir);
-
-    /// Инициализация тормозного оборудования
-    void initBrakesEquipment(const QString &modules_dir, const QString &custom_cfg_dir);
-
-    /// Инициализация ЭПТ
-    void initEPB(const QString &modules_dir, const QString &custom_cfg_dir);
-
-    /// Инициализация схемы управления тягой
-    void initTractionControl(const QString &modules_dir, const QString &custom_cfg_dir);
-
-    /// Инициализация ЭДТ
-    void initEDT(const QString &modules_dir, const QString &custom_cfg_dir);
-
-    /// Инициализация вспомогательного оборудования
-    void initSupportEquipment(const QString &modules_dir, const QString &custom_cfg_dir);
-
-    /// Инициализация приборов безопасности
-    void initSafetyDevices(const QString &modules_dir, const QString &custom_cfg_dir);
-
-    /// Инициализация прочего оборудования
-    void initOtherEquipment(const QString &modules_dir, const QString &custom_cfg_dir);
-
-    ///
-    void initModbus(const QString &modules_dir, const QString &custom_cfg_dir);
-
-    /// Инициализация регистратора
-    void initRegistrator(const QString &modules_dir, const QString &custom_cfg_dir);
-
-    /// Подпрограмма изменения положения пакетника
-    void setSwitcherState(Switcher *sw, signal_t signal);
-
-    /// Предварительные расчёты перед симуляцией
-    void preStep(double t);
-
-    /// Предварительный расчёт координат сцепных устройств
-    void preStepCouplings(double t);
-
-    /// Шаг моделирования всех систем локомотива в целом
-    void step(double t, double dt);
-
-    /// Моделирование сцепных устройств
-    void stepCouplings(double t, double dt);
-
-    /// Моделирование работы токоприемников
-    void stepPantographs(double t, double dt);
-
-    void stepFastSwitch(double t, double dt);
-
-    void stepProtection(double t, double dt);
-
-    /// Моделирование питательной магистрали
-    void stepPneumoSupply(double t, double dt);
-
-    /// Моделирование приборов управления тормозами
-    void stepBrakesControl(double t, double dt);
-
-    /// Моделирование тормозного оборудования
-    void stepBrakesEquipment(double t, double dt);
-
-    /// Моделирование ЭПТ
-    void stepEPB(double t, double dt);
-
-    void stepTractionControl(double t, double dt);
-
-    void stepEDT(double t, double dt);
-
-    void stepEDT2(double t, double dt);
-
-    void stepSupportEquipment(double t, double dt);
-
-    /// Моделирование приборов безопасности
-    void stepSafetyDevices(double t, double dt);
-
-    void stepOtherEquipment(double t, double dt);
-
-    void stepDebugMsg(double t, double dt);
-
-    void stepSignals();
-
-    /// Вывод сигналов звучки
-    void stepSoundSignalsOutput(double t, double dt);
-    float motorSoundSignal(double t, double dt);
-
-    void stepSwitcherPanel();
 
     void disableEDT() { EDT = allowEDT = false; }
 

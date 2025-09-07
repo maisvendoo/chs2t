@@ -5,7 +5,7 @@
 //------------------------------------------------------------------------------
 // Инициализация токоприемников
 //------------------------------------------------------------------------------
-void CHS2T::initPantographs(const QString &modules_dir, const QString &custom_cfg_dir)
+void CHS2T::initPantographs(const QString& modules_dir, const QString& custom_cfg_dir)
 {
     (void) modules_dir;
 
@@ -15,35 +15,23 @@ void CHS2T::initPantographs(const QString &modules_dir, const QString &custom_cf
         pantographs[i]->read_config("pantograph", custom_cfg_dir);
         pantographs[i]->setUks(Uks);
     }
-
-    for (size_t i = 0; i < NUM_PANTOGRAPHS; ++i)
-    {
-        pantoSwitcher[i] = new Switcher(Q_NULLPTR, 0, 4);
-        pantoSwitcher[i]->setSpringLast();
-    }
-
-    pantoSwitcher[0]->setKeyCode(KEY_I);
-    pantoSwitcher[1]->setKeyCode(KEY_O);
 }
 
 //------------------------------------------------------------------------------
 // Инициализация быстродействующего выключателя
 //------------------------------------------------------------------------------
-void CHS2T::initFastSwitch(const QString &modules_dir, const QString &custom_cfg_dir)
+void CHS2T::initFastSwitch(const QString& modules_dir, const QString& custom_cfg_dir)
 {
     (void) modules_dir;
 
     bv = new ProtectiveDevice();
     bv->read_config("bv", custom_cfg_dir);
-
-    fastSwitchSw = new Switcher(Q_NULLPTR, KEY_P, 4);
-    fastSwitchSw->setSpringLast();
 }
 
 //------------------------------------------------------------------------------
 //
 //------------------------------------------------------------------------------
-void CHS2T::initProtection(const QString &modules_dir, const QString &custom_cfg_dir)
+void CHS2T::initProtection(const QString& modules_dir, const QString& custom_cfg_dir)
 {
     (void) modules_dir;
 
@@ -54,11 +42,15 @@ void CHS2T::initProtection(const QString &modules_dir, const QString &custom_cfg
 //------------------------------------------------------------------------------
 //
 //------------------------------------------------------------------------------
-void CHS2T::initTractionControl(const QString &modules_dir, const QString &custom_cfg_dir)
+void CHS2T::initTractionControl(const QString& modules_dir, const QString& custom_cfg_dir)
 {
     (void) modules_dir;
 
-    km21KR2 = new Km21KR2();
+    for (auto cab_idx : {CAB1, CAB2})
+    {
+        km21KR2[cab_idx] = new Km21KR2();
+        km21KR2[cab_idx]->setControl(&pressed_keys_by_cabine[cab_idx]);
+    }
 
     stepSwitch = new StepSwitch();
     stepSwitch->read_config("step-switch", custom_cfg_dir);
@@ -74,7 +66,7 @@ void CHS2T::initTractionControl(const QString &modules_dir, const QString &custo
 //------------------------------------------------------------------------------
 //
 //------------------------------------------------------------------------------
-void CHS2T::initEDT(const QString &modules_dir, const QString &custom_cfg_dir)
+void CHS2T::initEDT(const QString& modules_dir, const QString& custom_cfg_dir)
 {
     (void) modules_dir;
 
@@ -95,7 +87,7 @@ void CHS2T::initEDT(const QString &modules_dir, const QString &custom_cfg_dir)
 //------------------------------------------------------------------------------
 //
 //------------------------------------------------------------------------------
-void CHS2T::initOtherEquipment(const QString &modules_dir, const QString &custom_cfg_dir)
+void CHS2T::initOtherEquipment(const QString& modules_dir, const QString& custom_cfg_dir)
 {
     (void) modules_dir;
 
@@ -112,7 +104,7 @@ void CHS2T::initOtherEquipment(const QString &modules_dir, const QString &custom
 //------------------------------------------------------------------------------
 //
 //------------------------------------------------------------------------------
-void CHS2T::initSupportEquipment(const QString &modules_dir, const QString &custom_cfg_dir)
+void CHS2T::initSupportEquipment(const QString& modules_dir, const QString& custom_cfg_dir)
 {
     (void) modules_dir;
 
@@ -125,12 +117,8 @@ void CHS2T::initSupportEquipment(const QString &modules_dir, const QString &cust
         motor_fan[i]->read_config("motor-fan", custom_cfg_dir);
     }
 
-    motor_fan_switcher = new Switcher(Q_NULLPTR, KEY_F, 3);
-
     blinds = new Blinds();
     blinds->read_config("blinds", custom_cfg_dir);
-
-    blindsSwitcher = new Switcher(Q_NULLPTR, KEY_G, 5);
 
     energy_counter = new EnergyCounter();
     energy_counter->read_config("energy-counter", custom_cfg_dir);
@@ -139,7 +127,7 @@ void CHS2T::initSupportEquipment(const QString &modules_dir, const QString &cust
 //------------------------------------------------------------------------------
 //
 //------------------------------------------------------------------------------
-void CHS2T::initModbus(const QString &modules_dir, const QString &custom_cfg_dir)
+void CHS2T::initModbus(const QString& modules_dir, const QString& custom_cfg_dir)
 {
     (void) modules_dir;
 
@@ -165,7 +153,7 @@ void CHS2T::initModbus(const QString &modules_dir, const QString &custom_cfg_dir
 //------------------------------------------------------------------------------
 // Инициализация регистратора
 //------------------------------------------------------------------------------
-void CHS2T::initRegistrator(const QString &modules_dir, const QString &custom_cfg_dir)
+void CHS2T::initRegistrator(const QString& modules_dir, const QString& custom_cfg_dir)
 {
     (void) modules_dir;
     (void) custom_cfg_dir;

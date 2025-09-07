@@ -3,46 +3,24 @@
 //------------------------------------------------------------------------
 //
 //------------------------------------------------------------------------
-void CHS2T::stepBrakesControl(double t, double dt)
+void CHS2T::stepBrakesControl(const double& t, const double& dt)
 {
-    // Поездной кран машиниста
-    brake_crane->setFLpressure(main_reservoir->getPressure());
-    brake_crane->setBPpressure(brakepipe->getPressure());
-
-    // Управляем краном, учитывая возможное наличие внешнего пульта
-    if (control_signals.analogSignal[CS_BRAKE_CRANE].is_active)
+    for (size_t cab_idx : {CAB1, CAB2})
     {
-        int brake_crane_pos = static_cast<int>(control_signals.analogSignal[CS_BRAKE_CRANE].cur_value);
-        brake_crane->setHandlePosition(brake_crane_pos);
+        // Поездной кран машиниста
+        brake_crane[cab_idx]->setFLpressure(main_reservoir->getPressure());
+        brake_crane[cab_idx]->setBPpressure(brakepipe->getPressure());
+        brake_crane[cab_idx]->step(t, dt);
+
+        // Кран вспомогательного тормоза
+        loco_crane[cab_idx]->setFLpressure(main_reservoir->getPressure());
+        loco_crane[cab_idx]->setBCpressure(loco_crane_splitter->getInputPressure());
+        loco_crane[cab_idx]->setILpressure(0.0);
+        loco_crane[cab_idx]->step(t, dt);
+
+        // Рукоятка задатчика тормозного усилия
+        handleEDT[cab_idx]->step(t, dt);
     }
-    else
-    {
-        brake_crane->setControl(keys);
-    }
-
-    brake_crane->step(t, dt);
-
-    // Кран вспомогательного тормоза
-    loco_crane->setFLpressure(main_reservoir->getPressure());
-    loco_crane->setBCpressure(loco_crane_splitter->getInputPressure());
-    loco_crane->setILpressure(0.0);
-
-    // Управляем, с учетом возможного наличия пульта
-    if (control_signals.analogSignal[CS_LOCO_CRANE].is_active)
-    {
-        double pos = control_signals.analogSignal[CS_LOCO_CRANE].cur_value;
-        loco_crane->setHandlePosition(pos);
-    }
-    else
-    {
-        loco_crane->setControl(keys);
-    }
-
-    loco_crane->step(t, dt);
-
-    // Рукоятка задатчика тормозного усилия
-    handleEDT->setControl(keys, control_signals);
-    handleEDT->step(t, dt);
 
     // Электропневматический вентиль экстренного торможения
     emergency_valve->setFLpressure(main_reservoir->getPressure());
@@ -58,7 +36,7 @@ void CHS2T::stepBrakesControl(double t, double dt)
     brake_ref_res->step(t, dt);
 
     // Разветвитель потока воздуха от локомотивного крана к тележкам
-    loco_crane_splitter->setInputFlow(loco_crane->getBCflow());
+    loco_crane_splitter->setInputFlow(loco_crane[CAB1]->getBCflow()/* + loco_crane[CAB2]->getBCflow()*/);
     loco_crane_splitter->setPipePressure1(bc_switch_valve[TROLLEY_FWD]->getPressure1());
     loco_crane_splitter->setPipePressure2(bc_switch_valve[TROLLEY_BWD]->getPressure1());
     loco_crane_splitter->step(t, dt);

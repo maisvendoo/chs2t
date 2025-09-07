@@ -3,7 +3,7 @@
 //------------------------------------------------------------------------------
 //
 //------------------------------------------------------------------------------
-void CHS2T::stepDebugMsg(double t, double dt)
+void CHS2T::debugPrint(const simulator_time_t& t, const double& dt)
 {
     (void) t;
     (void) dt;
@@ -18,9 +18,9 @@ void CHS2T::stepDebugMsg(double t, double dt)
                     .arg(10.0 * supply_reservoir->getPressure(), 6, 'f', 2);
     DebugMsg += QString("pFL%1|pER%2|395:%3|254:%4%|")
                     .arg(10.0 * main_reservoir->getPressure(), 6, 'f', 2)
-                    .arg(10.0 * brake_crane->getERpressure(), 6, 'f', 2)
-                    .arg(brake_crane->getPositionName(), 3)
-                    .arg(loco_crane->getHandlePosition() * 100.0, 3, 'f', 0);
+                    .arg(10.0 * brake_crane[CAB1]->getERpressure(), 6, 'f', 2)
+                    .arg(brake_crane[CAB1]->getPositionName(), 3)
+                    .arg(loco_crane[CAB1]->getHandlePosition() * 100.0, 3, 'f', 0);
     DebugMsg += QString("Rev%1|Pos %2%3|I%4 A|")
                     .arg(stepSwitch->getReverseState(), 2)
                     .arg(stepSwitch->getPoz(), 2)

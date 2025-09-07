@@ -3,7 +3,7 @@
 //------------------------------------------------------------------------------
 //
 //------------------------------------------------------------------------------
-void CHS2T::registrate(double t, double dt)
+void CHS2T::registrate(const double& t, const double& dt)
 {
     if (reg == nullptr)
         return;

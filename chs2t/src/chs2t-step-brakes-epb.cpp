@@ -3,7 +3,7 @@
 //------------------------------------------------------------------------
 //
 //------------------------------------------------------------------------
-void CHS2T::stepEPB(double t, double dt)
+void CHS2T::stepEPB(const double& t, const double& dt)
 {
     // Потребляемый ток электровоздухораспределителя
     double evr_current = electro_air_dist->getCurrent(0);
@@ -21,24 +21,32 @@ void CHS2T::stepEPB(double t, double dt)
 
     // Контроллер двухпроводного ЭПТ
     epb_control->setInputVoltage(epb_converter->getOutputVoltage()
-                                 * static_cast<double>(epb_switch.getState()) );
-    epb_control->setHoldState(brake_crane->isHold());
-    epb_control->setBrakeState(brake_crane->isBrake());
+                                 * static_cast<double>(epb_switch[CAB1].getState()) );
+    epb_control->setHoldState(brake_crane[CAB1]->isHold());
+    epb_control->setBrakeState(brake_crane[CAB1]->isBrake());
     epb_control->setControlVoltage(  hose_bp_fwd->getVoltage(1)
                                       + hose_bp_bwd->getVoltage(1) );
     epb_control->step(t, dt);
     double epb_work_U = epb_control->getWorkVoltage();
     double epb_work_f = epb_control->getWorkFrequency();
 
-    // Управление электровоздухораспределителем
-    // Управление от задатчика ЭДТ ("карандаша")
-    double evr_U = handleEDT->getControlSignal() * epb_converter->getOutputVoltage();
+    double evr_U = 0.0;
     double evr_f = 0.0;
-    // Управление от линий ЭПТ
-    if ((evr_U == 0.0) || (brake_ref_res->getPressure() > 0.22))
+    // Управление электровоздухораспределителем: отключается кнопкой "Отпуск электровоза"
+    if (!(button_loco_release[CAB1].getState() || button_loco_release[CAB2].getState()))
     {
-        evr_U = epb_work_U + hose_bp_fwd->getVoltage(0) + hose_bp_bwd->getVoltage(0);
-        evr_f = epb_work_f + hose_bp_fwd->getFrequency(0) + hose_bp_bwd->getFrequency(0);
+        // Управление от задатчика ЭДТ ("карандаша") - до давления в 0.22 МПа
+        if (brake_ref_res->getPressure() < 0.22)
+        {
+            evr_U = handleEDT[CAB1]->getControlSignal() * epb_converter->getOutputVoltage();
+        }
+
+        // Если управления с задатчика нет, сигнал из рабочей линии ЭПТ
+        if (evr_U == 0.0)
+        {
+            evr_U = epb_work_U + hose_bp_fwd->getVoltage(0) + hose_bp_bwd->getVoltage(0);
+            evr_f = epb_work_f + hose_bp_fwd->getFrequency(0) + hose_bp_bwd->getFrequency(0);
+        }
     }
     electro_air_dist->setVoltage  (0, evr_U);
     electro_air_dist->setFrequency(0, evr_f);

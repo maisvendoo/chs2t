@@ -32,8 +32,8 @@ HandleEDT::~HandleEDT()
 //------------------------------------------------------------------------------
 void HandleEDT::preStep(state_vector_t &Y, double t)
 {
-    Q_UNUSED(Y)
-    Q_UNUSED(t)
+    (void) Y;
+    (void) t;
 
     switch (pos)
     {
@@ -85,8 +85,8 @@ void HandleEDT::load_config(CfgReader &cfg)
 //------------------------------------------------------------------------------
 void HandleEDT::stepKeysControl(double t, double dt)
 {
-    Q_UNUSED(t)
-    Q_UNUSED(dt)
+    (void) t;
+    (void) dt;
 
     if (getKeyState(brakeKey))
     {
@@ -112,18 +112,21 @@ void HandleEDT::stepKeysControl(double t, double dt)
 
 void HandleEDT::stepExternalControl(double t, double dt)
 {
-    Q_UNUSED(t)
-    Q_UNUSED(dt)
+    (void) t;
+    (void) dt;
 
-    if (control_signals.analogSignal[EDT_BRAKE].is_active &&
-        control_signals.analogSignal[EDT_RELEASE].is_active    )
+    if (!control_signals)
+        return;
+
+    if (control_signals->analogSignal[EDT_BRAKE].is_active &&
+        control_signals->analogSignal[EDT_RELEASE].is_active    )
     {
-        if (static_cast<bool>(control_signals.analogSignal[EDT_BRAKE].cur_value))
+        if (static_cast<bool>(control_signals->analogSignal[EDT_BRAKE].cur_value))
         {
             pos_ref = POS_BRAKE;
         }
 
-        else if (static_cast<bool>(control_signals.analogSignal[EDT_RELEASE].cur_value))
+        else if (static_cast<bool>(control_signals->analogSignal[EDT_RELEASE].cur_value))
         {
             pos_ref = POS_RELEASE;
         }

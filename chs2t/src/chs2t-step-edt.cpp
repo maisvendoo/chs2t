@@ -3,7 +3,7 @@
 //------------------------------------------------------------------------------
 //
 //------------------------------------------------------------------------------
-void CHS2T::stepEDT(double t, double dt)
+void CHS2T::stepEDT(const double& t, const double& dt)
 {
     pulseConv->setUakb(110.0 * static_cast<double>(EDT));
     pulseConv->setU(BrakeReg->getU());
@@ -13,7 +13,7 @@ void CHS2T::stepEDT(double t, double dt)
     generator->setOmega(wheel_omega[0] * ip);
     generator->setRt(3.35);
 
-    BrakeReg->setActive(EDTSwitch.getState());
+    BrakeReg->setActive(EDT_switch[CAB1].getState());
     BrakeReg->setAllowEDT(dako->isEDTAllow());
     BrakeReg->setIa(generator->getIa());
     BrakeReg->setIf(generator->getIf());
@@ -27,9 +27,9 @@ void CHS2T::stepEDT(double t, double dt)
 //------------------------------------------------------------------------------
 //
 //------------------------------------------------------------------------------
-void CHS2T::stepEDT2(double t, double dt)
+void CHS2T::stepEDT2(const double& t, const double& dt)
 {
-    if (EDTSwitch.getState())
+    if (EDT_switch[CAB1].getState())
     {
         if ( (brake_ref_res->getPressure() >= 0.07) && !EDT_timer.isStarted())
         {

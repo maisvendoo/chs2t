@@ -3,26 +3,22 @@
 //------------------------------------------------------------------------------
 //
 //------------------------------------------------------------------------------
-void CHS2T::stepPantographs(double t, double dt)
+void CHS2T::stepPantographs(const double& t, const double& dt)
 {
     // Управление разъединителями токоприемников
     for (size_t i = 0; i < NUM_PANTOGRAPHS; ++i)
     {
-        pantoSwitcher[i]->setControl(keys);
-
-        if (pantoSwitcher[i]->getPosition() == 3)
+        if (pant_switcher[CAB1][i].getPosition() == 3)
             pant_switch[i].set();
 
-        if (pantoSwitcher[i]->getPosition() == 0)
+        if (pant_switcher[CAB1][i].getPosition() == 0)
             pant_switch[i].reset();
 
-        if (pantoSwitcher[i]->getPosition() == 2 && pant_switch[i].getState())
+        if (pant_switcher[CAB1][i].getPosition() == 2 && pant_switch[i].getState())
             pantup_trigger[i].set();
 
-        if (pantoSwitcher[i]->getPosition() == 1)
+        if (pant_switcher[CAB1][i].getPosition() == 1)
             pantup_trigger[i].reset();
-
-        pantoSwitcher[i]->step(t, dt);
 
         // Подъем/опускание ТП
         pantographs[i]->setState(pant_switch[i].getState() && pantup_trigger[i].getState());
@@ -34,7 +30,7 @@ void CHS2T::stepPantographs(double t, double dt)
 //------------------------------------------------------------------------------
 //
 //------------------------------------------------------------------------------
-void CHS2T::stepFastSwitch(double t, double dt)
+void CHS2T::stepFastSwitch(const double& t, const double& dt)
 {
     bv->setHoldingCoilState(getHoldingCoilState());
     bv_return = getHoldingCoilState() && bv_return;
@@ -48,26 +44,23 @@ void CHS2T::stepFastSwitch(double t, double dt)
     bv->setState(fast_switch_trigger.getState());
     bv->step(t, dt);
 
-    if (fastSwitchSw->getPosition() == 3)
+    if (fastswitch_switcher->getPosition() == 3)
     {
         fast_switch_trigger.set();
         bv_return = true;
     }
 
-    if (fastSwitchSw->getPosition() == 1)
+    if (fastswitch_switcher->getPosition() == 1)
     {
         fast_switch_trigger.reset();
         bv_return = false;
     }
-
-    fastSwitchSw->setControl(keys);
-    fastSwitchSw->step(t, dt);
 }
 
 //------------------------------------------------------------------------------
 //
 //------------------------------------------------------------------------------
-void CHS2T::stepProtection(double t, double dt)
+void CHS2T::stepProtection(const double& t, const double& dt)
 {
     overload_relay->setCurrent(motor->getIa());
     overload_relay->step(t, dt);
@@ -76,24 +69,22 @@ void CHS2T::stepProtection(double t, double dt)
 //------------------------------------------------------------------------------
 //
 //------------------------------------------------------------------------------
-void CHS2T::stepTractionControl(double t, double dt)
+void CHS2T::stepTractionControl(const double& t, const double& dt)
 {
     ip = 1.75;
 
-    km21KR2->setHod(stepSwitch->getHod());
-    km21KR2->setControl(keys, control_signals);
-    km21KR2->step(t, dt);
+    km21KR2[CAB1]->setHod(stepSwitch->getHod());
+    km21KR2[CAB1]->step(t, dt);
 
     stepSwitch->setDropPosition(dropPosition);
-    stepSwitch->setDropButtonState(button_sbros_cpc.getState());
-    stepSwitch->setCtrlState(km21KR2->getCtrlState());
-    stepSwitch->setControl(keys);
+    stepSwitch->setDropButtonState(button_sbros_cpc[CAB1].getState());
+    stepSwitch->setCtrlState(km21KR2[CAB1]->getCtrlState());
     stepSwitch->step(t, dt);
 
     puskRez->setPoz(stepSwitch->getPoz());
     puskRez->step(t, dt);
 
-    if (EDT || (!epk->isKeyOn()) || (!emergency_valve->isTractionAllow()))
+    if (EDT || (!epk[CAB1]->isKeyOn()) || (!emergency_valve->isTractionAllow()))
     {
         allowTrac.reset();
     }
@@ -121,7 +112,7 @@ void CHS2T::stepTractionControl(double t, double dt)
 //------------------------------------------------------------------------------
 //
 //------------------------------------------------------------------------------
-void CHS2T::stepSupportEquipment(double t, double dt)
+void CHS2T::stepSupportEquipment(const double& t, const double& dt)
 {
     double R = 0.6;
     bool hod = stepSwitch->getHod();
@@ -130,48 +121,42 @@ void CHS2T::stepSupportEquipment(double t, double dt)
     motor_fan_ptr->setPowerVoltage(R * (motor->getIa() * !hod + abs(generator->getIa())));
     motor_fan_ptr->step(t, dt);
 
-    motor_fan_switcher->setControl(keys);
-
-    if (motor_fan_switcher->getPosition() == 0)
+    if (motor_fan_switcher[CAB1].getPosition() == 0)
     {
         motor_fan[0]->setPowerVoltage(0.0);
         motor_fan[1]->setPowerVoltage(0.0);
     }
 
-    if (motor_fan_switcher->getPosition() == 1)
+    if (motor_fan_switcher[CAB1].getPosition() == 1)
     {
         motor_fan[0]->setPowerVoltage((bv->getU_out() / 2.0) * (stepSwitch->getPoz() > 0 || motor_fan[0]->isPowered()));
         motor_fan[1]->setPowerVoltage((bv->getU_out() / 2.0) * (stepSwitch->getPoz() > 0 || motor_fan[1]->isPowered()));
     }
 
-    if (motor_fan_switcher->getPosition() == 2)
+    if (motor_fan_switcher[CAB1].getPosition() == 2)
     {
         motor_fan[0]->setPowerVoltage(bv->getU_out() / 2.0);
         motor_fan[1]->setPowerVoltage(bv->getU_out() / 2.0);
     }
 
-    motor_fan_switcher->step(t, dt);
     motor_fan[0]->step(t, dt);
     motor_fan[1]->step(t, dt);
 
-    blindsSwitcher->setControl(keys);
-
-    if (blindsSwitcher->getPosition() == 0 || blindsSwitcher->getPosition() == 1)
+    if (blinds_switcher[CAB1].getPosition() == 0 || blinds_switcher[CAB1].getPosition() == 1)
     {
         blinds->setState(false);
     }
 
-    if (blindsSwitcher->getPosition() == 2)
+    if (blinds_switcher[CAB1].getPosition() == 2)
     {
         blinds->setState(true);
     }
 
-    if (blindsSwitcher->getPosition() == 3 || blindsSwitcher->getPosition() == 4)
+    if (blinds_switcher[CAB1].getPosition() == 3 || blinds_switcher[CAB1].getPosition() == 4)
     {
         blinds->setState((!hod && !stepSwitch->isZero()) || EDT);
     }
 
-    blindsSwitcher->step(t, dt);
     blinds->step(t, dt);
 
     energy_counter->setFullPower(Uks * (motor->getI12() + motor->getI34() + motor->getI56()) );
@@ -182,15 +167,13 @@ void CHS2T::stepSupportEquipment(double t, double dt)
 //------------------------------------------------------------------------------
 //
 //------------------------------------------------------------------------------
-void CHS2T::stepOtherEquipment(double t, double dt)
+void CHS2T::stepOtherEquipment(const double& t, const double& dt)
 {
     horn->setFLpressure(main_reservoir->getPressure());
-    horn->setControl(keys, control_signals);
     horn->step(t, dt);
 
     // Система подачи песка
     sand_system->setFLpressure(main_reservoir->getPressure());
-    sand_system->setControl(keys);
     sand_system->step(t, dt);
     for (size_t i = 0; i < num_axis; ++i)
     {

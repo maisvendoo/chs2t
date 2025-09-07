@@ -5,23 +5,26 @@
 //------------------------------------------------------------------------
 //
 //------------------------------------------------------------------------
-void CHS2T::initBrakesControl(const QString &modules_dir, const QString &custom_cfg_dir)
+void CHS2T::initBrakesControl(const QString& modules_dir, const QString& custom_cfg_dir)
 {
-    // Поездной кран машиниста
-    brake_crane = loadBrakeCrane(
-                modules_dir + QDir::separator() + brake_crane_module_name);
-    brake_crane->read_config(brake_crane_config_name);
+    for (size_t cab_idx : {CAB1, CAB2})
+    {
+        // Поездной кран машиниста
+        brake_crane[cab_idx] = loadBrakeCrane(
+            modules_dir + QDir::separator() + brake_crane_module_name);
+        brake_crane[cab_idx]->read_config(brake_crane_config_name);
 
-    // Кран вспомогательного тормоза
-    loco_crane = loadLocoCrane(
-                modules_dir + QDir::separator() + loco_crane_module_name);
-    loco_crane->read_config(loco_crane_config_name);
+        // Кран вспомогательного тормоза
+        loco_crane[cab_idx] = loadLocoCrane(
+            modules_dir + QDir::separator() + loco_crane_module_name);
+        loco_crane[cab_idx]->read_config(loco_crane_config_name);
 
-    // Рукоятка задатчика тормозного усилия
-    handleEDT = new HandleEDT();
-    handleEDT->read_config("handle-edt", custom_cfg_dir);
-    handleEDT->setBrakeKey(KEY_Period);
-    handleEDT->setReleaseKey(KEY_Comma);
+        // Рукоятка задатчика тормозного усилия
+        handleEDT[cab_idx] = new HandleEDT();
+        handleEDT[cab_idx]->read_config("handle-edt", custom_cfg_dir);
+        handleEDT[cab_idx]->setBrakeKey(KEY_Period);
+        handleEDT[cab_idx]->setReleaseKey(KEY_Comma);
+    }
 
     // Электропневматический вентиль экстренного торможения
     emergency_valve = new ElectroPneumoValveEmergency();
