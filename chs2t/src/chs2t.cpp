@@ -69,8 +69,6 @@ void CHS2T::initialization()
     QString custom_cfg_dir(fs.getVehiclesDir().c_str());
     custom_cfg_dir += fs.separator() + config_dir;
 
-    initTumblers(modules_dir, custom_cfg_dir);
-
     initCouplings(modules_dir, custom_cfg_dir);
 
     initPantographs(modules_dir, custom_cfg_dir);
@@ -96,6 +94,8 @@ void CHS2T::initialization()
     initSafetyDevices(modules_dir, custom_cfg_dir);
 
     initOtherEquipment(modules_dir, custom_cfg_dir);
+
+    initControl(modules_dir, custom_cfg_dir);
 
     initModbus(modules_dir, custom_cfg_dir);
 
