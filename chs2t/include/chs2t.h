@@ -166,9 +166,6 @@ private:
     /// Триггеры рукояток бдительности
     TriggerControl rb[CABS_NUM][NUM_RB];
 
-    /// Ключ ЭПК
-    TriggerControl key_epk[CABS_NUM];
-
     /// Выключатель ЭДТ
     TriggerControl EDT_switch[CABS_NUM];
 

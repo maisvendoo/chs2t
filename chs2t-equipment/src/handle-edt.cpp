@@ -88,13 +88,13 @@ void HandleEDT::stepKeysControl(double t, double dt)
     (void) t;
     (void) dt;
 
-    if (getKeyState(brakeKey))
+    if (getKeyState(pressed_keys, brakeKey))
     {
         pos_ref = POS_BRAKE;
     }
     else
     {
-        if (getKeyState(releaseKey))
+        if (getKeyState(pressed_keys, releaseKey))
         {
             pos_ref = POS_RELEASE;
         }
@@ -110,6 +110,9 @@ void HandleEDT::stepKeysControl(double t, double dt)
     motionTimer.step(t, dt);
 }
 
+//------------------------------------------------------------------------------
+//
+//------------------------------------------------------------------------------
 void HandleEDT::stepExternalControl(double t, double dt)
 {
     (void) t;

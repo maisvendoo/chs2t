@@ -118,12 +118,21 @@ void Km21KR2::stepKeysControl(double t, double dt)
     Q_UNUSED(t)
     Q_UNUSED(dt)
 
+    bool key_fwd = getKeyState(pressed_keys, KEY_W);
+    bool key_bwd = getKeyState(pressed_keys, KEY_S);
+    bool key_traction = getKeyState(pressed_keys, KEY_A);
+    bool key_traction_auto = getKeyState(pressed_keys, KEY_Q);
+    bool key_brakes = getKeyState(pressed_keys, KEY_D);
+    bool key_brakes_auto = getKeyState(pressed_keys, KEY_E);
+    bool isShift = isModifier(pressed_keys, MODIFIER_OnlyShift);
+    bool isControl = isModifier(pressed_keys, MODIFIER_OnlyControl);
+
     // Реверсор
     if (!reverseIsPressedOneTime && (mainShaftPos == 0) && (fieldWeakShaft == 0))
-        reverseState += ((getKeyState(KEY_W) && (reverseState != 1)) -
-                         (getKeyState(KEY_S) && (reverseState != -1)));
+        reverseState += ((key_fwd && (reverseState != 1)) -
+                         (key_bwd && (reverseState != -1)));
     // Запрещаем управлять реверсором дальше, пока не отпустим клавишу
-    reverseIsPressedOneTime = (getKeyState(KEY_W) || getKeyState(KEY_S));
+    reverseIsPressedOneTime = (key_fwd || key_bwd);
 
     // При реверсоре в нуле контроллер заблокирован, дальше делать нечего
     if (reverseState == 0)
@@ -131,17 +140,17 @@ void Km21KR2::stepKeysControl(double t, double dt)
 
     // Здесь страшным образом описывается состояние контроллера
     mainShaftPos = (-10 * autoReset) + (4 * autoSet) +
-                   (!autoReset && !autoSet && !isShift() && !isControl()) *
-                       (-5 * getKeyState(KEY_D) +
-                        2 * getKeyState(KEY_A));
+                   (!autoReset && !autoSet && !isShift && !isControl) *
+                       (-5 * key_brakes +
+                        2 * key_traction);
 
     mainShaftPos = mainShaftPos * TO_INT(hs_n(mainShaftHeight - 0.99));
 
     // Отмена автоматического сброса позиций
     if (autoReset)
     {
-        if ( (!getKeyState(KEY_E)) &&
-             ( getKeyState(KEY_A) || getKeyState(KEY_Q) || (isControl() && getKeyState(KEY_D)) ) )
+        if ( (!key_brakes_auto) &&
+             ( key_traction || key_traction_auto || (isControl && key_brakes) ) )
         {
             autoReset = false;
             sounds[MAIN_FIXED_RESET_OFF_SOUND].play();
@@ -152,7 +161,7 @@ void Km21KR2::stepKeysControl(double t, double dt)
     // Отмена автоматического набора позиций
     if (autoSet)
     {
-        if (!getKeyState(KEY_Q))
+        if (!key_traction_auto)
         {
             autoSet = false;
             sounds[MAIN_NONFIXED_OFF_SOUND].play();
@@ -164,7 +173,7 @@ void Km21KR2::stepKeysControl(double t, double dt)
     if (fieldWeakShaft == 0)
     {
         // Автоматический сброс позиций
-        if (getKeyState(KEY_E))
+        if (key_brakes_auto)
         {
             if (!autoReset)
             {
@@ -176,7 +185,7 @@ void Km21KR2::stepKeysControl(double t, double dt)
         }
 
         // Автоматический набор позиций
-        if (getKeyState(KEY_Q))
+        if (key_traction_auto)
         {
             if (!autoSet)
                 sounds[MAIN_NONFIXED_ON_SOUND].play();
@@ -186,10 +195,10 @@ void Km21KR2::stepKeysControl(double t, double dt)
     }
 
     // Сброс одной позиции
-    if (getKeyState(KEY_D))
+    if (key_brakes)
     {
         // Возврат контроллера - сброс ослабления поля полностью
-        if (isControl() && (fieldWeakShaft > 0))
+        if (isControl && (fieldWeakShaft > 0))
         {
             fieldWeakShaft = 0;
             mainShaftHeight = 0.0;
@@ -200,7 +209,7 @@ void Km21KR2::stepKeysControl(double t, double dt)
         }
 
         // Ослабление поля
-        if (is_dec && isShift() && (fieldWeakShaft > 0))
+        if (is_dec && isShift && (fieldWeakShaft > 0))
         {
             // Сброс одной позиции ослабления поля
             fieldWeakShaft -= 2;
@@ -217,7 +226,7 @@ void Km21KR2::stepKeysControl(double t, double dt)
         else
         {
             // Озвучка сброса одной позиции
-            if (is_dec && (!isControl()) && (!isShift()) && (fieldWeakShaft == 0))
+            if (is_dec && (!isControl) && (!isShift) && (fieldWeakShaft == 0))
                 sounds[MAIN_NONFIXED_ON_SOUND].play();
         }
         // Запрещаем озвучку следующего сброса позиции, пока не отпустим клавишу
@@ -228,7 +237,7 @@ void Km21KR2::stepKeysControl(double t, double dt)
     else
     {
         // Озвучка возврата контроллера
-        if ((!is_dec) && (no_from_weak) && (!isControl()) && (!isShift()) && (fieldWeakShaft == 0))
+        if ((!is_dec) && (no_from_weak) && (!isControl) && (!isShift) && (fieldWeakShaft == 0))
             sounds[MAIN_NONFIXED_OFF_SOUND].play();
 
         // Клавиша отпущена, разрешаем озвучку следующего сброса позиции
@@ -237,10 +246,10 @@ void Km21KR2::stepKeysControl(double t, double dt)
     }
 
     // Набор одной позиции
-    if (getKeyState(KEY_A))
+    if (key_traction)
     {
         // Ослабление поля
-        if (is_inc && isShift())
+        if (is_inc && isShift)
         {
             // Задаём вдавленное состояние контроллера
             if (fieldWeakShaft == 0)

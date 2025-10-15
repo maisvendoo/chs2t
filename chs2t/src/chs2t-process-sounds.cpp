@@ -51,8 +51,8 @@ void CHS2T::soundsOutput(const simulator_time_t& t, const double& dt)
     // Скоростемер
     analogSignal[SOUND_SPEED_METER_SL2M] = speed_meter[CAB1]->getSoundSignal();
     // ЭПК
-    analogSignal[SOUND_EPK_KEY] = key_epk[CAB1].getSoundSignal();
-    analogSignal[SOUND_EPK_WHISTLE] = epk[CAB1]->getSoundSignal();
+    analogSignal[SOUND_EPK_KEY] = epk[CAB1]->getSoundSignal(AutoTrainStop::KEY_STATE_CHANGED);
+    analogSignal[SOUND_EPK_WHISTLE] = epk[CAB1]->getSoundSignal(AutoTrainStop::AUTOSTOP_WHISTLE);
 
     // Токоприёмники
     analogSignal[SOUND_PANT_BWD_UP] = pantographs[1]->getSoundSignal(Pantograph::UP_SOUND);

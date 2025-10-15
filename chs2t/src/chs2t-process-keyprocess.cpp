@@ -10,6 +10,10 @@ void CHS2T::keyProcess(const simulator_time_t& t, const double& dt)
     // Тифон и свисток
     horn->setControl(&pressed_keys, &control_signals);
 
+    // Не допускаем двух ключей в электропневматических клапанах автостопа
+    epk[CAB2]->allowKey(!(epk[CAB1]->isKey()));
+    epk[CAB1]->allowKey(!(epk[CAB2]->isKey()));
+
     for (size_t cab_idx : {CAB1, CAB2})
     {
         km21KR2[cab_idx]->setControl(&pressed_keys_by_cabine[cab_idx], &control_signals);
@@ -90,7 +94,6 @@ void CHS2T::keyProcess(const simulator_time_t& t, const double& dt)
         }
         rb[cab_idx][RB1].step();
         rb[cab_idx][RBP].step();
-        key_epk[cab_idx].step();
         EDT_switch[cab_idx].step();
         button_sbros_cpc[cab_idx].step();
     }
