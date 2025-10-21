@@ -12,6 +12,7 @@
 //------------------------------------------------------------------------------
 
 #include    "chs2t.h"
+#include    "chs2t-signals.h"
 
 #include    "filesystem.h"
 
@@ -20,6 +21,8 @@
 //------------------------------------------------------------------------------
 CHS2T::CHS2T() : Vehicle()
 {
+    analogSignal.resize(SIGNALS_NUM_TOTAL);
+
     pressed_keys_by_cabine.resize(CABS_NUM);
     pressed_keys_by_cabine.shrink_to_fit();
 
