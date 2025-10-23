@@ -304,7 +304,7 @@ private:
     DCMotorFan* motor_fan_ptr = nullptr;
 
     /// Свисток и тифон
-    TrainHorn*   horn = nullptr;
+    TrainHorn*   horn[CABS_NUM] = {nullptr, nullptr};
 
     /// Система подачи песка
     SandingSystem*   sand_system = nullptr;

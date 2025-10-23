@@ -29,7 +29,8 @@ void CHS2T::stepPneumoSupply(const double& t, const double& dt)
     }
 
     // Питательная магистраль
-    FL_flow += horn->getFLflow();
+    FL_flow += horn[CAB1]->getFLflow();
+    FL_flow += horn[CAB2]->getFLflow();
     FL_flow += sand_system->getFLflow();
     FL_flow += brake_crane[CAB1]->getFLflow();
 //    FL_flow += brake_crane[CAB2]->getFLflow();

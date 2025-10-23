@@ -169,8 +169,10 @@ void CHS2T::stepSupportEquipment(const double& t, const double& dt)
 //------------------------------------------------------------------------------
 void CHS2T::stepOtherEquipment(const double& t, const double& dt)
 {
-    horn->setFLpressure(main_reservoir->getPressure());
-    horn->step(t, dt);
+    horn[CAB1]->setFLpressure(main_reservoir->getPressure());
+    horn[CAB1]->step(t, dt);
+    horn[CAB2]->setFLpressure(main_reservoir->getPressure());
+    horn[CAB2]->step(t, dt);
 
     // Система подачи песка
     sand_system->setFLpressure(main_reservoir->getPressure());

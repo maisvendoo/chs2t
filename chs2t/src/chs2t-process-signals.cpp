@@ -10,101 +10,166 @@ void CHS2T::signalsOutput(const simulator_time_t& t, const double& dt)
     (void) t;
     (void) dt;
 
-    analogSignal[STRELKA_POS] = static_cast<float>(stepSwitch->getPoz()) / 42.0f;
+    analogSignal[SERIAL_NUMBER] = 1543.0f;
 
-    analogSignal[STRELKA_AMP1] = static_cast<float>(motor->getI12() / 1000.0);
+    // Вращение колёсных пар
+    analogSignal[WHEELSET_1] = static_cast<float>(wheel_rotation_angle[0] / 2.0 / Physics::PI);
+    analogSignal[WHEELSET_2] = static_cast<float>(wheel_rotation_angle[1] / 2.0 / Physics::PI);
+    analogSignal[WHEELSET_3] = static_cast<float>(wheel_rotation_angle[2] / 2.0 / Physics::PI);
+    analogSignal[WHEELSET_4] = static_cast<float>(wheel_rotation_angle[3] / 2.0 / Physics::PI);
+    analogSignal[WHEELSET_5] = static_cast<float>(wheel_rotation_angle[4] / 2.0 / Physics::PI);
+    analogSignal[WHEELSET_6] = static_cast<float>(wheel_rotation_angle[5] / 2.0 / Physics::PI);
 
-    if (EDT)
-    {
-        analogSignal[STRELKA_AMP3] = static_cast<float>(abs(generator->getIa()) / 1000.0);
-        analogSignal[STRELKA_AMP2] = static_cast<float>(abs(generator->getIf()) / 1000.0);
-    }
-    else
-    {
-        analogSignal[STRELKA_AMP3] = static_cast<float>(motor->getI56() / 1000.0);
-        analogSignal[STRELKA_AMP2] = static_cast<float>(motor->getI34() / 1000.0);
-    }
-
-    analogSignal[STRELKA_PM] = static_cast<float>(main_reservoir->getPressure() / 1.6);
-    analogSignal[STRELKA_TC] = static_cast<float>(brake_mech[TROLLEY_FWD]->getBCpressure() / 1.0);
-    analogSignal[STRELKA_EDT] = static_cast<float>(brake_ref_res->getPressure() / 1.0);
-    analogSignal[STRELKA_UR] = static_cast<float>(brake_crane[CAB1]->getERpressure() / 1.0);
-    analogSignal[STRELKA_TM] = static_cast<float>(brakepipe->getPressure() / 1.0);
-
-    analogSignal[STRELKA_UKS] = static_cast<float>(U_kr / 4000.0);
-
-    analogSignal[STRELKA_U_BAT] = static_cast<float>(U_bat / 100.0);
-    analogSignal[STRELKA_U_EPT] = static_cast<float>(epb_converter->getOutputVoltage() / 100.0);
-
-    analogSignal[KRAN395_RUK] = static_cast<float>(brake_crane[CAB1]->getHandlePosition());
-    analogSignal[KRAN254_RUK] = static_cast<float>(loco_crane[CAB1]->getHandlePosition());
-
-    analogSignal[KONTROLLER] = static_cast<float>(km21KR2[CAB1]->getMainShaftPos());
-    analogSignal[REVERSOR] = static_cast<float>(stepSwitch->getReverseState());
-    analogSignal[SHTURVAL] = static_cast<float>(km21KR2[CAB1]->getHandleHeight());
-    analogSignal[SHTUR_SVISTOK] = static_cast<float>(horn->isSvistok());
-
-    analogSignal[SIGLIGHT_P] = static_cast<float>(stepSwitch->isParallel());
-    analogSignal[SIGLIGHT_SP] = static_cast<float>(stepSwitch->isSeriesParallel());
-    analogSignal[SIGLIGHT_S] = static_cast<float>(stepSwitch->isSeries());
-    analogSignal[SIGLIGHT_ZERO] = static_cast<float>(stepSwitch->isZero());
-
-    analogSignal[SIGLIGHT_R] = static_cast<float>(EDT);
-
-    analogSignal[SIGLIGHT_O] = static_cast<float>(epb_control->stateReleaseLamp());
-    analogSignal[SIGLIGHT_PEREKRISHA] = static_cast<float>(epb_control->stateHoldLamp());
-    analogSignal[SIGLIGHT_T] = static_cast<float>(epb_control->stateBrakeLamp());
-
-    analogSignal[SIGLIGHT_NO_BRAKES_RELEASE] = static_cast<float>(brake_mech[0]->getBCpressure() >= 0.1);
-
-    analogSignal[PANT1] = static_cast<float>(pantographs[0]->getHeight());
-    analogSignal[PANT2] = static_cast<float>(pantographs[1]->getHeight());
-
-    analogSignal[SW_PNT1] = pant_switcher[CAB1][0].getHandlePosition();
-    analogSignal[SW_PNT2] = pant_switcher[CAB1][1].getHandlePosition();
-
-    analogSignal[SIGLIGHT_RAZED] = static_cast<float>( !pant_switch[0].getState() && !pant_switch[1].getState() );
-
-    analogSignal[INDICATOR_BV] = static_cast<float>(bv->getLampState());
-
-    analogSignal[SW_BV] = fastswitch_switcher[CAB1].getHandlePosition();
-    analogSignal[SW_MV] = motor_fan_switcher[CAB1].getHandlePosition();
-    analogSignal[SW_MK1] = mk_switcher[CAB1][0].getHandlePosition();
-    analogSignal[SW_MK2] = mk_switcher[CAB1][1].getHandlePosition();
-
-    analogSignal[SW_EPT] = static_cast<float>(epb_switch[CAB1].getState());
-
-    analogSignal[SW_VK] = blinds_switcher[CAB1].getHandlePosition();
-
+    // Открытие жалюзи охлаждение пуско-тормозных резисторов
     analogSignal[BLINDS] = blinds->getPosition();
-    analogSignal[SIGLIGHT_GALYZI] = static_cast<float>(blinds->isOpened());
 
-    analogSignal[HANDLE_RT] = handleEDT[CAB1]->getHandlePos();
+    // Состояние токоприемников
+    analogSignal[PANT1_POS] = static_cast<float>(pantographs[PANT1]->getHeight());
+    analogSignal[PANT2_POS] = static_cast<float>(pantographs[PANT2]->getHeight());
 
-    analogSignal[STRELKA_SPEED] = speed_meter[CAB1]->getArrowPos();
-    analogSignal[VAL_PR_SKOR1] = speed_meter[CAB1]->getShaftPos();
-    analogSignal[VAL_PR_SKOR2] = speed_meter[CAB1]->getShaftPos();
+    // Поворот часовой и минутной стрелки на скоростемерах
+    analogSignal[TIME_3SL2M_HOUR] = static_cast<float>(t.time.hour()) + static_cast<float>(t.time.minute()) / 60.0f;
+    analogSignal[TIME_3SL2M_MINUTE] = static_cast<float>(t.time.minute()) + static_cast<float>(t.time.sec()) / 60.0f;
 
-    analogSignal[SW_EDT] = EDT_switch[CAB1].getState();
+    // Кабины
+    for (auto cab_idx : {CAB1, CAB2})
+    {
+        std::uint16_t d = (SPOTLIGHT_BWD - SPOTLIGHT_FWD) * cab_idx;
 
-    // Лампы локомотивного светофора
-    analogSignal[LS_W] = safety_device[CAB1]->getWhiteLamp();
-    analogSignal[LS_YR] = safety_device[CAB1]->getRedYellowLamp();
-    analogSignal[LS_R] = safety_device[CAB1]->getRedLamp();
-    analogSignal[LS_Y] = safety_device[CAB1]->getYellowLamp();
-    analogSignal[LS_G] = safety_device[CAB1]->getGreenLamp();
-    analogSignal[EPK] = static_cast<float>(epk[CAB1]->isKeyOn());
+        // Прожектор
+        analogSignal[SPOTLIGHT_FWD + d] = 0.5f * static_cast<float>(spotlight_switcher[cab_idx].isSwitched(1)) +
+                                          static_cast<float>(spotlight_switcher[cab_idx].isSwitched(2));
 
-    analogSignal[CAB1_RBS] = static_cast<float>(rb[CAB1][RBS].getState());
-    analogSignal[CAB1_RB1] = static_cast<float>(rb[CAB1][RB1].getState());
+        // Буферные огни
+        analogSignal[BUFFERLIGHT_FWD_L_WHITE + d] = static_cast<float>(bufferlight_L_switcher[cab_idx].isSwitched(2));
+        analogSignal[BUFFERLIGHT_FWD_L_RED + d] = static_cast<float>(bufferlight_L_switcher[cab_idx].isSwitched(0));
+        analogSignal[BUFFERLIGHT_FWD_R_WHITE + d] = static_cast<float>(bufferlight_R_switcher[cab_idx].isSwitched(2));
+        analogSignal[BUFFERLIGHT_FWD_R_RED + d] = static_cast<float>(bufferlight_R_switcher[cab_idx].isSwitched(0));
 
-    analogSignal[BUTTON_SBROS_CPC] = static_cast<float>(button_sbros_cpc[CAB1].getState());
-    analogSignal[BUTTON_LOCO_RELEASE] = static_cast<float>(button_loco_release[CAB1].getState());
+        // Свет в кабине
+        analogSignal[CAB1_LIGHT_CABINE + d] = static_cast<float>(cab_light_switcher[cab_idx].isSwitched(3)) +
+                                              0.5f * static_cast<float>(cab_light_switcher[cab_idx].isSwitched(4));
 
-    analogSignal[WHEEL_1] = static_cast<float>(wheel_rotation_angle[0] / 2.0 / Physics::PI);
-    analogSignal[WHEEL_2] = static_cast<float>(wheel_rotation_angle[1] / 2.0 / Physics::PI);
-    analogSignal[WHEEL_3] = static_cast<float>(wheel_rotation_angle[2] / 2.0 / Physics::PI);
-    analogSignal[WHEEL_4] = static_cast<float>(wheel_rotation_angle[3] / 2.0 / Physics::PI);
-    analogSignal[WHEEL_5] = static_cast<float>(wheel_rotation_angle[4] / 2.0 / Physics::PI);
-    analogSignal[WHEEL_6] = static_cast<float>(wheel_rotation_angle[5] / 2.0 / Physics::PI);
+        // Подсветка приборов
+        analogSignal[CAB1_LIGHT_DEVICES + d] = 0.5f * static_cast<float>(cab_light_switcher[cab_idx].isSwitched(1)) +
+                                               static_cast<float>(cab_light_switcher[cab_idx].isSwitched(0));
+
+        // Лампы локомотивного светофора
+        analogSignal[CAB1_LS_WHITE + d] = safety_device[cab_idx]->getWhiteLamp();
+        analogSignal[CAB1_LS_RED + d] = safety_device[cab_idx]->getRedLamp();
+        analogSignal[CAB1_LS_REDYELLOW + d] = safety_device[cab_idx]->getRedYellowLamp();
+        analogSignal[CAB1_LS_YELLOW + d] = safety_device[cab_idx]->getYellowLamp();
+        analogSignal[CAB1_LS_GREEN + d] = safety_device[cab_idx]->getGreenLamp();
+
+        // Сигнальные лампы
+        analogSignal[CAB1_SIGLIGHT_SHUTOFF_PANTS + d] = static_cast<float>( !pant_switch[PANT1].getState() && !pant_switch[PANT2].getState() );
+
+        analogSignal[CAB1_SIGLIGHT_BATTERY1 + d] = 0.0f;
+        analogSignal[CAB1_SIGLIGHT_BATTERY2 + d] = 0.0f;
+        analogSignal[CAB1_SIGLIGHT_RESISTS_FAN + d] = static_cast<float>(motor_fan_ptr->isPowered());
+        analogSignal[CAB1_SIGLIGHT_BLINDS + d] = static_cast<float>(blinds->isOpened());
+        analogSignal[CAB1_SIGLIGHT_ZASHITA + d] = 0.0f;
+        analogSignal[CAB1_SIGLIGHT_PESOK + d] = static_cast<float>(sand_system->isSandDelivery());
+        analogSignal[CAB1_SIGLIGHT_NO_BRAKES_RELEASE + d] = static_cast<float>(brake_mech[cab_idx]->getBCpressure() > 0.05);
+        analogSignal[CAB1_SIGLIGHT_SYNC_FAIL + d] = 0.0f;
+        analogSignal[CAB1_SIGLIGHT_0 + d] = static_cast<float>(stepSwitch->isZero());
+        analogSignal[CAB1_SIGLIGHT_S + d] = static_cast<float>(stepSwitch->isSeries());
+        analogSignal[CAB1_SIGLIGHT_SP + d] = static_cast<float>(stepSwitch->isSeriesParallel());
+        analogSignal[CAB1_SIGLIGHT_P + d] = static_cast<float>(stepSwitch->isParallel());
+        analogSignal[CAB1_SIGLIGHT_REOSTAT + d] = static_cast<float>(EDT);
+        analogSignal[CAB1_SIGLIGHT_EPB_BRAKE + d] = static_cast<float>(epb_control->stateBrakeLamp());
+        analogSignal[CAB1_SIGLIGHT_EPB_HOLD + d] = static_cast<float>(epb_control->stateHoldLamp());
+        analogSignal[CAB1_SIGLIGHT_EPB_CONTROL + d] = static_cast<float>(epb_control->stateReleaseLamp());
+
+        // Скоростемер
+        analogSignal[CAB1_3SL2M_SPEED + d] = speed_meter[cab_idx]->getArrowPos();
+        analogSignal[CAB1_3SL2M_SHAFT + d] = speed_meter[cab_idx]->getShaftPos();
+
+        // Циферблаты
+        analogSignal[CAB1_BATTERY_VOLTAGE + d] = static_cast<float>(U_bat / 100.0);
+        analogSignal[CAB1_EPB_VOLTAGE + d] = static_cast<float>(epb_converter->getOutputVoltage() / 100.0);
+        analogSignal[CAB1_WIRE_VOLTAGE + d] = static_cast<float>(U_kr / 4000.0);
+
+        analogSignal[CAB1_KONTROLLER_POSITION + d] = static_cast<float>(stepSwitch->getPoz()) / 42.0f;
+
+        if (EDT)
+        {
+            analogSignal[CAB1_ENGINE_CURRENT_1_2 + d] = 0.0f;
+            analogSignal[CAB1_ENGINE_CURRENT_3_4 + d] = static_cast<float>(abs(generator->getIf()) / 1000.0);
+            analogSignal[CAB1_ENGINE_CURRENT_5_6 + d] = static_cast<float>(abs(generator->getIa()) / 1000.0);
+        }
+        else
+        {
+            analogSignal[CAB1_ENGINE_CURRENT_1_2 + d] = static_cast<float>(motor->getI12() / 1000.0);
+            analogSignal[CAB1_ENGINE_CURRENT_3_4 + d] = static_cast<float>(motor->getI34() / 1000.0);
+            analogSignal[CAB1_ENGINE_CURRENT_5_6 + d] = static_cast<float>(motor->getI56() / 1000.0);
+        }
+
+        analogSignal[CAB1_PRESSURE_BP + d] = static_cast<float>(brakepipe->getPressure() / 1.0);
+        analogSignal[CAB1_PRESSURE_ER + d] = static_cast<float>(brake_crane[cab_idx]->getERpressure() / 1.0);
+        analogSignal[CAB1_PRESSURE_REF + d] = static_cast<float>(brake_ref_res->getPressure() / 1.0);
+        analogSignal[CAB1_PRESSURE_FL + d] = static_cast<float>(main_reservoir->getPressure() / 1.6);
+        analogSignal[CAB1_PRESSURE_BC + d] = static_cast<float>(brake_mech[cab_idx]->getBCpressure() / 1.0);
+
+        // Контроллер машиниста
+        analogSignal[CAB1_KM_IS_REVERS_HANDLE + d] = 1.0f;
+        analogSignal[CAB1_KM_REVERSOR_POS + d] = static_cast<float>(stepSwitch->getReverseState());
+        analogSignal[CAB1_KM_CONTROLLER_POS + d] = static_cast<float>(km21KR2[cab_idx]->getMainShaftPos());
+        analogSignal[CAB1_KM_CONTROLLER_HEIGHT + d] = static_cast<float>(km21KR2[cab_idx]->getHandleHeight());
+        analogSignal[CAB1_BRAKE_STICK_POS + d] = handleEDT[cab_idx]->getHandlePos();
+
+        // Приборы управления тормозами
+        analogSignal[CAB1_SHUTOFF_CRANE_POS + d] = 1.0f;
+        analogSignal[CAB1_COMBINE_CRANE_POS + d] = 0.0f;
+        analogSignal[CAB1_BRAKE_CRANE_HANDLE_POS + d] = static_cast<float>(brake_crane[cab_idx]->getHandlePosition());
+        analogSignal[CAB1_LOCO_CRANE_HANDLE_POS + d] = static_cast<float>(loco_crane[cab_idx]->getHandlePosition());
+        analogSignal[CAB1_AUTOSTOP_IS_KEY + d] = static_cast<float>(epk[cab_idx]->isKey());
+        analogSignal[CAB1_AUTOSTOP_KEY_POS + d] = static_cast<float>(epk[cab_idx]->isKeyOn());
+
+        // Педали
+        analogSignal[CAB1_SAND + d] = static_cast<float>(sand_system->isSandDelivery());
+        analogSignal[CAB1_TIFON + d] = static_cast<float>(horn[cab_idx]->isTifon());
+
+        // Кнопки
+        analogSignal[CAB1_WHISTLE + d] = static_cast<float>(horn[cab_idx]->isSvistok());
+        analogSignal[CAB1_BRAKE_RELEASE + d] = static_cast<float>(button_loco_release[cab_idx].getState());
+        analogSignal[CAB1_RESET_POS_TO_NONREOSTAT + d] = static_cast<float>(button_sbros_cpc[cab_idx].getState());
+        analogSignal[CAB1_FAST_SWITCH_OFF + d] = 0.0f;
+        analogSignal[CAB1_RBS + d] = static_cast<float>(rb[cab_idx][RBS].getState());
+        analogSignal[CAB1_RB_1 + d] = static_cast<float>(rb[cab_idx][RB1].getState());
+        analogSignal[CAB1_RBP + d] = static_cast<float>(rb[cab_idx][RBP].getState());
+        analogSignal[CAB1_P_SAND + d] = 0.0f;
+        analogSignal[CAB1_P_TIFON + d] = 0.0f;
+        analogSignal[CAB1_P_WHISTLE + d] = 0.0f;
+        analogSignal[CAB1_MANEOURUS_POS_INC + d] = 0.0f;
+        analogSignal[CAB1_MANEOURUS_POS_RESET + d] = 0.0f;
+        analogSignal[CAB1_MANEOURUS_WHISTLE + d] = 0.0f;
+
+        // Переключатели
+        analogSignal[CAB1_SWITCHERS_PANEL_IS_KEY + d] = 1.0f;
+        analogSignal[CAB1_SWITCHERS_PANEL_KEY_POS + d] = 1.0f;
+        // Верхний ряд
+        analogSignal[CAB1_SWITCHER_EPB + d] = static_cast<float>(epb_switch[cab_idx].getState());
+        analogSignal[CAB1_SWITCHER_COMPR_1 + d] = mk_switcher[cab_idx][MK1].getHandlePosition();
+        analogSignal[CAB1_SWITCHER_PANT_FWD + d] = pant_switcher[cab_idx][PANT1].getHandlePosition();
+        analogSignal[CAB1_SWITCHER_FAST_SWITCH + d] = fastswitch_switcher[cab_idx].getHandlePosition();
+        // Средний ряд
+        analogSignal[CAB1_SWITCHER_FANS + d] = motor_fan_switcher[cab_idx].getHandlePosition();
+        analogSignal[CAB1_SWITCHER_COMPR_2 + d] = mk_switcher[cab_idx][MK2].getHandlePosition();
+        analogSignal[CAB1_SWITCHER_PANT_BWD + d] = pant_switcher[cab_idx][PANT2].getHandlePosition();
+        analogSignal[CAB1_SWITCHER_AUXCOMPR_SAND_BLINDS + d] = blinds_switcher[cab_idx].getHandlePosition();
+        // Нижний ряд
+        analogSignal[CAB1_SWITCHER_LIGHT_CAB_DEVICES + d] = cab_light_switcher[cab_idx].getHandlePosition();
+        analogSignal[CAB1_SWITCHER_BUFFERLIGHT_L + d] = bufferlight_L_switcher[cab_idx].getHandlePosition();
+        analogSignal[CAB1_SWITCHER_BUFFERLIGHT_R + d] = bufferlight_R_switcher[cab_idx].getHandlePosition();
+        analogSignal[CAB1_SWITCHER_SPOTLIGHT + d] = spotlight_switcher[cab_idx].getHandlePosition();
+        // Выключатель ЭДТ
+        analogSignal[CAB1_SWITCHER_EDB + d] = static_cast<float>(EDT_switch[cab_idx].getState());
+
+        analogSignal[CAB1_INDICATOR_FAST_SWITCH] = static_cast<float>(bv->getLampState());
+        analogSignal[CAB1_DIMMER_LIGHT_DEVICES] = 1.0f;
+        analogSignal[CAB1_POWER_TRAINHEAT_KEY] = 0.0f;
+        analogSignal[CAB1_POWER_TRAINHEAT_INDICATOR] = 0.0f;
+        analogSignal[CAB1_STOP_HANDLE] = 0.0f;
+    }
 }

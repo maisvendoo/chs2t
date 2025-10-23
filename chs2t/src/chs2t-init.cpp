@@ -91,8 +91,11 @@ void CHS2T::initOtherEquipment(const QString& modules_dir, const QString& custom
 {
     (void) modules_dir;
 
-    horn = new TrainHorn();
-    horn->read_config("train-horn");
+    for (auto cab_idx : {CAB1, CAB2})
+    {
+        horn[cab_idx] = new TrainHorn();
+        horn[cab_idx]->read_config("train-horn");
+    }
 
     // Система подачи песка
     sand_system = new SandingSystem();

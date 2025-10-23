@@ -5,11 +5,6 @@
 //------------------------------------------------------------------------------
 void CHS2T::keyProcess(const simulator_time_t& t, const double& dt)
 {
-    // Песочница
-    sand_system->setControl(&pressed_keys);
-    // Тифон и свисток
-    horn->setControl(&pressed_keys, &control_signals);
-
     // Не допускаем двух ключей в электропневматических клапанах автостопа
     epk[CAB2]->allowKey(!(epk[CAB1]->isKey()));
     epk[CAB1]->allowKey(!(epk[CAB2]->isKey()));

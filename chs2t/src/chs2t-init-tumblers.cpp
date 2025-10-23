@@ -67,11 +67,17 @@ void CHS2T::initControl(const QString &modules_dir, const QString &custom_cfg_di
     hose_bp_bwd->setKeyModifierDisconnect(MODIFIER_OnlyControl);
     hose_bp_bwd->setControl(&pressed_keys);
 
+    // Песочница
+    sand_system->setControl(&pressed_keys);
+
 
     for (auto cab_idx : {CAB1, CAB2})
     {
         // Электропневматический клапан автостопа
         epk[cab_idx]->setControl(&pressed_keys_by_cabine[cab_idx]);
+
+        // Тифон, свисток
+        horn[cab_idx]->setControl(&pressed_keys_by_cabine[cab_idx]);
 
         // Кнопка "Свисток"
         button_svistok[cab_idx].setKeySymbolOn(KEY_Space);
