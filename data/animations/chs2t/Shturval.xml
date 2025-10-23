@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Config>
 	<AnalogTranslation>
-		<SignalID>2</SignalID>
-		<Duration>30.0</Duration>		
+		<SignalID>53</SignalID>
+		<Duration>30.0</Duration>
 		<Axis>0.0 0.0 1.0</Axis>
 	</AnalogTranslation>
 
@@ -14,6 +14,6 @@
 	<KeyPoint>
 		<Param>1.0</Param>
 		<Value>0.02</Value>
-	</KeyPoint>	
+	</KeyPoint>
 
 </Config>

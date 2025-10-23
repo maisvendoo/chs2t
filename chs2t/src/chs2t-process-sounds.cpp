@@ -94,20 +94,20 @@ void CHS2T::soundsOutput(const simulator_time_t& t, const double& dt)
     analogSignal[SOUND_110_X] = sound_state_t::createSoundSignal(Vkmh > 110.0);
 
     // Токоприёмники
-    analogSignal[SOUND_PANT_BWD_UP] = pantographs[1]->getSoundSignal(Pantograph::UP_SOUND);
-    analogSignal[SOUND_PANT_BWD_DOWN] = pantographs[1]->getSoundSignal(Pantograph::DOWN_SOUND);
-    analogSignal[SOUND_PANT_FWD_UP] = pantographs[0]->getSoundSignal(Pantograph::UP_SOUND);
-    analogSignal[SOUND_PANT_FWD_DOWN] = pantographs[0]->getSoundSignal(Pantograph::DOWN_SOUND);
+    analogSignal[SOUND_PANT_FWD_UP] = pantographs[PANT1]->getSoundSignal(Pantograph::UP_SOUND);
+    analogSignal[SOUND_PANT_FWD_DOWN] = pantographs[PANT1]->getSoundSignal(Pantograph::DOWN_SOUND);
+    analogSignal[SOUND_PANT_BWD_UP] = pantographs[PANT2]->getSoundSignal(Pantograph::UP_SOUND);
+    analogSignal[SOUND_PANT_BWD_DOWN] = pantographs[PANT2]->getSoundSignal(Pantograph::DOWN_SOUND);
     // Главный выключатель
     analogSignal[SOUND_BV_ON] = bv->getSoundSignal(ProtectiveDevice::ON_SOUND);
     analogSignal[SOUND_BV_OFF] = bv->getSoundSignal(ProtectiveDevice::OFF_SOUND);
 
     // Мотор-компрессоры
-    analogSignal[SOUND_COMPRESSOR_1] = motor_compressor[0]->getSoundSignal();
-    analogSignal[SOUND_COMPRESSOR_2] = motor_compressor[1]->getSoundSignal();
+    analogSignal[SOUND_COMPRESSOR_1] = motor_compressor[MK1]->getSoundSignal();
+    analogSignal[SOUND_COMPRESSOR_2] = motor_compressor[MK2]->getSoundSignal();
     // Мотор-вентиляторы
-    analogSignal[SOUND_FAN_1] = motor_fan[0]->getSoundSignal();
-    analogSignal[SOUND_FAN_2] = motor_fan[1]->getSoundSignal();
+    analogSignal[SOUND_FAN_1] = motor_fan[TROLLEY_FWD]->getSoundSignal();
+    analogSignal[SOUND_FAN_2] = motor_fan[TROLLEY_BWD]->getSoundSignal();
     analogSignal[SOUND_FAN_RESIST] = motor_fan_ptr->getSoundSignal();
 
     // Песочница
