@@ -462,7 +462,7 @@
 	</Sound>
 	<!-- Прожектор -->
 	<Sound>
-		<SignalID>243</SignalID>
+		<SignalID>244</SignalID>
 		<Filename>tumbler.wav</Filename>
 		<InitVolume>1.0</InitVolume>
 		<MaxVolume>1.0</MaxVolume>
@@ -474,7 +474,7 @@
 
 	<!-- Выключатель электродинамического тормоза -->
 	<Sound>
-		<SignalID>244</SignalID>
+		<SignalID>245</SignalID>
 		<Filename>tumbler.wav</Filename>
 		<InitVolume>1.0</InitVolume>
 		<MaxVolume>1.0</MaxVolume>
