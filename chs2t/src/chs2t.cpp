@@ -101,8 +101,6 @@ void CHS2T::process(const simulator_time_t& t, const double& dt)
 
     soundsOutput(t, dt);
 
-    stepSwitcherPanel(t, dt);
-
     hardwareOutput();
 }
 

@@ -77,7 +77,13 @@ void CHS2T::initControl(const QString &modules_dir, const QString &custom_cfg_di
         epk[cab_idx]->setControl(&pressed_keys_by_cabine[cab_idx]);
 
         // Контроллер машиниста
-        km21KR2[cab_idx]->setControl(&pressed_keys_by_cabine[cab_idx], &control_signals);
+        km21KR2[cab_idx]->setControl(&pressed_keys_by_cabine[cab_idx]/*, (cab_idx == CAB1) ? &control_signals : nullptr*/);
+
+        // Панель переключателей
+        sw_panel[cab_idx].setControl(&pressed_keys_by_cabine[cab_idx]/*, (cab_idx == CAB1) ? &control_signals : nullptr*/);
+
+        // Рукоятка задатчика тормозного усилия
+        handleEDT[cab_idx]->setControl(&pressed_keys_by_cabine[cab_idx]/*, (cab_idx == CAB1) ? &control_signals : nullptr*/);
 
         // Тифон, свисток
         horn[cab_idx]->setControl(&pressed_keys_by_cabine[cab_idx]);
@@ -110,6 +116,33 @@ void CHS2T::initControl(const QString &modules_dir, const QString &custom_cfg_di
         button_loco_release[cab_idx].setKeyModifierOff(KEY_Undefined);
         button_loco_release[cab_idx].setControl(&pressed_keys_by_cabine[cab_idx]);
 
+        // Кнопка "Сброс СП-С"
+        button_sbros_cpc[cab_idx].setKeySymbolOn(KEY_R);
+        button_sbros_cpc[cab_idx].setKeyModifierOn(ANY_MODIFIERS);
+        button_sbros_cpc[cab_idx].setKeySymbolOff(KEY_Undefined);
+        button_sbros_cpc[cab_idx].setKeyModifierOff(KEY_Undefined);
+        button_sbros_cpc[cab_idx].setControl(&pressed_keys_by_cabine[cab_idx]);
+
+        // Триггеры рукояток бдительности
+        rb[cab_idx][RBS].setKeySymbolOn(KEY_M);
+        rb[cab_idx][RBS].setKeyModifierOn(ANY_MODIFIERS);
+        rb[cab_idx][RBS].setKeySymbolOff(KEY_Undefined);
+        rb[cab_idx][RBS].setKeyModifierOff(KEY_Undefined);
+        rb[cab_idx][RBS].setControl(&pressed_keys_by_cabine[cab_idx]);
+
+        rb[cab_idx][RB1].setKeySymbolOn(KEY_Z);
+        rb[cab_idx][RB1].setKeyModifierOn(ANY_MODIFIERS);
+        rb[cab_idx][RB1].setKeySymbolOff(KEY_Undefined);
+        rb[cab_idx][RB1].setKeyModifierOff(KEY_Undefined);
+        rb[cab_idx][RB1].setControl(&pressed_keys_by_cabine[cab_idx]);
+
+        rb[cab_idx][RBP].setKeySymbolOn(KEY_Tilde);
+        rb[cab_idx][RBP].setKeyModifierOn(ANY_MODIFIERS);
+        rb[cab_idx][RBP].setKeySymbolOff(KEY_Undefined);
+        rb[cab_idx][RBP].setKeyModifierOff(KEY_Undefined);
+        rb[cab_idx][RBP].setControl(&pressed_keys_by_cabine[cab_idx]);
+
+// Удалить после переписывания на sw_panel
         // Тумблер включения ЭПТ
         epb_switch[cab_idx].setKeySymbolOn(KEY_V);
         epb_switch[cab_idx].setKeyModifierOn(MODIFIER_OnlyShift);
@@ -217,37 +250,11 @@ void CHS2T::initControl(const QString &modules_dir, const QString &custom_cfg_di
         spotlight_switcher[cab_idx].setControl(&pressed_keys_by_cabine[cab_idx]);
         spotlight_switcher[cab_idx].setInitPosition(0);
 
-        // Триггеры рукояток бдительности
-        rb[cab_idx][RBS].setKeySymbolOn(KEY_M);
-        rb[cab_idx][RBS].setKeyModifierOn(ANY_MODIFIERS);
-        rb[cab_idx][RBS].setKeySymbolOff(KEY_Undefined);
-        rb[cab_idx][RBS].setKeyModifierOff(KEY_Undefined);
-        rb[cab_idx][RBS].setControl(&pressed_keys_by_cabine[cab_idx]);
-
-        rb[cab_idx][RB1].setKeySymbolOn(KEY_Z);
-        rb[cab_idx][RB1].setKeyModifierOn(ANY_MODIFIERS);
-        rb[cab_idx][RB1].setKeySymbolOff(KEY_Undefined);
-        rb[cab_idx][RB1].setKeyModifierOff(KEY_Undefined);
-        rb[cab_idx][RB1].setControl(&pressed_keys_by_cabine[cab_idx]);
-
-        rb[cab_idx][RBP].setKeySymbolOn(KEY_Tilde);
-        rb[cab_idx][RBP].setKeyModifierOn(ANY_MODIFIERS);
-        rb[cab_idx][RBP].setKeySymbolOff(KEY_Undefined);
-        rb[cab_idx][RBP].setKeyModifierOff(KEY_Undefined);
-        rb[cab_idx][RBP].setControl(&pressed_keys_by_cabine[cab_idx]);
-
         // Выключатель ЭДТ
         EDT_switch[cab_idx].setKeySymbolOn(KEY_F);
         EDT_switch[cab_idx].setKeyModifierOn(MODIFIER_OnlyShift);
         EDT_switch[cab_idx].setKeySymbolOff(KEY_F);
         EDT_switch[cab_idx].setKeyModifierOff(MODIFIER_OnlyControl);
         EDT_switch[cab_idx].setControl(&pressed_keys_by_cabine[cab_idx]);
-
-        // Кнопка "Сброс СП-С"
-        button_sbros_cpc[cab_idx].setKeySymbolOn(KEY_R);
-        button_sbros_cpc[cab_idx].setKeyModifierOn(ANY_MODIFIERS);
-        button_sbros_cpc[cab_idx].setKeySymbolOff(KEY_Undefined);
-        button_sbros_cpc[cab_idx].setKeyModifierOff(KEY_Undefined);
-        button_sbros_cpc[cab_idx].setControl(&pressed_keys_by_cabine[cab_idx]);
     }
 }

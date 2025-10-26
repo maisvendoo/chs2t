@@ -14,7 +14,7 @@ public:
     /// Конструктор
     Km21KR2(QObject *parent = Q_NULLPTR);
 
-    ///Деструктор
+    /// Деструктор
     ~Km21KR2();
 
     /// Разрешить установить реверсивку (для реализации одной рукоятки на несколько кабин)
@@ -78,17 +78,11 @@ private:
 
     void ode_system(const state_vector_t &Y, state_vector_t &dYdt, double t);
 
-    void load_config(CfgReader &cfg);
-
-    void preStep(state_vector_t &Y, double t);
-
     void stepKeysControl(double t, double dt);
 
     void stepExternalControl(double t, double dt);
 
     void connectSignals(ControllerSignals cs, bool &k);
-
-    void addSignalsInControllerState();
 
     /// Разрешение установить реверсивку (для реализации одной рукоятки на несколько кабин)
     bool is_reverse_handle_allowed = true;
@@ -96,52 +90,30 @@ private:
     /// Cостояние электромагнитной защёлки, разрешающей переключение реверса
     bool is_reverse_change_allowed = true;
 
+    /// Вдавленное состояние контроллера для управления ослаблением поля
+    bool ref_height_for_field_weak = false;
+
     /// Предыдущее состояние управляющих клавиш
     bool old_key_state_fwd_or_bwd = false;
     bool old_key_state_inc_or_dec = false;
 
-    /// Контакты реверсивного вала
-    bool k01 = false;
-    bool k02 = false;
-
-    /// Контакты командного вала
-    bool k21 = true;
-    bool k22 = true;
-    bool k23 = true;
-    bool k25 = false;
-
-    /// Контакты вала ослабления поля
-    bool k31 = false;
-    bool k32 = false;
-    bool k33 = false;
-
-    /// Вдавленное состояние контроллера для управления ослаблением поля
-    bool ref_height_for_field_weak = false;
+    /// Состояние всех контактов
+    ControllerState controlState;
 
     /// Положение реверсивной рукоятки
-    int reverseState;
+    int reverseState = 0;
 
-    int mainShaftPos;
-    int fieldWeakShaft;
+    /// Положение командного вала
+    int mainShaftPos = 0;
 
-    bool autoSet;
-    bool autoReset;
-    bool reverseIsPressedOneTime;
-
-
-    bool is_inc;
-    bool is_dec;
-    bool no_from_weak;
+    /// Положение вала ослабления поля
+    int fieldWeakShaft = 0;
 
     /// Признак реверсивной рукоятки
     Trigger is_revers_handle;
 
-    ControllerState controlState;
-
     /// Счётчик и состояние звуков
     std::array <sound_state_t, NUM_SOUNDS> sounds;
 };
-
-#define TO_INT(variable) static_cast<int>(variable)
 
 #endif // KM21KR2_H

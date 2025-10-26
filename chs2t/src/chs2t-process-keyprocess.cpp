@@ -53,24 +53,12 @@ void CHS2T::keyProcess(const simulator_time_t& t, const double& dt)
             loco_crane[cab_idx]->setControl(&pressed_keys_by_cabine[cab_idx]);
         }
 
-        handleEDT[cab_idx]->setControl(&pressed_keys_by_cabine[cab_idx], &control_signals);
+        sw_panel[cab_idx].step(t.simulation_seconds, dt);
 
         button_svistok[cab_idx].step();
         button_tifon[cab_idx].step();
         button_sand[cab_idx].step();
         button_loco_release[cab_idx].step();
-        epb_switch[cab_idx].step();
-        motor_fan_switcher[cab_idx].step();
-        mk_switcher[cab_idx][MK1].step();
-        mk_switcher[cab_idx][MK2].step();
-        pant_switcher[cab_idx][PANT1].step();
-        pant_switcher[cab_idx][PANT2].step();
-        fastswitch_switcher[cab_idx].step();
-        blinds_switcher[cab_idx].step();
-        cab_light_switcher[cab_idx].step();
-        bufferlight_L_switcher[cab_idx].step();
-        bufferlight_R_switcher[cab_idx].step();
-        spotlight_switcher[cab_idx].step();
 
         // Нажатие РБС
         // Если активна РБС на внешнем пульте
@@ -91,8 +79,21 @@ void CHS2T::keyProcess(const simulator_time_t& t, const double& dt)
         }
         rb[cab_idx][RB1].step();
         rb[cab_idx][RBP].step();
-        EDT_switch[cab_idx].step();
         button_sbros_cpc[cab_idx].step();
-    }
 
+// Удалить после переписывания на sw_panel
+        epb_switch[cab_idx].step();
+        motor_fan_switcher[cab_idx].step();
+        mk_switcher[cab_idx][MK1].step();
+        mk_switcher[cab_idx][MK2].step();
+        pant_switcher[cab_idx][PANT1].step();
+        pant_switcher[cab_idx][PANT2].step();
+        fastswitch_switcher[cab_idx].step();
+        blinds_switcher[cab_idx].step();
+        cab_light_switcher[cab_idx].step();
+        bufferlight_L_switcher[cab_idx].step();
+        bufferlight_R_switcher[cab_idx].step();
+        spotlight_switcher[cab_idx].step();
+        EDT_switch[cab_idx].step();
+    }
 }

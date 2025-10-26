@@ -15,6 +15,7 @@
 
 #include    "vehicle-api.h"
 
+#include    "switchers-panel.h"
 #include    "km-21kr2.h"
 #include    "stepswitch.h"
 #include    "pusk-rez.h"
@@ -112,6 +113,8 @@ private:
         CAB1 = 0,
         CAB2 = 1
     };
+
+    CHS2tSwitchers sw_panel[CABS_NUM] = {CHS2tSwitchers(), CHS2tSwitchers()};
 
     /// Кнопка "Свисток"
     TriggerControl button_svistok[CABS_NUM];
@@ -450,11 +453,6 @@ private:
     /// Сигналы для озвучки
     void soundsOutput(const simulator_time_t& t, const double& dt);
     float motorSoundSignal();
-
-    /// Изменение положений пакетников и тумблеров
-    void setSwitcherState(Switcher& sw, signal_t signal);
-    void setTriggerState(Trigger& trig, signal_t signal);
-    void stepSwitcherPanel(const simulator_time_t& t, const double& dt);
 
     /// Вывод данных на внешние СОИ
     void hardwareOutput();
