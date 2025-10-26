@@ -11,21 +11,36 @@ void CHS2T::stepPneumoSupply(const double& t, const double& dt)
 
     double FL_flow = 0.0;
 
+    // Соответствия, какими переключателями в кабинах управляются мотор-компрессоры
+    struct indexes {
+        std::uint8_t compr_idx;
+        std::uint8_t cab_idx[CABS_NUM];
+        std::uint8_t sw_idx[CABS_NUM];
+    };
+    constexpr indexes compr_indexes[NUM_MOTOR_KOMPRESSORS] =
+        {{MK1, {CAB1, CAB2}, {CHS2tSwitchers::COMPR_1, CHS2tSwitchers::COMPR_1}},
+         {MK2, {CAB1, CAB2}, {CHS2tSwitchers::COMPR_2, CHS2tSwitchers::COMPR_2}}};
+
     // Мотор-компрессоры
-    for (size_t i = 0; i < motor_compressor.size(); ++i)
+    for (const auto& [compr_idx, cab_idx, sw_idx] : compr_indexes)
     {
-        double U_power = 0.0;
+        bool compr_on = false;
 
-        if (    (mk_switcher[CAB1][i].getPosition() == 3)
-            || ((mk_switcher[CAB1][i].getPosition() == 2) && (press_reg->getState() )) )
+        for (const auto& cab : {CAB1, CAB2})
         {
-            U_power = bv->getU_out();
-        }
-        motor_compressor[i]->setFLpressure(main_reservoir->getPressure());
-        motor_compressor[i]->setPowerVoltage(U_power);
-        motor_compressor[i]->step(t, dt);
+            const bool is_on = sw_panel[cab_idx[cab]].isSwitched(sw_idx[cab], CHS2tSwitchers::COMPR_ON);
+            const bool is_auto = sw_panel[cab_idx[cab]].isSwitched(sw_idx[cab], CHS2tSwitchers::COMPR_AUTO);
 
-        FL_flow += motor_compressor[i]->getFLflow();
+            compr_on |= is_on;
+            compr_on |= (is_auto && press_reg->getState());
+        }
+        double U_power = compr_on ? bv->getU_out() : 0.0;
+
+        motor_compressor[compr_idx]->setFLpressure(main_reservoir->getPressure());
+        motor_compressor[compr_idx]->setPowerVoltage(U_power);
+        motor_compressor[compr_idx]->step(t, dt);
+
+        FL_flow += motor_compressor[compr_idx]->getFLflow();
     }
 
     // Питательная магистраль
@@ -37,7 +52,7 @@ void CHS2T::stepPneumoSupply(const double& t, const double& dt)
     FL_flow += loco_crane[CAB1]->getFLflow();
 //    FL_flow += loco_crane[CAB2]->getFLflow();
     FL_flow += epk[CAB1]->getFLflow();
-//    FL_flow += epk[CAB2]->getFLflow();
+    FL_flow += epk[CAB2]->getFLflow();
     FL_flow += dako->getFLflow();
     FL_flow += bc_pressure_relay->getFLflow();
 

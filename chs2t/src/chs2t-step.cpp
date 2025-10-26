@@ -5,25 +5,51 @@
 //------------------------------------------------------------------------------
 void CHS2T::stepPantographs(const double& t, const double& dt)
 {
-    // Управление разъединителями токоприемников
-    for (size_t i = 0; i < NUM_PANTOGRAPHS; ++i)
+    // Соответствия, какими переключателями в кабинах управляются токоприемники
+    struct indexes {
+        std::uint8_t pant_idx;
+        std::uint8_t cab_idx[CABS_NUM];
+        std::uint8_t sw_idx[CABS_NUM];
+    };
+    constexpr indexes pant_indexes[NUM_PANTOGRAPHS] =
+        {{PANT1, {CAB1, CAB2}, {CHS2tSwitchers::PANT_FWD, CHS2tSwitchers::PANT_BWD}},
+         {PANT2, {CAB1, CAB2}, {CHS2tSwitchers::PANT_BWD, CHS2tSwitchers::PANT_FWD}}};
+
+    // Управление токоприемниками и их разъединителями
+    for (const auto& [pant_idx, cab_idx, sw_idx] : pant_indexes)
     {
-        if (pant_switcher[CAB1][i].getPosition() == 3)
-            pant_switch[i].set();
+        bool pant_off = true;
+        bool pant_down = true;
+        bool pant_up = false;
+        bool pant_on = false;
 
-        if (pant_switcher[CAB1][i].getPosition() == 0)
-            pant_switch[i].reset();
+        for (const auto& cab : {CAB1, CAB2})
+        {
+            const bool is_off = sw_panel[cab_idx[cab]].isSwitched(sw_idx[cab], CHS2tSwitchers::PANT_OFF);
+            const bool is_down = sw_panel[cab_idx[cab]].isSwitched(sw_idx[cab], CHS2tSwitchers::PANT_DOWN);
+            const bool is_up = sw_panel[cab_idx[cab]].isSwitched(sw_idx[cab], CHS2tSwitchers::PANT_UP);
+            const bool is_on = sw_panel[cab_idx[cab]].isSwitched(sw_idx[cab], CHS2tSwitchers::PANT_ON);
 
-        if (pant_switcher[CAB1][i].getPosition() == 2 && pant_switch[i].getState())
-            pantup_trigger[i].set();
+            pant_off &= is_off;
+            pant_down &= is_down;
+            pant_up |= is_up;
+            pant_on |= is_on;
+        }
 
-        if (pant_switcher[CAB1][i].getPosition() == 1)
-            pantup_trigger[i].reset();
+        if (pant_off)
+            pant_switch[pant_idx].reset();
 
-        // Подъем/опускание ТП
-        pantographs[i]->setState(pant_switch[i].getState() && pantup_trigger[i].getState());
+        if (pant_off || pant_down)
+            pantup_trigger[pant_idx].reset();
 
-        pantographs[i]->step(t, dt);
+        if (pant_up && pant_switch[pant_idx].getState())
+            pantup_trigger[pant_idx].set();
+
+        if (pant_on)
+            pant_switch[pant_idx].set();
+
+        pantographs[pant_idx]->setState(pant_switch[pant_idx].getState() && pantup_trigger[pant_idx].getState());
+        pantographs[pant_idx]->step(t, dt);
     }
 }
 
@@ -44,13 +70,24 @@ void CHS2T::stepFastSwitch(const double& t, const double& dt)
     bv->setState(fast_switch_trigger.getState());
     bv->step(t, dt);
 
-    if (fastswitch_switcher->getPosition() == 3)
+    bool fs_off = true;
+    bool fs_on = false;
+    for (const auto& cab_idx : {CAB1, CAB2})
+    {
+        const bool is_off = sw_panel[cab_idx].isSwitched(CHS2tSwitchers::FAST_SW, CHS2tSwitchers::FAST_SW_OFF);
+        const bool is_on = sw_panel[cab_idx].isSwitched(CHS2tSwitchers::FAST_SW, CHS2tSwitchers::FAST_SW_ON);
+
+        fs_off &= is_off;
+        fs_on |= is_on;
+    }
+
+    if (fs_on)
     {
         fast_switch_trigger.set();
         bv_return = true;
     }
 
-    if (fastswitch_switcher->getPosition() == 1)
+    if (fs_off)
     {
         fast_switch_trigger.reset();
         bv_return = false;
@@ -73,15 +110,29 @@ void CHS2T::stepTractionControl(const double& t, const double& dt)
 {
     ip = 1.75;
 
+    // Контроллер машиниста
+    ControllerState km_state = ControllerState();
     for (size_t cab_idx : {CAB1, CAB2})
     {
-        km21KR2[cab_idx]->allowChangeReversPos(stepSwitch->isZero());
-        km21KR2[cab_idx]->step(t, dt);
+        km21KR2[cab_idx].allowChangeReversPos(stepSwitch->isZero());
+        km21KR2[cab_idx].step(t, dt);
+
+        // Контакты контроллера из кабины с реверсивкой
+        if (km21KR2[cab_idx].isReversHandle())
+        {
+            km_state = km21KR2[cab_idx].getCtrlState();
+
+            // Из задней кабины контакты реверсивного вала наоборот
+            if (cab_idx == CAB2)
+            {
+                std::swap(km_state.k01, km_state.k02);
+            }
+        }
     }
 
     stepSwitch->setDropPosition(dropPosition);
-    stepSwitch->setDropButtonState(button_sbros_cpc[CAB1].getState());
-    stepSwitch->setCtrlState(km21KR2[CAB1]->getCtrlState());
+    stepSwitch->setDropButtonState(button_sbros_cpc[CAB1].getState() || button_sbros_cpc[CAB2].getState());
+    stepSwitch->setCtrlState(km_state);
     stepSwitch->step(t, dt);
 
     puskRez->setPoz(stepSwitch->getPoz());
@@ -124,19 +175,47 @@ void CHS2T::stepSupportEquipment(const double& t, const double& dt)
     motor_fan_ptr->setPowerVoltage(R * (motor->getIa() * !hod + abs(generator->getIa())));
     motor_fan_ptr->step(t, dt);
 
-    if (motor_fan_switcher[CAB1].getPosition() == 0)
+    bool fan_off = true;
+    bool fan_auto = false;
+    bool fan_on = false;
+//    bool blinds_off = true;
+    bool blinds_on = true;
+    bool blinds_auto = false;
+
+    for (const auto& cab_idx : {CAB1, CAB2})
+    {
+        bool is_off = sw_panel[cab_idx].isSwitched(CHS2tSwitchers::FANS, CHS2tSwitchers::FANS_OFF);
+        bool is_auto = sw_panel[cab_idx].isSwitched(CHS2tSwitchers::FANS, CHS2tSwitchers::FANS_AUTO);
+        bool is_on = sw_panel[cab_idx].isSwitched(CHS2tSwitchers::FANS, CHS2tSwitchers::FANS_ON);
+
+        fan_off &= is_off;
+        fan_auto |= is_auto;
+        fan_on |= is_on;
+
+/*        is_off = sw_panel[cab_idx].isSwitched(CHS2tSwitchers::BLINDS, CHS2tSwitchers::AUXCOMPR) ||
+                 sw_panel[cab_idx].isSwitched(CHS2tSwitchers::BLINDS, CHS2tSwitchers::AUTO_SAND);*/
+        is_on = sw_panel[cab_idx].isSwitched(CHS2tSwitchers::BLINDS, CHS2tSwitchers::BLINDS_OPEN);
+        is_auto = sw_panel[cab_idx].isSwitched(CHS2tSwitchers::BLINDS, CHS2tSwitchers::AUTO_BLINDS) ||
+                  sw_panel[cab_idx].isSwitched(CHS2tSwitchers::BLINDS, CHS2tSwitchers::AUTO_BLINDS_SAND);
+
+//        blinds_off &= is_off;
+        blinds_on &= is_on;
+        blinds_auto |= is_auto;
+    }
+
+    if (fan_off)
     {
         motor_fan[0]->setPowerVoltage(0.0);
         motor_fan[1]->setPowerVoltage(0.0);
     }
 
-    if (motor_fan_switcher[CAB1].getPosition() == 1)
+    if (fan_auto)
     {
         motor_fan[0]->setPowerVoltage((bv->getU_out() / 2.0) * (stepSwitch->getPoz() > 0 || motor_fan[0]->isPowered()));
         motor_fan[1]->setPowerVoltage((bv->getU_out() / 2.0) * (stepSwitch->getPoz() > 0 || motor_fan[1]->isPowered()));
     }
 
-    if (motor_fan_switcher[CAB1].getPosition() == 2)
+    if (fan_on)
     {
         motor_fan[0]->setPowerVoltage(bv->getU_out() / 2.0);
         motor_fan[1]->setPowerVoltage(bv->getU_out() / 2.0);
@@ -145,17 +224,19 @@ void CHS2T::stepSupportEquipment(const double& t, const double& dt)
     motor_fan[0]->step(t, dt);
     motor_fan[1]->step(t, dt);
 
-    if (blinds_switcher[CAB1].getPosition() == 0 || blinds_switcher[CAB1].getPosition() == 1)
+    blinds->setState(false);
+/*
+    if (blinds_off)
     {
         blinds->setState(false);
     }
-
-    if (blinds_switcher[CAB1].getPosition() == 2)
+*/
+    if (blinds_on)
     {
         blinds->setState(true);
     }
 
-    if (blinds_switcher[CAB1].getPosition() == 3 || blinds_switcher[CAB1].getPosition() == 4)
+    if (blinds_auto)
     {
         blinds->setState((!hod && !stepSwitch->isZero()) || EDT);
     }

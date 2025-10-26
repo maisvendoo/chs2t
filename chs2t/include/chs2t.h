@@ -114,6 +114,10 @@ private:
         CAB2 = 1
     };
 
+    /// Контроллер машиниста
+    Km21KR2 km21KR2[CABS_NUM] = {Km21KR2(), Km21KR2()};
+
+    /// Переключатели
     CHS2tSwitchers sw_panel[CABS_NUM] = {CHS2tSwitchers(), CHS2tSwitchers()};
 
     /// Кнопка "Свисток"
@@ -128,35 +132,8 @@ private:
     /// Кнопка "Отпуск электровоза"
     TriggerControl button_loco_release[CABS_NUM];
 
-    /// Тумблер включения ЭПТ
-    TriggerControl epb_switch[CABS_NUM];
-
-    /// Галетник управления мотор-вентиляторами
-    SwitcherControl motor_fan_switcher[CABS_NUM];
-
-    /// Галетники управления мотор-компрессорами
-    SwitcherControl mk_switcher[CABS_NUM][NUM_MOTOR_KOMPRESSORS];
-
-    /// Галетники управления токоприемниками
-    SwitcherControl pant_switcher[CABS_NUM][NUM_PANTOGRAPHS];
-
-    /// Галетник управления БВ
-    SwitcherControl fastswitch_switcher[CABS_NUM];
-
-    /// Галетник управления жалюзи
-    SwitcherControl blinds_switcher[CABS_NUM];
-
-    /// Галетник управления освещением кабины и приборов
-    SwitcherControl cab_light_switcher[CABS_NUM];
-
-    /// Галетник управления левым буферным огнём
-    SwitcherControl bufferlight_L_switcher[CABS_NUM];
-
-    /// Галетник управления правым буферным огнём
-    SwitcherControl bufferlight_R_switcher[CABS_NUM];
-
-    /// Галетник управления прожектором
-    SwitcherControl spotlight_switcher[CABS_NUM];
+    /// Кнопка "Сброс СП-С"
+    TriggerControl button_sbros_cpc[CABS_NUM];
 
     enum
     {
@@ -168,15 +145,6 @@ private:
 
     /// Триггеры рукояток бдительности
     TriggerControl rb[CABS_NUM][NUM_RB];
-
-    /// Выключатель ЭДТ
-    TriggerControl EDT_switch[CABS_NUM];
-
-    /// Кнопка "Сброс СП-С"
-    TriggerControl button_sbros_cpc[CABS_NUM];
-
-    /// Контроллер машиниста
-    Km21KR2* km21KR2[CABS_NUM] = {nullptr, nullptr};
 
 
     /// Напряжение аккумуляторной батареи
@@ -493,8 +461,6 @@ private:
     void stepTractionControl(const double& t, const double& dt);
 
     void stepEDT(const double& t, const double& dt);
-
-    void stepEDT2(const double& t, const double& dt);
 
     void stepSupportEquipment(const double& t, const double& dt);
 

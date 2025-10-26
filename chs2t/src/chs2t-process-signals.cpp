@@ -37,22 +37,29 @@ void CHS2T::signalsOutput(const simulator_time_t& t, const double& dt)
         std::uint16_t d = (SPOTLIGHT_BWD - SPOTLIGHT_FWD) * cab_idx;
 
         // Прожектор
-        analogSignal[SPOTLIGHT_FWD + d] = 0.5f * static_cast<float>(spotlight_switcher[cab_idx].isSwitched(1)) +
-                                          static_cast<float>(spotlight_switcher[cab_idx].isSwitched(2));
+        const bool s_low = sw_panel[cab_idx].isSwitched(CHS2tSwitchers::SPOTLIGHT, CHS2tSwitchers::SPOTLIGHT_LOW);
+        const bool s_high = sw_panel[cab_idx].isSwitched(CHS2tSwitchers::SPOTLIGHT, CHS2tSwitchers::SPOTLIGHT_HIGH);
+        analogSignal[SPOTLIGHT_FWD + d] = 0.5f * static_cast<float>(s_low) + static_cast<float>(s_high);
 
         // Буферные огни
-        analogSignal[BUFFERLIGHT_FWD_L_WHITE + d] = static_cast<float>(bufferlight_L_switcher[cab_idx].isSwitched(2));
-        analogSignal[BUFFERLIGHT_FWD_L_RED + d] = static_cast<float>(bufferlight_L_switcher[cab_idx].isSwitched(0));
-        analogSignal[BUFFERLIGHT_FWD_R_WHITE + d] = static_cast<float>(bufferlight_R_switcher[cab_idx].isSwitched(2));
-        analogSignal[BUFFERLIGHT_FWD_R_RED + d] = static_cast<float>(bufferlight_R_switcher[cab_idx].isSwitched(0));
+        const bool l_w = sw_panel[CAB1].isSwitched(CHS2tSwitchers::BUFLIGHT_L, CHS2tSwitchers::BUFLIGHT_WHITE);
+        const bool l_r = sw_panel[CAB1].isSwitched(CHS2tSwitchers::BUFLIGHT_L, CHS2tSwitchers::BUFLIGHT_RED);
+        const bool r_w = sw_panel[CAB1].isSwitched(CHS2tSwitchers::BUFLIGHT_R, CHS2tSwitchers::BUFLIGHT_WHITE);
+        const bool r_r = sw_panel[CAB1].isSwitched(CHS2tSwitchers::BUFLIGHT_R, CHS2tSwitchers::BUFLIGHT_RED);
+        analogSignal[BUFFERLIGHT_FWD_L_WHITE + d] = static_cast<float>(l_w);
+        analogSignal[BUFFERLIGHT_FWD_L_RED + d] = static_cast<float>(l_r);
+        analogSignal[BUFFERLIGHT_FWD_R_WHITE + d] = static_cast<float>(r_w);
+        analogSignal[BUFFERLIGHT_FWD_R_RED + d] = static_cast<float>(r_r);
 
         // Свет в кабине
-        analogSignal[CAB1_LIGHT_CABINE + d] = static_cast<float>(cab_light_switcher[cab_idx].isSwitched(3)) +
-                                              0.5f * static_cast<float>(cab_light_switcher[cab_idx].isSwitched(4));
+        const bool k_low = sw_panel[cab_idx].isSwitched(CHS2tSwitchers::CAB_LIGHT, CHS2tSwitchers::CAB_LIGHT_LOW);
+        const bool k_high = sw_panel[cab_idx].isSwitched(CHS2tSwitchers::CAB_LIGHT, CHS2tSwitchers::CAB_LIGHT_HIGH);
+        analogSignal[CAB1_LIGHT_CABINE + d] = 0.5f * static_cast<float>(k_low) + static_cast<float>(k_high);
 
         // Подсветка приборов
-        analogSignal[CAB1_LIGHT_DEVICES + d] = 0.5f * static_cast<float>(cab_light_switcher[cab_idx].isSwitched(1)) +
-                                               static_cast<float>(cab_light_switcher[cab_idx].isSwitched(0));
+        const bool d_low = sw_panel[cab_idx].isSwitched(CHS2tSwitchers::CAB_LIGHT, CHS2tSwitchers::CAB_LIGHT_DEVICES_LOW);
+        const bool d_high = sw_panel[cab_idx].isSwitched(CHS2tSwitchers::CAB_LIGHT, CHS2tSwitchers::CAB_LIGHT_DEVICES_HIGH);
+        analogSignal[CAB1_LIGHT_DEVICES + d] = 0.5f * static_cast<float>(d_low) + static_cast<float>(d_high);
 
         // Лампы локомотивного светофора
         analogSignal[CAB1_LS_WHITE + d] = safety_device[cab_idx]->getWhiteLamp();
@@ -112,10 +119,10 @@ void CHS2T::signalsOutput(const simulator_time_t& t, const double& dt)
         analogSignal[CAB1_PRESSURE_BC + d] = static_cast<float>(brake_mech[cab_idx]->getBCpressure() / 1.0);
 
         // Контроллер машиниста
-        analogSignal[CAB1_KM_IS_REVERS_HANDLE + d] = static_cast<float>(km21KR2[cab_idx]->isReversHandle());
+        analogSignal[CAB1_KM_IS_REVERS_HANDLE + d] = static_cast<float>(km21KR2[cab_idx].isReversHandle());
         analogSignal[CAB1_KM_REVERSOR_POS + d] = static_cast<float>(stepSwitch->getReverseState());
-        analogSignal[CAB1_KM_CONTROLLER_POS + d] = static_cast<float>(km21KR2[cab_idx]->getMainPos());
-        analogSignal[CAB1_KM_CONTROLLER_HEIGHT + d] = static_cast<float>(km21KR2[cab_idx]->getMainHeight());
+        analogSignal[CAB1_KM_CONTROLLER_POS + d] = static_cast<float>(km21KR2[cab_idx].getMainPos());
+        analogSignal[CAB1_KM_CONTROLLER_HEIGHT + d] = static_cast<float>(km21KR2[cab_idx].getMainHeight());
         analogSignal[CAB1_BRAKE_STICK_POS + d] = handleEDT[cab_idx]->getHandlePos();
 
         // Приборы управления тормозами
@@ -149,22 +156,22 @@ void CHS2T::signalsOutput(const simulator_time_t& t, const double& dt)
         analogSignal[CAB1_SWITCHERS_PANEL_IS_KEY + d] = 1.0f;
         analogSignal[CAB1_SWITCHERS_PANEL_KEY_POS + d] = 1.0f;
         // Верхний ряд
-        analogSignal[CAB1_SWITCHER_EPB + d] = static_cast<float>(epb_switch[cab_idx].getState());
-        analogSignal[CAB1_SWITCHER_COMPR_1 + d] = mk_switcher[cab_idx][MK1].getHandlePosition();
-        analogSignal[CAB1_SWITCHER_PANT_FWD + d] = pant_switcher[cab_idx][PANT1].getHandlePosition();
-        analogSignal[CAB1_SWITCHER_FAST_SWITCH + d] = fastswitch_switcher[cab_idx].getHandlePosition();
+        analogSignal[CAB1_SWITCHER_EPB + d] = sw_panel[cab_idx].getSwitcherHandlePosition(CHS2tSwitchers::EPB);
+        analogSignal[CAB1_SWITCHER_COMPR_1 + d] = sw_panel[cab_idx].getSwitcherHandlePosition(CHS2tSwitchers::COMPR_1);
+        analogSignal[CAB1_SWITCHER_PANT_FWD + d] = sw_panel[cab_idx].getSwitcherHandlePosition(CHS2tSwitchers::PANT_FWD);
+        analogSignal[CAB1_SWITCHER_FAST_SWITCH + d] = sw_panel[cab_idx].getSwitcherHandlePosition(CHS2tSwitchers::FAST_SW);
         // Средний ряд
-        analogSignal[CAB1_SWITCHER_FANS + d] = motor_fan_switcher[cab_idx].getHandlePosition();
-        analogSignal[CAB1_SWITCHER_COMPR_2 + d] = mk_switcher[cab_idx][MK2].getHandlePosition();
-        analogSignal[CAB1_SWITCHER_PANT_BWD + d] = pant_switcher[cab_idx][PANT2].getHandlePosition();
-        analogSignal[CAB1_SWITCHER_AUXCOMPR_SAND_BLINDS + d] = blinds_switcher[cab_idx].getHandlePosition();
+        analogSignal[CAB1_SWITCHER_FANS + d] = sw_panel[cab_idx].getSwitcherHandlePosition(CHS2tSwitchers::FANS);
+        analogSignal[CAB1_SWITCHER_COMPR_2 + d] = sw_panel[cab_idx].getSwitcherHandlePosition(CHS2tSwitchers::COMPR_2);
+        analogSignal[CAB1_SWITCHER_PANT_BWD + d] = sw_panel[cab_idx].getSwitcherHandlePosition(CHS2tSwitchers::PANT_BWD);
+        analogSignal[CAB1_SWITCHER_AUXCOMPR_SAND_BLINDS + d] = sw_panel[cab_idx].getSwitcherHandlePosition(CHS2tSwitchers::BLINDS);
         // Нижний ряд
-        analogSignal[CAB1_SWITCHER_LIGHT_CAB_DEVICES + d] = cab_light_switcher[cab_idx].getHandlePosition();
-        analogSignal[CAB1_SWITCHER_BUFFERLIGHT_L + d] = bufferlight_L_switcher[cab_idx].getHandlePosition();
-        analogSignal[CAB1_SWITCHER_BUFFERLIGHT_R + d] = bufferlight_R_switcher[cab_idx].getHandlePosition();
-        analogSignal[CAB1_SWITCHER_SPOTLIGHT + d] = spotlight_switcher[cab_idx].getHandlePosition();
+        analogSignal[CAB1_SWITCHER_LIGHT_CAB_DEVICES + d] = sw_panel[cab_idx].getSwitcherHandlePosition(CHS2tSwitchers::CAB_LIGHT);
+        analogSignal[CAB1_SWITCHER_BUFFERLIGHT_L + d] = sw_panel[cab_idx].getSwitcherHandlePosition(CHS2tSwitchers::BUFLIGHT_L);
+        analogSignal[CAB1_SWITCHER_BUFFERLIGHT_R + d] = sw_panel[cab_idx].getSwitcherHandlePosition(CHS2tSwitchers::BUFLIGHT_R);
+        analogSignal[CAB1_SWITCHER_SPOTLIGHT + d] = sw_panel[cab_idx].getSwitcherHandlePosition(CHS2tSwitchers::SPOTLIGHT);
         // Выключатель ЭДТ
-        analogSignal[CAB1_SWITCHER_EDB + d] = static_cast<float>(EDT_switch[cab_idx].getState());
+        analogSignal[CAB1_SWITCHER_EDT + d] = sw_panel[cab_idx].getSwitcherHandlePosition(CHS2tSwitchers::EDT);
 
         analogSignal[CAB1_INDICATOR_FAST_SWITCH] = static_cast<float>(bv->getLampState());
         analogSignal[CAB1_DIMMER_LIGHT_DEVICES] = 1.0f;

@@ -13,7 +13,12 @@ void CHS2T::stepEDT(const double& t, const double& dt)
     generator->setOmega(wheel_omega[0] * ip);
     generator->setRt(3.35);
 
-    BrakeReg->setActive(EDT_switch[CAB1].getState());
+    const bool EDT_cab1 = km21KR2[CAB1].isReversHandle() &&
+        sw_panel[CAB1].isSwitched(CHS2tSwitchers::EDT, CHS2tSwitchers::EDT_ON);
+    const bool EDT_cab2 = km21KR2[CAB2].isReversHandle() &&
+        sw_panel[CAB2].isSwitched(CHS2tSwitchers::EDT, CHS2tSwitchers::EDT_ON);
+
+    BrakeReg->setActive(EDT_cab1 || EDT_cab2);
     BrakeReg->setAllowEDT(dako->isEDTAllow());
     BrakeReg->setIa(generator->getIa());
     BrakeReg->setIf(generator->getIf());
@@ -22,14 +27,8 @@ void CHS2T::stepEDT(const double& t, const double& dt)
     pulseConv->step(t, dt);
     generator->step(t, dt);
     BrakeReg->step(t, dt);
-}
 
-//------------------------------------------------------------------------------
-//
-//------------------------------------------------------------------------------
-void CHS2T::stepEDT2(const double& t, const double& dt)
-{
-    if (EDT_switch[CAB1].getState())
+    if (EDT_cab1 || EDT_cab2)
     {
         if ( (brake_ref_res->getPressure() >= 0.07) && !EDT_timer.isStarted())
         {

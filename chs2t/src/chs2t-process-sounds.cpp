@@ -19,14 +19,14 @@ void CHS2T::soundsOutput(const simulator_time_t& t, const double& dt)
         analogSignal[SOUND_FWD_TIFON + d] = horn[cab_idx]->getSoundSignal(TrainHorn::TIFON_SOUND);
 
         // Реверсор и контроллер
-        analogSignal[CAB1_SOUND_INSERT_REVERS_HANDLE + d] = km21KR2[cab_idx]->getSoundSignal(Km21KR2::HANDLE_INSERTED_SOUND);
-        analogSignal[CAB1_SOUND_REMOVE_REVERS_HANDLE + d] = km21KR2[cab_idx]->getSoundSignal(Km21KR2::HANDLE_REMOVED_SOUND);
-        analogSignal[CAB1_SOUND_REVERS_CHANGE_POS + d] = km21KR2[cab_idx]->getSoundSignal(Km21KR2::REVERS_CHANGE_POS_SOUND);
-        analogSignal[CAB1_SOUND_MAIN_NONFIXED_ON + d] = km21KR2[cab_idx]->getSoundSignal(Km21KR2::MAIN_NONFIXED_ON_SOUND);
-        analogSignal[CAB1_SOUND_MAIN_NONFIXED_OFF + d] = km21KR2[cab_idx]->getSoundSignal(Km21KR2::MAIN_NONFIXED_OFF_SOUND);
-        analogSignal[CAB1_SOUND_MAIN_FIXED_ON + d] = km21KR2[cab_idx]->getSoundSignal(Km21KR2::MAIN_FIXED_RESET_ON_SOUND);
-        analogSignal[CAB1_SOUND_MAIN_FIXED_OFF + d] = km21KR2[cab_idx]->getSoundSignal(Km21KR2::MAIN_FIXED_RESET_OFF_SOUND);
-        analogSignal[CAB1_SOUND_MAIN_CHANGE_FIELDWEAK_POS + d] = km21KR2[cab_idx]->getSoundSignal(Km21KR2::MAIN_CHANGE_FIELDWEAK_SOUND);
+        analogSignal[CAB1_SOUND_INSERT_REVERS_HANDLE + d] = km21KR2[cab_idx].getSoundSignal(Km21KR2::HANDLE_INSERTED_SOUND);
+        analogSignal[CAB1_SOUND_REMOVE_REVERS_HANDLE + d] = km21KR2[cab_idx].getSoundSignal(Km21KR2::HANDLE_REMOVED_SOUND);
+        analogSignal[CAB1_SOUND_REVERS_CHANGE_POS + d] = km21KR2[cab_idx].getSoundSignal(Km21KR2::REVERS_CHANGE_POS_SOUND);
+        analogSignal[CAB1_SOUND_MAIN_NONFIXED_ON + d] = km21KR2[cab_idx].getSoundSignal(Km21KR2::MAIN_NONFIXED_ON_SOUND);
+        analogSignal[CAB1_SOUND_MAIN_NONFIXED_OFF + d] = km21KR2[cab_idx].getSoundSignal(Km21KR2::MAIN_NONFIXED_OFF_SOUND);
+        analogSignal[CAB1_SOUND_MAIN_FIXED_ON + d] = km21KR2[cab_idx].getSoundSignal(Km21KR2::MAIN_FIXED_RESET_ON_SOUND);
+        analogSignal[CAB1_SOUND_MAIN_FIXED_OFF + d] = km21KR2[cab_idx].getSoundSignal(Km21KR2::MAIN_FIXED_RESET_OFF_SOUND);
+        analogSignal[CAB1_SOUND_MAIN_CHANGE_FIELDWEAK_POS + d] = km21KR2[cab_idx].getSoundSignal(Km21KR2::MAIN_CHANGE_FIELDWEAK_SOUND);
 
         // Скоростемер
         analogSignal[CAB1_SOUND_SPEED_METER_SL2M + d] = speed_meter[cab_idx]->getSoundSignal();
@@ -57,25 +57,26 @@ void CHS2T::soundsOutput(const simulator_time_t& t, const double& dt)
         analogSignal[CAB1_SOUND_LOCO_CRANE_BC_DRAIN_FLOW + d] = loco_crane[cab_idx]->getSoundSignal(LocoCrane::BC_DRAIN_FLOW_SOUND);
 
         // Переключатели
-        analogSignal[CAB1_SOUND_INSERT_SWITCHERS_PANEL_KEY + d] = sound_state_t::createSoundSignal(false);
-        analogSignal[CAB1_SOUND_REMOVE_SWITCHERS_PANEL_KEY + d] = sound_state_t::createSoundSignal(false);
+        analogSignal[CAB1_SOUND_INSERT_SWITCHERS_PANEL_KEY + d] = sw_panel[cab_idx].getKeyInsertSoundSignal(Trigger::ON_SOUND);
+        analogSignal[CAB1_SOUND_REMOVE_SWITCHERS_PANEL_KEY + d] = sw_panel[cab_idx].getKeyInsertSoundSignal(Trigger::OFF_SOUND);
+        analogSignal[CAB1_SOUND_TURN_SWITCHERS_PANEL_KEY + d] = sw_panel[cab_idx].getKeyTurnSoundSignal(Trigger::CHANGE_SOUND);
         // Верхний ряд
-        analogSignal[CAB1_SOUND_SWITCHER_EPB + d] = epb_switch[cab_idx].getSoundSignal();
-        analogSignal[CAB1_SOUND_SWITCHER_COMPR_1 + d] = mk_switcher[cab_idx][MK1].getSoundSignal();
-        analogSignal[CAB1_SOUND_SWITCHER_PANT_FWD + d] = pant_switcher[cab_idx][PANT1].getSoundSignal();
-        analogSignal[CAB1_SOUND_SWITCHER_FAST_SWITCH + d] = fastswitch_switcher[cab_idx].getSoundSignal();
+        analogSignal[CAB1_SOUND_SWITCHER_EPB + d] = sw_panel[cab_idx].getSoundSignal(CHS2tSwitchers::EPB);
+        analogSignal[CAB1_SOUND_SWITCHER_COMPR_1 + d] = sw_panel[cab_idx].getSoundSignal(CHS2tSwitchers::COMPR_1);
+        analogSignal[CAB1_SOUND_SWITCHER_PANT_FWD + d] = sw_panel[cab_idx].getSoundSignal(CHS2tSwitchers::PANT_FWD);
+        analogSignal[CAB1_SOUND_SWITCHER_FAST_SWITCH + d] = sw_panel[cab_idx].getSoundSignal(CHS2tSwitchers::FAST_SW);
         // Средний ряд
-        analogSignal[CAB1_SOUND_SWITCHER_FANS + d] = motor_fan_switcher[cab_idx].getSoundSignal();
-        analogSignal[CAB1_SOUND_SWITCHER_COMPR_2 + d] = mk_switcher[cab_idx][MK2].getSoundSignal();
-        analogSignal[CAB1_SOUND_SWITCHER_PANT_BWD + d] = pant_switcher[cab_idx][PANT2].getSoundSignal();
-        analogSignal[CAB1_SOUND_SWITCHER_AUXCOMPR_SAND_BLINDS + d] = blinds_switcher[cab_idx].getSoundSignal();
+        analogSignal[CAB1_SOUND_SWITCHER_FANS + d] = sw_panel[cab_idx].getSoundSignal(CHS2tSwitchers::FANS);
+        analogSignal[CAB1_SOUND_SWITCHER_COMPR_2 + d] = sw_panel[cab_idx].getSoundSignal(CHS2tSwitchers::COMPR_2);
+        analogSignal[CAB1_SOUND_SWITCHER_PANT_BWD + d] = sw_panel[cab_idx].getSoundSignal(CHS2tSwitchers::PANT_BWD);
+        analogSignal[CAB1_SOUND_SWITCHER_AUXCOMPR_SAND_BLINDS + d] = sw_panel[cab_idx].getSoundSignal(CHS2tSwitchers::BLINDS);
         // Нижний ряд
-        analogSignal[CAB1_SOUND_SWITCHER_LIGHT_CAB_DEVICES + d] = cab_light_switcher[cab_idx].getSoundSignal();
-        analogSignal[CAB1_SOUND_SWITCHER_BUFFERLIGHT_L + d] = bufferlight_L_switcher[cab_idx].getSoundSignal();
-        analogSignal[CAB1_SOUND_SWITCHER_BUFFERLIGHT_R + d] = bufferlight_R_switcher[cab_idx].getSoundSignal();
-        analogSignal[CAB1_SOUND_SWITCHER_SPOTLIGHT + d] = spotlight_switcher[cab_idx].getSoundSignal();
+        analogSignal[CAB1_SOUND_SWITCHER_LIGHT_CAB_DEVICES + d] = sw_panel[cab_idx].getSoundSignal(CHS2tSwitchers::CAB_LIGHT);
+        analogSignal[CAB1_SOUND_SWITCHER_BUFFERLIGHT_L + d] = sw_panel[cab_idx].getSoundSignal(CHS2tSwitchers::BUFLIGHT_L);
+        analogSignal[CAB1_SOUND_SWITCHER_BUFFERLIGHT_R + d] = sw_panel[cab_idx].getSoundSignal(CHS2tSwitchers::BUFLIGHT_R);
+        analogSignal[CAB1_SOUND_SWITCHER_SPOTLIGHT + d] = sw_panel[cab_idx].getSoundSignal(CHS2tSwitchers::SPOTLIGHT);
         // Выключатель ЭДТ
-        analogSignal[CAB1_SOUND_SWITCHER_EDB + d] = EDT_switch[cab_idx].getSoundSignal();
+        analogSignal[CAB1_SOUND_SWITCHER_EDT + d] = sw_panel[cab_idx].getSoundSignal(CHS2tSwitchers::EDT);
     }
 
     // Звуки в движении

@@ -11,7 +11,7 @@ void CHS2T::stepBrakesEquipment(const double& t, const double& dt)
     BP_flow += brake_crane[CAB1]->getBPflow();
 //    BP_flow += brake_crane[CAB2]->getBPflow();
     BP_flow += epk[CAB1]->getBPflow();
-//    BP_flow += epk[CAB2]->getBPflow();
+    BP_flow += epk[CAB2]->getBPflow();
 
     anglecock_bp_fwd->setHoseFlow(hose_bp_fwd->getFlow());
     BP_flow += anglecock_bp_fwd->getFlowToPipe();

@@ -153,7 +153,7 @@ bool CHS2tSwitchers::isSwitched(size_t switcher_idx, std::uint16_t pos) const
 //------------------------------------------------------------------------------
 //
 //------------------------------------------------------------------------------
-float CHS2tSwitchers::getKeyInsertSoundSignal(size_t idx)
+float CHS2tSwitchers::getKeyInsertSoundSignal(size_t idx) const
 {
     return is_key.getSoundSignal(idx);
 }
@@ -161,7 +161,7 @@ float CHS2tSwitchers::getKeyInsertSoundSignal(size_t idx)
 //------------------------------------------------------------------------------
 //
 //------------------------------------------------------------------------------
-float CHS2tSwitchers::getKeyTurnSoundSignal(size_t idx)
+float CHS2tSwitchers::getKeyTurnSoundSignal(size_t idx) const
 {
     return key_state.getSoundSignal(idx);
 }
@@ -169,7 +169,7 @@ float CHS2tSwitchers::getKeyTurnSoundSignal(size_t idx)
 //------------------------------------------------------------------------------
 //
 //------------------------------------------------------------------------------
-float CHS2tSwitchers::getSwitcherSoundSignal(size_t switcher_idx)
+float CHS2tSwitchers::getSoundSignal(size_t switcher_idx) const
 {
     return switchers[switcher_idx].getSoundSignal();
 }
@@ -286,7 +286,7 @@ void CHS2tSwitchers::initControl()
     switchers[COMPR_1].setKeyModifierIncrease(MODIFIER_OnlyShift);
     switchers[COMPR_1].setKeySymbolDecrease(KEY_2);
     switchers[COMPR_1].setKeyModifierDecrease(MODIFIER_OnlyControl);
-    switchers[COMPR_1].setInitPosition(COMPR_NO_CTRL);
+    switchers[COMPR_1].setInitPosition(COMPR_HEAT);
 
     switchers[PANT_FWD].setNumPositions(PANT_NUM);
     switchers[PANT_FWD].setKeySymbolIncrease(KEY_I);
@@ -314,7 +314,7 @@ void CHS2tSwitchers::initControl()
     switchers[COMPR_2].setKeyModifierIncrease(MODIFIER_OnlyShift);
     switchers[COMPR_2].setKeySymbolDecrease(KEY_3);
     switchers[COMPR_2].setKeyModifierDecrease(MODIFIER_OnlyControl);
-    switchers[COMPR_2].setInitPosition(COMPR_NO_CTRL);
+    switchers[COMPR_2].setInitPosition(COMPR_HEAT);
 
     switchers[PANT_BWD].setNumPositions(PANT_NUM);
     switchers[PANT_BWD].setKeySymbolIncrease(KEY_O);

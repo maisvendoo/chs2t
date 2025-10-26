@@ -20,10 +20,14 @@ void CHS2T::stepEPB(const double& t, const double& dt)
     epb_converter->step(t, dt);
 
     // Контроллер двухпроводного ЭПТ
+    const bool cab1_on = sw_panel[CAB1].isSwitched(CHS2tSwitchers::EPB, CHS2tSwitchers::EPB_ON);
+    const bool cab2_on = sw_panel[CAB2].isSwitched(CHS2tSwitchers::EPB, CHS2tSwitchers::EPB_ON);
     epb_control->setInputVoltage(epb_converter->getOutputVoltage()
-                                 * static_cast<double>(epb_switch[CAB1].getState()) );
-    epb_control->setHoldState(brake_crane[CAB1]->isHold());
-    epb_control->setBrakeState(brake_crane[CAB1]->isBrake());
+                                 * static_cast<double>(cab1_on || cab2_on) );
+    epb_control->setHoldState((cab1_on && brake_crane[CAB1]->isHold()) ||
+                              (cab2_on && brake_crane[CAB2]->isHold()));
+    epb_control->setBrakeState((cab1_on && brake_crane[CAB1]->isBrake()) ||
+                               (cab2_on && brake_crane[CAB2]->isBrake()));
     epb_control->setControlVoltage(  hose_bp_fwd->getVoltage(1)
                                       + hose_bp_bwd->getVoltage(1) );
     epb_control->step(t, dt);

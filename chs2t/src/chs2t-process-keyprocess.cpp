@@ -9,9 +9,13 @@ void CHS2T::keyProcess(const simulator_time_t& t, const double& dt)
     epk[CAB2]->allowKey(!(epk[CAB1]->isKey()));
     epk[CAB1]->allowKey(!(epk[CAB2]->isKey()));
 
+    // Не допускаем двух ключей в панелях переключателей
+    sw_panel[CAB2].allowKey(!(sw_panel[CAB1].isKey()));
+    sw_panel[CAB1].allowKey(!(sw_panel[CAB2].isKey()));
+
     // Не допускаем двух реверсивных рукояток в контроллерах машиниста
-    km21KR2[CAB2]->allowReversHandle(!(km21KR2[CAB1]->isReversHandle()));
-    km21KR2[CAB1]->allowReversHandle(!(km21KR2[CAB2]->isReversHandle()));
+    km21KR2[CAB2].allowReversHandle(!(km21KR2[CAB1].isReversHandle()));
+    km21KR2[CAB1].allowReversHandle(!(km21KR2[CAB2].isReversHandle()));
 
     for (size_t cab_idx : {CAB1, CAB2})
     {
@@ -59,6 +63,7 @@ void CHS2T::keyProcess(const simulator_time_t& t, const double& dt)
         button_tifon[cab_idx].step();
         button_sand[cab_idx].step();
         button_loco_release[cab_idx].step();
+        button_sbros_cpc[cab_idx].step();
 
         // Нажатие РБС
         // Если активна РБС на внешнем пульте
@@ -79,21 +84,5 @@ void CHS2T::keyProcess(const simulator_time_t& t, const double& dt)
         }
         rb[cab_idx][RB1].step();
         rb[cab_idx][RBP].step();
-        button_sbros_cpc[cab_idx].step();
-
-// Удалить после переписывания на sw_panel
-        epb_switch[cab_idx].step();
-        motor_fan_switcher[cab_idx].step();
-        mk_switcher[cab_idx][MK1].step();
-        mk_switcher[cab_idx][MK2].step();
-        pant_switcher[cab_idx][PANT1].step();
-        pant_switcher[cab_idx][PANT2].step();
-        fastswitch_switcher[cab_idx].step();
-        blinds_switcher[cab_idx].step();
-        cab_light_switcher[cab_idx].step();
-        bufferlight_L_switcher[cab_idx].step();
-        bufferlight_R_switcher[cab_idx].step();
-        spotlight_switcher[cab_idx].step();
-        EDT_switch[cab_idx].step();
     }
 }

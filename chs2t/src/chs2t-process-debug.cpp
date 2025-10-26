@@ -27,35 +27,35 @@ void CHS2T::debugPrint(const simulator_time_t& t, const double& dt)
                         .arg(0.0, 2, 'f', 0);   //combine_crane
     }
 
-    if (km21KR2[CAB1]->isReversHandle())
+    if (sw_panel[CAB1].isKey())
+    {
+        if (sw_panel[CAB1].isKeyOn())
+        {
+            DebugMsg += QString("Switchers:UNLOCK|");
+        }
+        else
+        {
+            DebugMsg += QString("Switchers:LOCKED|");
+        }
+    }
+    else
+    {
+        DebugMsg += QString("Switchers:NO KEY|");
+    }
+
+    if (km21KR2[CAB1].isReversHandle())
     {
         DebugMsg += QString("R:%1%2|%3:%4|")
-                        .arg(km21KR2[CAB1]->getReversHandlePos(), 2)
-                        .arg((km21KR2[CAB1]->isChangeReversAllowed()) ? '*' : '#')
-                        .arg((km21KR2[CAB1]->getMainHeight() < 0.99) ? "Controller" : "FieldWeak")
-                        .arg(km21KR2[CAB1]->getMainPos(), 2);
+                        .arg(km21KR2[CAB1].getReversHandlePos(), 2)
+                        .arg((km21KR2[CAB1].isChangeReversAllowed()) ? '*' : '#')
+                        .arg((km21KR2[CAB1].getMainHeight() < 0.99) ? "Controller" : "FieldWeak")
+                        .arg(km21KR2[CAB1].getMainPos(), 2);
     }
     else
     {
         DebugMsg += QString(" NO REVERS HANDLE |");
     }
-/*
-    if (tumblers_panel[CAB1]->isKey())
-    {
-        if (tumblers_panel[CAB1]->isKeyOn())
-        {
-            DebugMsg += QString("Tumblers:UNLOCK|");
-        }
-        else
-        {
-            DebugMsg += QString("Tumblers:LOCKED|");
-        }
-    }
-    else
-    {
-        DebugMsg += QString("Tumblers:NO KEY|");
-    }
-*/
+
     if (epk[CAB1]->isKeyOn())
     {
         if (safety_device[CAB1]->getEPKstate())
@@ -154,35 +154,35 @@ void CHS2T::debugPrint(const simulator_time_t& t, const double& dt)
                         .arg(0.0, 2, 'f', 0);   //combine_crane
     }
 
-    if (km21KR2[CAB2]->isReversHandle())
+    if (sw_panel[CAB1].isKey())
+    {
+        if (sw_panel[CAB1].isKeyOn())
+        {
+            DebugMsg += QString("Switchers:UNLOCK|");
+        }
+        else
+        {
+            DebugMsg += QString("Switchers:LOCKED|");
+        }
+    }
+    else
+    {
+        DebugMsg += QString("Switchers:NO KEY|");
+    }
+
+    if (km21KR2[CAB2].isReversHandle())
     {
         DebugMsg += QString("R:%1%2|%3:%4|")
-                        .arg(km21KR2[CAB2]->getReversHandlePos(), 2)
-                        .arg((km21KR2[CAB2]->isChangeReversAllowed()) ? '*' : '#')
-                        .arg((km21KR2[CAB2]->getMainHeight() < 0.99) ? "Controller" : "FieldWeak")
-                        .arg(km21KR2[CAB2]->getMainPos(), 2);
+                        .arg(km21KR2[CAB2].getReversHandlePos(), 2)
+                        .arg((km21KR2[CAB2].isChangeReversAllowed()) ? '*' : '#')
+                        .arg((km21KR2[CAB2].getMainHeight() < 0.99) ? "Controller" : "FieldWeak")
+                        .arg(km21KR2[CAB2].getMainPos(), 2);
     }
     else
     {
         DebugMsg += QString(" NO REVERS HANDLE |");
     }
-/*
-    if (tumblers_panel[CAB2]->isKey())
-    {
-        if (tumblers_panel[CAB2]->isKeyOn())
-        {
-            DebugMsg += QString("Tumblers:UNLOCK|");
-        }
-        else
-        {
-            DebugMsg += QString("Tumblers:LOCKED|");
-        }
-    }
-    else
-    {
-        DebugMsg += QString("Tumblers:NO KEY|");
-    }
-*/
+
     if (epk[CAB2]->isKeyOn())
     {
         if (safety_device[CAB2]->getEPKstate())

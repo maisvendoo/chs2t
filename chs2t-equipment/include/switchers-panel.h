@@ -42,7 +42,7 @@ public:
         FANS_ON = 3,
 
         COMPR_NUM = 4,
-        COMPR_NO_CTRL = 0,
+        COMPR_HEAT = 0,
         COMPR_OFF = 1,
         COMPR_AUTO = 2,
         COMPR_ON = 3,
@@ -133,11 +133,11 @@ public:
     /// Состояние позиции
     bool isSwitched(size_t switcher_idx, std::uint16_t pos) const;
 
-    float getKeyInsertSoundSignal(size_t idx = Trigger::CHANGE_SOUND);
+    float getKeyInsertSoundSignal(size_t idx = Trigger::CHANGE_SOUND) const;
 
-    float getKeyTurnSoundSignal(size_t idx = Trigger::CHANGE_SOUND);
+    float getKeyTurnSoundSignal(size_t idx = Trigger::CHANGE_SOUND) const;
 
-    float getSwitcherSoundSignal(size_t switcher_idx);
+    float getSoundSignal(size_t switcher_idx) const override;
 
 private:
 

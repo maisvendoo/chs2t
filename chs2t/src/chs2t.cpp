@@ -139,7 +139,6 @@ void CHS2T::step(const double& t, const double& dt)
     stepBrakesEquipment(t, dt);
 
     stepEDT(t, dt);
-    stepEDT2(t, dt);
 
     stepSupportEquipment(t, dt);
 

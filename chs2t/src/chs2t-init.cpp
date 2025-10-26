@@ -46,12 +46,6 @@ void CHS2T::initTractionControl(const QString& modules_dir, const QString& custo
 {
     (void) modules_dir;
 
-    for (auto cab_idx : {CAB1, CAB2})
-    {
-        km21KR2[cab_idx] = new Km21KR2();
-        km21KR2[cab_idx]->setControl(&pressed_keys_by_cabine[cab_idx]);
-    }
-
     stepSwitch = new StepSwitch();
     stepSwitch->read_config("step-switch", custom_cfg_dir);
 

@@ -170,7 +170,7 @@ void CHS2T::load_brakes_config(QString path)
                 break;
             } }
         }
-        // Не допускаем двух ключей в панелях тумблеров
+        // Не допускаем двух ключей в панелях переключателей
         sw_panel[CAB2].allowKey(!(sw_panel[CAB1].isKey()));
 
         tmp_int = 0;
@@ -196,23 +196,23 @@ void CHS2T::load_brakes_config(QString path)
                 break;
             } }
         }
-        // Не допускаем двух ключей в панелях тумблеров
+        // Не допускаем двух ключей в панелях переключателей
         sw_panel[CAB1].allowKey(!(sw_panel[CAB2].isKey()));
 
         tmp_int = 1;
         if (cfg.getInt(secName, "ReversHandleCab1", tmp_int))
         {
-            km21KR2[CAB1]->insertReversHandle(tmp_int);
+            km21KR2[CAB1].insertReversHandle(tmp_int);
         }
         // Не допускаем двух реверсивных рукояток в контроллерах машиниста
-        km21KR2[CAB2]->allowReversHandle(!(km21KR2[CAB1]->isReversHandle()));
+        km21KR2[CAB2].allowReversHandle(!(km21KR2[CAB1].isReversHandle()));
 
         tmp_int = 0;
         if (cfg.getInt(secName, "ReversHandleCab2", tmp_int))
         {
-            km21KR2[CAB2]->insertReversHandle(tmp_int);
+            km21KR2[CAB2].insertReversHandle(tmp_int);
         }
         // Не допускаем двух реверсивных рукояток в контроллерах машиниста
-        km21KR2[CAB1]->allowReversHandle(!(km21KR2[CAB2]->isReversHandle()));
+        km21KR2[CAB1].allowReversHandle(!(km21KR2[CAB2].isReversHandle()));
     }
 }

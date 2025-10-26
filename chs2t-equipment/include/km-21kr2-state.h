@@ -6,31 +6,19 @@
 //------------------------------------------------------------------------------
 struct ControllerState
 {
-    bool k01;
-    bool k02;
+    bool k01 = false;
+    bool k02 = false;
 
-    bool k21;
-    bool k22;
-    bool k23;
-    bool k25;
+    bool k21 = false;
+    bool k22 = false;
+    bool k23 = false;
+    bool k25 = false;
 
-    bool k31;
-    bool k32;
-    bool k33;
+    bool k31 = false;
+    bool k32 = false;
+    bool k33 = false;
 
-    ControllerState()
-        : k01(false)
-        , k02(false)
-        , k21(false)
-        , k22(false)
-        , k23(false)
-        , k25(false)
-        , k31(false)
-        , k32(false)
-        , k33(false)
-    {
-
-    }
+    ControllerState() = default;
 };
 
 #endif // KM21KR2STATE_H
