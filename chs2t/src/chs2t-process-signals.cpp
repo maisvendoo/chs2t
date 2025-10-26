@@ -112,10 +112,10 @@ void CHS2T::signalsOutput(const simulator_time_t& t, const double& dt)
         analogSignal[CAB1_PRESSURE_BC + d] = static_cast<float>(brake_mech[cab_idx]->getBCpressure() / 1.0);
 
         // Контроллер машиниста
-        analogSignal[CAB1_KM_IS_REVERS_HANDLE + d] = 1.0f;
+        analogSignal[CAB1_KM_IS_REVERS_HANDLE + d] = static_cast<float>(km21KR2[cab_idx]->isReversHandle());
         analogSignal[CAB1_KM_REVERSOR_POS + d] = static_cast<float>(stepSwitch->getReverseState());
-        analogSignal[CAB1_KM_CONTROLLER_POS + d] = static_cast<float>(km21KR2[cab_idx]->getMainShaftPos());
-        analogSignal[CAB1_KM_CONTROLLER_HEIGHT + d] = static_cast<float>(km21KR2[cab_idx]->getHandleHeight());
+        analogSignal[CAB1_KM_CONTROLLER_POS + d] = static_cast<float>(km21KR2[cab_idx]->getMainPos());
+        analogSignal[CAB1_KM_CONTROLLER_HEIGHT + d] = static_cast<float>(km21KR2[cab_idx]->getMainHeight());
         analogSignal[CAB1_BRAKE_STICK_POS + d] = handleEDT[cab_idx]->getHandlePos();
 
         // Приборы управления тормозами

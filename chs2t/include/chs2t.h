@@ -513,6 +513,8 @@ private:
 
     void disableEDT() { EDT = allowEDT = false; }
 
+    void load_brakes_config(QString path);
+
 private slots:
 
     void enableEDT()

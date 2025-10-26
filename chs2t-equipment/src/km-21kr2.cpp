@@ -22,11 +22,9 @@ Km21KR2::Km21KR2(QObject* parent) : Device(parent)
   , autoSet(false)
   , autoReset(false)
   , reverseIsPressedOneTime(false)
-  , hod(false)
   , reverseState(0)
   , mainShaftPos(0.0)
   , fieldWeakShaft(0.0)
-  , mainShaftHeight(0.0)
   , is_inc(true)
   , is_dec(true)
   , no_from_weak(true)
@@ -45,11 +43,238 @@ Km21KR2::~Km21KR2()
 //------------------------------------------------------------------------------
 //
 //------------------------------------------------------------------------------
+void Km21KR2::allowReversHandle(bool allow)
+{
+    is_reverse_handle_allowed = allow;
+}
+
+//------------------------------------------------------------------------------
+//
+//------------------------------------------------------------------------------
+bool Km21KR2::isReversHandleAllowed() const
+{
+    return is_reverse_handle_allowed;
+}
+
+//------------------------------------------------------------------------------
+//
+//------------------------------------------------------------------------------
+void Km21KR2::insertReversHandle(bool insert)
+{
+    insert = insert && is_reverse_handle_allowed;
+
+    if (insert)
+    {
+        // Вставляем реверсивную рукоятку
+        is_revers_handle.set();
+        return;
+    }
+
+    // Извлечение реверсивной рукоятки только в нулевом положении
+    if (reverseState == 0)
+    {
+        is_revers_handle.reset();
+    }
+}
+
+//------------------------------------------------------------------------------
+//
+//------------------------------------------------------------------------------
+bool Km21KR2::isReversHandle() const
+{
+    return is_revers_handle.getState();
+}
+
+//------------------------------------------------------------------------------
+//
+//------------------------------------------------------------------------------
+void Km21KR2::allowChangeReversPos(bool allow)
+{
+    is_reverse_change_allowed = allow;
+}
+
+//------------------------------------------------------------------------------
+//
+//------------------------------------------------------------------------------
+bool Km21KR2::isChangeReversAllowed() const
+{
+    return is_reverse_change_allowed;
+}
+
+//------------------------------------------------------------------------------
+//
+//------------------------------------------------------------------------------
+void Km21KR2::setReversHandlePos(int pos)
+{
+    if (isReversHandle())
+    {
+        if (is_reverse_change_allowed)
+        {
+            pos = std::clamp(pos, -1, 1);
+        }
+        else
+        {
+            // Пока контроллер не в нулевой позиции
+            // и не подаёт напряжение на электромагнитную защёлку
+            // не меняем положение реверсивки
+            pos = reverseState;
+        }
+    }
+    else
+    {
+        // При снятой реверсивке всегда в нуле
+        pos = 0;
+    }
+
+    if (reverseState != pos)
+    {
+        sounds[REVERS_CHANGE_POS_SOUND].play();
+
+        reverseState = pos;
+        k01 = (reverseState == 1);
+        k02 = (reverseState == -1);
+    }
+}
+
+//------------------------------------------------------------------------------
+//
+//------------------------------------------------------------------------------
+int Km21KR2::getReversHandlePos() const
+{
+    return reverseState;
+}
+
+//------------------------------------------------------------------------------
+//
+//------------------------------------------------------------------------------
+void Km21KR2::setControlPos(int pos)
+{
+    if ((reverseState != 0) && (getMainHeight() < 0.01))
+    {
+        pos = std::clamp(pos, -2, 2);
+    }
+    else
+    {
+        // При реверсивке в нуле или вдавленном штурвале блокируем командный вал
+        pos = 0;
+    }
+
+    if (mainShaftPos != pos)
+    {
+        switch (pos)
+        {
+        case -2:
+        {
+            sounds[MAIN_FIXED_RESET_ON_SOUND].play();
+            break;
+        }
+        case -1:
+        case 1:
+        case 2:
+        {
+            sounds[MAIN_NONFIXED_ON_SOUND].play();
+            break;
+        }
+        case 0:
+        {
+            if (mainShaftPos == -2)
+                sounds[MAIN_FIXED_RESET_OFF_SOUND].play();
+            else
+                sounds[MAIN_NONFIXED_OFF_SOUND].play();
+            break;
+        }
+        default:
+        {
+            break;
+        }
+        }
+
+        mainShaftPos = pos;
+        k21 = (mainShaftPos == -2 || mainShaftPos == 0  || mainShaftPos == 2);
+        k22 = (mainShaftPos == 0   || mainShaftPos == 1  || mainShaftPos == 2);
+        k23 = (mainShaftPos == 1   || mainShaftPos == 2);
+        k25 = (mainShaftPos == -2 || mainShaftPos == -1 || mainShaftPos == 0);
+    }
+}
+
+//------------------------------------------------------------------------------
+//
+//------------------------------------------------------------------------------
+void Km21KR2::setFieldWeakPos(int pos)
+{
+    if ((reverseState != 0) && (mainShaftPos == 0))
+    {
+        // Управляем вдавливанием штурвала
+        ref_height_for_field_weak = (pos > 0);
+
+        if (getMainHeight() > 0.99)
+        {
+            pos = std::clamp(pos, 0, 5);
+        }
+        else
+        {
+            // Пока не вдавлен штурвал, блокируем вал ослабления поля
+            pos = 0;
+        }
+    }
+    else
+    {
+        // При реверсивке в нуле или командном валу не в нуле блокируем вал ослабления поля
+        ref_height_for_field_weak = false;
+        pos = 0;
+    }
+
+    if (fieldWeakShaft != pos)
+    {
+        sounds[MAIN_CHANGE_FIELDWEAK_SOUND].play();
+
+        fieldWeakShaft = pos;
+        k31 = (fieldWeakShaft == 1 || fieldWeakShaft == 4 || fieldWeakShaft == 5 );
+        k32 = (fieldWeakShaft == 2 || fieldWeakShaft == 4);
+        k33 = (fieldWeakShaft == 3 || fieldWeakShaft == 5);
+    }
+}
+
+//------------------------------------------------------------------------------
+//
+//------------------------------------------------------------------------------
+int Km21KR2::getMainPos() const
+{
+    if (getMainHeight() < 0.01)
+    {
+        return mainShaftPos;
+    }
+
+    return fieldWeakShaft;
+}
+
+//------------------------------------------------------------------------------
+//
+//------------------------------------------------------------------------------
+double Km21KR2::getMainHeight() const
+{
+    return getY(0);
+}
+
+//------------------------------------------------------------------------------
+//
+//------------------------------------------------------------------------------
+ControllerState Km21KR2::getCtrlState()
+{
+    return controlState;
+}
+
+//------------------------------------------------------------------------------
+//
+//------------------------------------------------------------------------------
 sound_state_t Km21KR2::getSoundState(size_t idx) const
 {
-    if (idx < sounds.size())
+    if (idx < NUM_SOUNDS)
+    {
         return sounds[idx];
-    return Device::getSoundState();
+    }
+
+    return is_revers_handle.getSoundState(idx - NUM_SOUNDS);
 }
 
 //------------------------------------------------------------------------------
@@ -57,9 +282,12 @@ sound_state_t Km21KR2::getSoundState(size_t idx) const
 //------------------------------------------------------------------------------
 float Km21KR2::getSoundSignal(size_t idx) const
 {
-    if (idx < sounds.size())
+    if (idx < NUM_SOUNDS)
+    {
         return sounds[idx].createSoundSignal();
-    return Device::getSoundSignal();
+    }
+
+    return is_revers_handle.getSoundSignal(idx - NUM_SOUNDS);
 }
 
 //------------------------------------------------------------------------------
@@ -67,11 +295,9 @@ float Km21KR2::getSoundSignal(size_t idx) const
 //------------------------------------------------------------------------------
 void Km21KR2::ode_system(const state_vector_t& Y, state_vector_t& dYdt, double t)
 {
-    Q_UNUSED(t)
-    Q_UNUSED(Y)
-    Q_UNUSED(dYdt)
+    (void) t;
 
-    dYdt[0] = (mainShaftHeight - Y[0]) / 0.1;
+    dYdt[0] = (static_cast<double>(ref_height_for_field_weak) - Y[0]) / 0.1;
 }
 
 //------------------------------------------------------------------------------
@@ -92,7 +318,7 @@ void Km21KR2::preStep(state_vector_t& Y, double t)
     Q_UNUSED(Y)
 
     addSignalsInControllerState();
-
+/*
     k01 = (reverseState == 1);
 
     k02 = (reverseState == -1);
@@ -104,10 +330,7 @@ void Km21KR2::preStep(state_vector_t& Y, double t)
 
     k31 = (fieldWeakShaft == 2 || fieldWeakShaft == 8 || fieldWeakShaft == 10 );
     k32 = (fieldWeakShaft == 4 || fieldWeakShaft == 8);
-    k33 = (fieldWeakShaft == 6 || fieldWeakShaft == 10);
-
-    if ((k01 != controlState.k01) || (k02 != controlState.k02))
-        sounds[REVERS_CHANGE_POS_SOUND].play();
+    k33 = (fieldWeakShaft == 6 || fieldWeakShaft == 10);*/
 }
 
 //------------------------------------------------------------------------------
@@ -115,179 +338,189 @@ void Km21KR2::preStep(state_vector_t& Y, double t)
 //------------------------------------------------------------------------------
 void Km21KR2::stepKeysControl(double t, double dt)
 {
-    Q_UNUSED(t)
-    Q_UNUSED(dt)
+    (void) t;
+    (void) dt;
+
+    if (!pressed_keys)
+    {
+        old_key_state_fwd_or_bwd = false;
+        old_key_state_inc_or_dec = false;
+
+        if ((getMainHeight() <= 0.99) && (mainShaftPos != -2))
+        {
+            setControlPos(0);
+        }
+    }
 
     bool key_fwd = getKeyState(pressed_keys, KEY_W);
     bool key_bwd = getKeyState(pressed_keys, KEY_S);
     bool key_traction = getKeyState(pressed_keys, KEY_A);
+    bool key_reset = getKeyState(pressed_keys, KEY_D);
     bool key_traction_auto = getKeyState(pressed_keys, KEY_Q);
-    bool key_brakes = getKeyState(pressed_keys, KEY_D);
-    bool key_brakes_auto = getKeyState(pressed_keys, KEY_E);
+    bool key_reset_auto = getKeyState(pressed_keys, KEY_E);
     bool isShift = isModifier(pressed_keys, MODIFIER_OnlyShift);
     bool isControl = isModifier(pressed_keys, MODIFIER_OnlyControl);
 
-    // Реверсор
-    if (!reverseIsPressedOneTime && (mainShaftPos == 0) && (fieldWeakShaft == 0))
-        reverseState += ((key_fwd && (reverseState != 1)) -
-                         (key_bwd && (reverseState != -1)));
-    // Запрещаем управлять реверсором дальше, пока не отпустим клавишу
-    reverseIsPressedOneTime = (key_fwd || key_bwd);
-
-    // При реверсоре в нуле контроллер заблокирован, дальше делать нечего
-    if (reverseState == 0)
-        return;
-
-    // Здесь страшным образом описывается состояние контроллера
-    mainShaftPos = (-10 * autoReset) + (4 * autoSet) +
-                   (!autoReset && !autoSet && !isShift && !isControl) *
-                       (-5 * key_brakes +
-                        2 * key_traction);
-
-    mainShaftPos = mainShaftPos * TO_INT(hs_n(mainShaftHeight - 0.99));
-
-    // Отмена автоматического сброса позиций
-    if (autoReset)
+    if (key_fwd)
     {
-        if ( (!key_brakes_auto) &&
-             ( key_traction || key_traction_auto || (isControl && key_brakes) ) )
+        if (isShift)
         {
-            autoReset = false;
-            sounds[MAIN_FIXED_RESET_OFF_SOUND].play();
+            old_key_state_fwd_or_bwd = true;
+
+            // Shift - вставляем реверсивку
+            insertReversHandle(true);
+            return;
         }
+
+        if (isControl)
+        {
+            old_key_state_fwd_or_bwd = true;
+
+            // Ctrl - извлекаем реверсивку
+            insertReversHandle(false);
+            return;
+        }
+
+        if (!old_key_state_fwd_or_bwd)
+        {
+            // Управление реверсивной рукояткой
+            setReversHandlePos(reverseState + 1);
+        }
+
+        old_key_state_fwd_or_bwd = true;
         return;
     }
 
-    // Отмена автоматического набора позиций
-    if (autoSet)
+    if (key_bwd)
     {
-        if (!key_traction_auto)
+        if (isControl)
         {
-            autoSet = false;
-            sounds[MAIN_NONFIXED_OFF_SOUND].play();
+            old_key_state_fwd_or_bwd = true;
+
+            // Ctrl - быстрый возврат в нулевую позицию
+            setReversHandlePos(0);
+            return;
         }
+
+        if (!old_key_state_fwd_or_bwd)
+        {
+            // Управление реверсивной рукояткой
+            setReversHandlePos(reverseState - 1);
+        }
+
+        old_key_state_fwd_or_bwd = true;
         return;
     }
 
-    // Автоматический набор-сброс, если не в позициях ослабления поля
-    if (fieldWeakShaft == 0)
+    old_key_state_fwd_or_bwd = false;
+
+    if (key_reset_auto)
     {
-        // Автоматический сброс позиций
-        if (key_brakes_auto)
+        old_key_state_inc_or_dec = true;
+
+        // Управление командным валом
+        setControlPos(-2);
+        return;
+    }
+
+    if (key_reset)
+    {
+        if (isControl)
         {
-            if (!autoReset)
+            old_key_state_inc_or_dec = true;
+
+            // Ctrl - Быстрый сброс штурвала в ноль
+            setControlPos(0);
+            setFieldWeakPos(0);
+            return;
+        }
+
+        if (mainShaftPos == -2)
+        {
+            old_key_state_inc_or_dec = true;
+            return;
+        }
+
+        if (!old_key_state_inc_or_dec)
+        {
+            if (isShift)
             {
-                sounds[MAIN_NONFIXED_ON_SOUND].play();
-                sounds[MAIN_FIXED_RESET_ON_SOUND].play();
+                old_key_state_inc_or_dec = true;
+
+                // Управление валом ослабления поля
+                setFieldWeakPos(fieldWeakShaft - 1);
+                return;
             }
-            autoReset = true;
-            return;
+
+            // Управление командным валом
+            setControlPos(-1);
         }
 
-        // Автоматический набор позиций
-        if (key_traction_auto)
-        {
-            if (!autoSet)
-                sounds[MAIN_NONFIXED_ON_SOUND].play();
-            autoSet = true;
-            return;
-        }
-    }
-
-    // Сброс одной позиции
-    if (key_brakes)
-    {
-        // Возврат контроллера - сброс ослабления поля полностью
-        if (isControl && (fieldWeakShaft > 0))
-        {
-            fieldWeakShaft = 0;
-            mainShaftHeight = 0.0;
-            sounds[MAIN_CHANGE_FIELDWEAK_SOUND].play();
-            // Запрещаем озвучку обычного возврата
-            no_from_weak = false;
-            return;
-        }
-
-        // Ослабление поля
-        if (is_dec && isShift && (fieldWeakShaft > 0))
-        {
-            // Сброс одной позиции ослабления поля
-            fieldWeakShaft -= 2;
-            sounds[MAIN_CHANGE_FIELDWEAK_SOUND].play();
-
-            // Сбрасываем вдавленное состояние контроллера
-            if (fieldWeakShaft == 0)
-            {
-                mainShaftHeight = 0.0;
-                // Запрещаем озвучку обычного возврата
-                no_from_weak = false;
-            }
-        }
-        else
-        {
-            // Озвучка сброса одной позиции
-            if (is_dec && (!isControl) && (!isShift) && (fieldWeakShaft == 0))
-                sounds[MAIN_NONFIXED_ON_SOUND].play();
-        }
-        // Запрещаем озвучку следующего сброса позиции, пока не отпустим клавишу
-        is_dec = false;
-
+        old_key_state_inc_or_dec = true;
         return;
     }
-    else
-    {
-        // Озвучка возврата контроллера
-        if ((!is_dec) && (no_from_weak) && (!isControl) && (!isShift) && (fieldWeakShaft == 0))
-            sounds[MAIN_NONFIXED_OFF_SOUND].play();
 
-        // Клавиша отпущена, разрешаем озвучку следующего сброса позиции
-        is_dec = true;
-        no_from_weak = true;
-    }
-
-    // Набор одной позиции
     if (key_traction)
     {
-        // Ослабление поля
-        if (is_inc && isShift)
+        if ((mainShaftPos == -2) && (!key_reset_auto))
         {
-            // Задаём вдавленное состояние контроллера
-            if (fieldWeakShaft == 0)
-                mainShaftHeight = 1.0;
+            old_key_state_inc_or_dec = true;
 
-            // Если контроллер вдавился, набор одной позиции ослабления поля
-            if ((getY(0) > 0.99) && (fieldWeakShaft != 10))
+            // Возврат из автосброса
+            setControlPos(0);
+            return;
+        }
+
+        if (!old_key_state_inc_or_dec)
+        {
+            if (isShift)
             {
-                fieldWeakShaft += 2;
-                sounds[MAIN_CHANGE_FIELDWEAK_SOUND].play();
+                // Обрабатываем удержание клавиши до вдавливания штуравла
+                old_key_state_inc_or_dec = (getMainHeight() > 0.99);
 
-                // Запрещаем набор следующей позиции, пока не отпустим клавишу
-                is_inc = false;
+                // Управление валом ослабления поля
+                setFieldWeakPos(fieldWeakShaft + 1);
+                return;
             }
-        }
-        else
-        {
-            // Озвучка набора одной позиции
-            if (is_inc && (fieldWeakShaft == 0))
-                sounds[MAIN_NONFIXED_ON_SOUND].play();
 
-            // Запрещаем озвучку следующего набора позиции, пока не отпустим клавишу
-            is_inc = false;
+            // Управление командным валом
+            setControlPos(1);
         }
+
+        old_key_state_inc_or_dec = true;
+        return;
     }
-    else
+
+    if (key_traction_auto)
     {
-        // Озвучка возврата контроллера
-        if ((!is_inc) && (fieldWeakShaft == 0))
-            sounds[MAIN_NONFIXED_OFF_SOUND].play();
+        if ((mainShaftPos == -2) && (!key_reset_auto))
+        {
+            // Возврат из автосброса
+            old_key_state_inc_or_dec = true;
+            setControlPos(0);
+            return;
+        }
 
-        // Клавиша отпущена, разрешаем озвучку следующего набора позиции
-        is_inc = true;
+        if (!old_key_state_inc_or_dec)
+        {
+            // Управление командным валом
+            setControlPos(2);
+        }
 
-        // Сбрасываем вдавленное состояние контроллера,
-        // если не успели набрать позиции ослабления поля пока нажата клавиша
-        if (fieldWeakShaft == 0)
-            mainShaftHeight = 0.0;
+        old_key_state_inc_or_dec = true;
+        return;
+    }
+
+    old_key_state_inc_or_dec = false;
+
+    // Автовозврат из нефиксированных положений
+    if (mainShaftPos != -2)
+    {
+        setControlPos(0);
+    }
+    if (fieldWeakShaft == 0)
+    {
+        ref_height_for_field_weak = false;
     }
 }
 
@@ -296,8 +529,8 @@ void Km21KR2::stepKeysControl(double t, double dt)
 //------------------------------------------------------------------------------
 void Km21KR2::stepExternalControl(double t, double dt)
 {
-    Q_UNUSED(t)
-    Q_UNUSED(dt)
+    (void) t;
+    (void) dt;
 
     if (!control_signals)
         return;

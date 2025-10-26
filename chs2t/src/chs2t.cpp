@@ -39,30 +39,6 @@ CHS2T::~CHS2T()
 }
 
 //------------------------------------------------------------------------------
-// Загрузка данных из конфигурационного файла
-//------------------------------------------------------------------------------
-void CHS2T::loadConfig(QString cfg_path)
-{
-    CfgReader cfg;
-
-    if (cfg.load(cfg_path))
-    {
-        QString secName = "Vehicle";
-
-        cfg.getString(secName, "CouplingModule", coupling_module_name);
-        cfg.getString(secName, "CouplingConfig", coupling_config_name);
-        cfg.getString(secName, "BrakeCraneModule", brake_crane_module_name);
-        cfg.getString(secName, "BrakeCraneConfig", brake_crane_config_name);
-        cfg.getString(secName, "LocoCraneModule", loco_crane_module_name);
-        cfg.getString(secName, "LocoCraneConfig", loco_crane_config_name);
-        cfg.getString(secName, "AirDistModule", airdist_module_name);
-        cfg.getString(secName, "AirDistConfig", airdist_config_name);
-        cfg.getString(secName, "ElectroAirDistModule", electro_airdist_module_name);
-        cfg.getString(secName, "ElectroAirDistConfig", electro_airdist_config_name);
-    }
-}
-
-//------------------------------------------------------------------------------
 // Общая инициализация локомотива
 //------------------------------------------------------------------------------
 void CHS2T::initialization()

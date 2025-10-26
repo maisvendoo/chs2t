@@ -76,6 +76,9 @@ void CHS2T::initControl(const QString &modules_dir, const QString &custom_cfg_di
         // Электропневматический клапан автостопа
         epk[cab_idx]->setControl(&pressed_keys_by_cabine[cab_idx]);
 
+        // Контроллер машиниста
+        km21KR2[cab_idx]->setControl(&pressed_keys_by_cabine[cab_idx], &control_signals);
+
         // Тифон, свисток
         horn[cab_idx]->setControl(&pressed_keys_by_cabine[cab_idx]);
 

@@ -73,8 +73,11 @@ void CHS2T::stepTractionControl(const double& t, const double& dt)
 {
     ip = 1.75;
 
-    km21KR2[CAB1]->setHod(stepSwitch->getHod());
-    km21KR2[CAB1]->step(t, dt);
+    for (size_t cab_idx : {CAB1, CAB2})
+    {
+        km21KR2[cab_idx]->allowChangeReversPos(stepSwitch->isZero());
+        km21KR2[cab_idx]->step(t, dt);
+    }
 
     stepSwitch->setDropPosition(dropPosition);
     stepSwitch->setDropButtonState(button_sbros_cpc[CAB1].getState());

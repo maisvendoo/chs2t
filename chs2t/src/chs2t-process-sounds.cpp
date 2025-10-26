@@ -19,8 +19,8 @@ void CHS2T::soundsOutput(const simulator_time_t& t, const double& dt)
         analogSignal[SOUND_FWD_TIFON + d] = horn[cab_idx]->getSoundSignal(TrainHorn::TIFON_SOUND);
 
         // Реверсор и контроллер
-        analogSignal[CAB1_SOUND_INSERT_REVERS_HANDLE + d] = sound_state_t::createSoundSignal(false);
-        analogSignal[CAB1_SOUND_REMOVE_REVERS_HANDLE + d] = sound_state_t::createSoundSignal(false);
+        analogSignal[CAB1_SOUND_INSERT_REVERS_HANDLE + d] = km21KR2[cab_idx]->getSoundSignal(Km21KR2::HANDLE_INSERTED_SOUND);
+        analogSignal[CAB1_SOUND_REMOVE_REVERS_HANDLE + d] = km21KR2[cab_idx]->getSoundSignal(Km21KR2::HANDLE_REMOVED_SOUND);
         analogSignal[CAB1_SOUND_REVERS_CHANGE_POS + d] = km21KR2[cab_idx]->getSoundSignal(Km21KR2::REVERS_CHANGE_POS_SOUND);
         analogSignal[CAB1_SOUND_MAIN_NONFIXED_ON + d] = km21KR2[cab_idx]->getSoundSignal(Km21KR2::MAIN_NONFIXED_ON_SOUND);
         analogSignal[CAB1_SOUND_MAIN_NONFIXED_OFF + d] = km21KR2[cab_idx]->getSoundSignal(Km21KR2::MAIN_NONFIXED_OFF_SOUND);
@@ -122,11 +122,11 @@ void CHS2T::soundsOutput(const simulator_time_t& t, const double& dt)
 float CHS2T::motorSoundSignal()
 {
     // Если есть ток в модуле motor - ТЭД в режиме тяги
-    if (motor->getY(0) > 100.0)
+    if (motor->getY(0) > 20.0)
         return motor->getSoundSignal();
 
     // Если есть ток в модуле generator - ТЭД в режиме электродинамического торможения
-    if (generator->getY(0) > 100.0)
+    if (generator->getY(0) > 20.0)
         return generator->getSoundSignal();
 
     // ТЭД на выбеге, без звука

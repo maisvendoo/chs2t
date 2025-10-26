@@ -9,10 +9,12 @@ void CHS2T::keyProcess(const simulator_time_t& t, const double& dt)
     epk[CAB2]->allowKey(!(epk[CAB1]->isKey()));
     epk[CAB1]->allowKey(!(epk[CAB2]->isKey()));
 
+    // Не допускаем двух реверсивных рукояток в контроллерах машиниста
+    km21KR2[CAB2]->allowReversHandle(!(km21KR2[CAB1]->isReversHandle()));
+    km21KR2[CAB1]->allowReversHandle(!(km21KR2[CAB2]->isReversHandle()));
+
     for (size_t cab_idx : {CAB1, CAB2})
     {
-        km21KR2[cab_idx]->setControl(&pressed_keys_by_cabine[cab_idx], &control_signals);
-
         // Управляем краном, учитывая возможное наличие внешнего пульта
         // TODO // перенести freejoy во вьювер, его команды передавать по сети,
         // TODO // и также указывая индекс кабины
