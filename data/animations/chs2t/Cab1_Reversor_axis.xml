@@ -3,11 +3,11 @@
 	<AnalogRotation>
 		<SignalID>51</SignalID>
 		<Duration>10.0</Duration>
-		<Axis>0.0 0.0 -1.0</Axis>
+		<Axis>0.0 -1.0 0.0</Axis>
 	</AnalogRotation>
 
 	<KeyPoint>
-		<Param>-1</Param>
+		<Param>-1.0</Param>
 		<Value>-44</Value>
 	</KeyPoint>
 

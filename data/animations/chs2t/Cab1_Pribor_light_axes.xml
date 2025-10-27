@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Config>
-
 	<VisibleAnimation>
-		<SignalID>76</SignalID>
+		<SignalID>13</SignalID>
 	</VisibleAnimation>
-
 </Config>

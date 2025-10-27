@@ -152,8 +152,8 @@ void CHS2T::signalsOutput(const simulator_time_t& t, const double& dt)
         analogSignal[CAB1_MANEOURUS_WHISTLE + d] = 0.0f;
 
         // Переключатели
-        analogSignal[CAB1_SWITCHERS_PANEL_IS_KEY + d] = 1.0f;
-        analogSignal[CAB1_SWITCHERS_PANEL_KEY_POS + d] = 1.0f;
+        analogSignal[CAB1_SWITCHERS_PANEL_IS_KEY + d] = static_cast<float>(sw_panel[cab_idx].isKey());
+        analogSignal[CAB1_SWITCHERS_PANEL_KEY_POS + d] = static_cast<float>(sw_panel[cab_idx].isKeyOn());
         // Верхний ряд
         analogSignal[CAB1_SWITCHER_EPB + d] = sw_panel[cab_idx].getSwitcherHandlePosition(CHS2tSwitchers::EPB);
         analogSignal[CAB1_SWITCHER_COMPR_1 + d] = sw_panel[cab_idx].getSwitcherHandlePosition(CHS2tSwitchers::COMPR_1);

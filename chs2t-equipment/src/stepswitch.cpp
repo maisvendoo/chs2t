@@ -142,7 +142,7 @@ void StepSwitch::stepDiscrete(double t, double dt)
 
     if (up && ableToGainPositions )
     {
-        poz_d += V * hs_p(MPOS_P - poz_d) * dt;
+        poz_d += V * dt;
 
         if (hod && prevPos != poz)
         {
@@ -153,9 +153,23 @@ void StepSwitch::stepDiscrete(double t, double dt)
 
     changeOnePosition(up1 - down1);
 
-    if (down || dropPosition)
+    if (drop_state && (poz > 0))
     {
-        poz_d -= V * hs_p(poz_d) * dt;
+        prevPos2 = poz;
+        dropPositionsWithZ = true;
+    }
+
+    if (dropPositionsWithZ)
+    {
+        if (!zero || (poz == 0) || (hod && (poz != prevPos2)))
+        {
+            dropPositionsWithZ = false;
+        }
+    }
+
+    if (down || dropPosition || dropPositionsWithZ)
+    {
+        poz_d -= V * dt;
         fieldStep = 0;
     }
     else
@@ -174,25 +188,10 @@ void StepSwitch::stepDiscrete(double t, double dt)
         ableToGainPositions = true;
     }
 
-    if (drop_state)
-    {
-        prevPos2 = poz;
-        dropPositionsWithZ = true;
-    }
-
-    if (dropPositionsWithZ)
-    {
-        poz_d -= V * dt;
-
-        if ((poz == 0 || hod) && (poz != prevPos2))
-        {
-            dropPositionsWithZ = false;
-        }
-    }
-
     reverseState = (-1 * (!ctrlState.k01 && ctrlState.k02)) +
                     (1 * (ctrlState.k01 && !ctrlState.k02));
 
+    poz_d = cut(poz_d, 0.0, static_cast<double>(MPOS_P));
     poz = static_cast<int>(poz_d);
 }
 
@@ -201,7 +200,6 @@ void StepSwitch::changeOnePosition(int dir)
     if (ableToChangeOnePosition)
     {
         poz_d += dir;
-        poz_d = cut(poz_d, 0.0, static_cast<double>(MPOS_P));
         ableToChangeOnePosition = false;
     }
 }

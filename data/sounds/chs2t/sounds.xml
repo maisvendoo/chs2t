@@ -190,7 +190,41 @@
 		<LocalPosition>1.22 7.33 2.81</LocalPosition>
 	</Sound>
 
+	<!-- Щелчок разобщительного крана -->
+	<Sound>
+		<SignalID>218</SignalID>
+		<Filename>komb-kran.wav</Filename>
+		<InitVolume>1.0</InitVolume>
+		<MaxVolume>1.0</MaxVolume>
+		<InitPitch>1.0</InitPitch>
+		<Loop>0</Loop>
+		<PlayOnStart>0</PlayOnStart>
+		<LocalPosition>1.1 8.1 2.8</LocalPosition>
+	</Sound>
 
+	<!-- Щелчок комбинированного крана -->
+	<Sound>
+		<SignalID>219</SignalID>
+		<Filename>komb-kran.wav</Filename>
+		<InitVolume>1.0</InitVolume>
+		<MaxVolume>1.0</MaxVolume>
+		<InitPitch>1.0</InitPitch>
+		<Loop>0</Loop>
+		<PlayOnStart>0</PlayOnStart>
+		<LocalPosition>1.1 8.0 2.9</LocalPosition>
+	</Sound>
+
+	<!-- Опорожнение тормозной магистрали от комбинированного крана -->
+	<Sound>
+		<SignalID>220</SignalID>
+		<Filename>395_vypusk.wav</Filename>
+		<InitVolume>0.0</InitVolume>
+		<MaxVolume>1.0</MaxVolume>
+		<InitPitch>1.0</InitPitch>
+		<Loop>1</Loop>
+		<PlayOnStart>0</PlayOnStart>
+		<LocalPosition>1.1 8.0 2.9</LocalPosition>
+	</Sound>
 
 	<!-- Щелчок рукоятки крана 395 -->
 	<Sound>
@@ -327,7 +361,7 @@
 	<!-- Повернуть ключ панели переключателей -->
 	<Sound>
 		<SignalID>232</SignalID>
-		<Filename>revers.wav</Filename>
+		<Filename>epk_vkl.wav</Filename>
 		<InitVolume>1.0</InitVolume>
 		<MaxVolume>1.0</MaxVolume>
 		<InitPitch>1.0</InitPitch>
@@ -656,7 +690,7 @@
 		<LocalPosition>0.0 -7.0 5.5</LocalPosition>
 	</Sound>
 
-	<!-- Включение ГВ -->
+	<!-- Включение БВ -->
 	<Sound>
 		<SignalID>317</SignalID>
 		<Filename>bv_on.wav</Filename>
@@ -668,7 +702,7 @@
 		<LocalPosition>-0.55 -0.07 3.0</LocalPosition>
 	</Sound>
 
-	<!-- Отключение ГВ -->
+	<!-- Отключение БВ -->
 	<Sound>
 		<SignalID>318</SignalID>
 		<Filename>bv_off.wav</Filename>
@@ -713,7 +747,7 @@
 		<InitPitch>1.0</InitPitch>
 		<Loop>1</Loop>
 		<PlayOnStart>0</PlayOnStart>
-		<LocalPosition>-1.0 -7.0 2.0</LocalPosition>
+		<LocalPosition>-0.5 4.0 3.0</LocalPosition>
 	</Sound>
 
 	<!-- Мотор-вентилятор 2 -->
@@ -725,7 +759,7 @@
 		<InitPitch>1.0</InitPitch>
 		<Loop>1</Loop>
 		<PlayOnStart>0</PlayOnStart>
-		<LocalPosition>1.0 -7.0 2.0</LocalPosition>
+		<LocalPosition>0.5 -4.0 3.0</LocalPosition>
 	</Sound>
 
 	<!-- Мотор-вентилятор ПТР -->
@@ -737,9 +771,8 @@
 		<InitPitch>1.0</InitPitch>
 		<Loop>1</Loop>
 		<PlayOnStart>0</PlayOnStart>
-		<LocalPosition>-1.0 -3.0 2.0</LocalPosition>
+		<LocalPosition>0.0 0.0 4.5</LocalPosition>
 	</Sound>
-
 
 	<!-- Подача песка спереди -->
 	<Sound>

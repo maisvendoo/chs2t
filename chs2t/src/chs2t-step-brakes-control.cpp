@@ -13,7 +13,7 @@ void CHS2T::stepBrakesControl(const double& t, const double& dt)
         shutoff_crane[cab_idx]->step(t, dt);
 
         // Комбинированный кран усл.№114
-        combine_crane[cab_idx]->setBPpressure(main_reservoir->getPressure());
+        combine_crane[cab_idx]->setBPpressure(brakepipe->getPressure());
         combine_crane[cab_idx]->setCraneBPflow(brake_crane[cab_idx]->getBPflow());
         combine_crane[cab_idx]->step(t, dt);
 

@@ -47,7 +47,7 @@ void CHS2T::debugPrint(const simulator_time_t& t, const double& dt)
     {
         DebugMsg += QString("R:%1%2|%3%4|")
                         .arg(km21KR2[CAB1].getReversHandlePos(), 2)
-                        .arg((km21KR2[CAB1].isChangeReversAllowed()) ? '*' : '#')
+                        .arg((km21KR2[CAB1].isChangeReversAllowed()) ? ' ' : '#')
                         .arg((km21KR2[CAB1].getMainHeight() < 0.99) ? "Controller" : "FieldWeak:")
                         .arg(km21KR2[CAB1].getMainPos(), 2);
     }
@@ -103,8 +103,7 @@ void CHS2T::debugPrint(const simulator_time_t& t, const double& dt)
                     .arg(10.0 * brake_mech[TROLLEY_FWD]->getBCpressure(), 6, 'f', 2)
                     .arg(10.0 * supply_reservoir->getPressure(), 6, 'f', 2)
                     .arg(10.0 * main_reservoir->getPressure(), 6, 'f', 2);
-    DebugMsg += QString("Rev%1|Pos %2%3|I%4 A|")
-                    .arg(stepSwitch->getReverseState(), 2)
+    DebugMsg += QString("Pos %1%2|I%3 A|")
                     .arg(stepSwitch->getPoz(), 2)
                     .arg(stepSwitch->getHod() ? "*" : " ")
                     .arg(motor->getI56() - abs(generator->getIa()), 6, 'f', 1);
@@ -174,7 +173,7 @@ void CHS2T::debugPrint(const simulator_time_t& t, const double& dt)
     {
         DebugMsg += QString("R:%1%2|%3%4|")
                         .arg(km21KR2[CAB2].getReversHandlePos(), 2)
-                        .arg((km21KR2[CAB2].isChangeReversAllowed()) ? '*' : '#')
+                        .arg((km21KR2[CAB2].isChangeReversAllowed()) ? ' ' : '#')
                         .arg((km21KR2[CAB2].getMainHeight() < 0.99) ? "Controller" : "FieldWeak:")
                         .arg(km21KR2[CAB2].getMainPos(), 2);
     }

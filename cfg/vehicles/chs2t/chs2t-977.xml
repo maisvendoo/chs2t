@@ -39,10 +39,10 @@
 		<DriverPos>0.492 7.776 3.98</DriverPos>
 		<DriverDir>0.0</DriverDir>
 	</Cabine>
-<!--
+
 	<Cabine>
 		<DriverPos>-0.492 -7.776 3.98</DriverPos>
 		<DriverDir>180.0</DriverDir>
 	</Cabine>
--->
+
 </Config>

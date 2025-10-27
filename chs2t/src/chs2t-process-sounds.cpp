@@ -31,17 +31,17 @@ void CHS2T::soundsOutput(const simulator_time_t& t, const double& dt)
         // Скоростемер
         analogSignal[CAB1_SOUND_SPEED_METER_SL2M + d] = speed_meter[cab_idx]->getSoundSignal();
 
-        // Разобщительный и комбинированный краны
-        analogSignal[CAB1_SOUND_SHUTOFF_CRANE_CHANGE_POS + d] = shutoff_crane[cab_idx]->getSoundSignal(PneumoShutoffValve::CHANGE_SOUND);
-        analogSignal[CAB1_SOUND_COMB_CRANE_CHANGE_POS + d] = combine_crane[cab_idx]->getSoundSignal(PneumoCombineCrane::CHANGE_COMB_POS_SOUND);
-        analogSignal[CAB1_SOUND_COMB_CRANE_BP_DRAIN_FLOW + d] = combine_crane[cab_idx]->getSoundSignal(PneumoCombineCrane::BP_DRAIN_FLOW_SOUND);
-
         // ЭПК
         analogSignal[CAB1_SOUND_EPK_INSERT_KEY + d] = epk[cab_idx]->getSoundSignal(AutoTrainStop::KEY_INSERTED);
         analogSignal[CAB1_SOUND_EPK_KEY_ON + d] = epk[cab_idx]->getSoundSignal(AutoTrainStop::KEY_STATE_ON);
         analogSignal[CAB1_SOUND_EPK_REMOVE_KEY + d] = epk[cab_idx]->getSoundSignal(AutoTrainStop::KEY_REMOVED);
         analogSignal[CAB1_SOUND_EPK_KEY_OFF + d] = epk[cab_idx]->getSoundSignal(AutoTrainStop::KEY_STATE_OFF);
         analogSignal[CAB1_SOUND_AUTOSTOP_WHISTLE + d] = epk[cab_idx]->getSoundSignal(AutoTrainStop::AUTOSTOP_WHISTLE);
+
+        // Разобщительный и комбинированный краны
+        analogSignal[CAB1_SOUND_SHUTOFF_CRANE_CHANGE_POS + d] = shutoff_crane[cab_idx]->getSoundSignal(PneumoShutoffValve::CHANGE_SOUND);
+        analogSignal[CAB1_SOUND_COMB_CRANE_CHANGE_POS + d] = combine_crane[cab_idx]->getSoundSignal(PneumoCombineCrane::CHANGE_COMB_POS_SOUND);
+        analogSignal[CAB1_SOUND_COMB_CRANE_BP_DRAIN_FLOW + d] = combine_crane[cab_idx]->getSoundSignal(PneumoCombineCrane::BP_DRAIN_FLOW_SOUND);
 
         // Поездной кран
         analogSignal[CAB1_SOUND_BRAKE_CRANE_CHANGE_POS + d] = brake_crane[cab_idx]->getSoundSignal(BrakeCrane::CHANGE_POS_SOUND);
