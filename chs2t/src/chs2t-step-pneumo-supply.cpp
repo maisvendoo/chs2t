@@ -47,10 +47,8 @@ void CHS2T::stepPneumoSupply(const double& t, const double& dt)
     FL_flow += horn[CAB1]->getFLflow();
     FL_flow += horn[CAB2]->getFLflow();
     FL_flow += sand_system->getFLflow();
-    FL_flow += brake_crane[CAB1]->getFLflow();
-//    FL_flow += brake_crane[CAB2]->getFLflow();
-    FL_flow += loco_crane[CAB1]->getFLflow();
-//    FL_flow += loco_crane[CAB2]->getFLflow();
+    FL_flow += shutoff_crane[CAB1]->getFlowToPipe();
+    FL_flow += shutoff_crane[CAB2]->getFlowToPipe();
     FL_flow += epk[CAB1]->getFLflow();
     FL_flow += epk[CAB2]->getFLflow();
     FL_flow += dako->getFLflow();

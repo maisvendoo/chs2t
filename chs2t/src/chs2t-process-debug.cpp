@@ -11,11 +11,11 @@ void CHS2T::debugPrint(const simulator_time_t& t, const double& dt)
 
     DebugMsg = "";
     DebugMsg += QString("CABINE 1|");
-    if (true)//combine == 0
+    if (abs(combine_crane[CAB1]->getCombineCraneHandlePosition()) < 0.5)
     {
         DebugMsg += QString("fl%1|comb:%2|395:%3|pER%4|254:%5%|")
-                        .arg(1.0, 1, 'f', 0)    //shutoff
-                        .arg(0.0, 2, 'f', 0)    //combine
+                        .arg(shutoff_crane[CAB1]->getHandlePosition(), 1, 'f', 0)
+                        .arg(combine_crane[CAB1]->getCombineCraneHandlePosition(), 2, 'f', 0)
                         .arg(brake_crane[CAB1]->getPositionName(), 3)
                         .arg(10.0 * brake_crane[CAB1]->getERpressure(), 6, 'f', 2)
                         .arg(loco_crane[CAB1]->getHandlePosition() * 100.0, 3, 'f', 0);
@@ -23,8 +23,8 @@ void CHS2T::debugPrint(const simulator_time_t& t, const double& dt)
     else
     {
         DebugMsg += QString("fl%1|comb:%2| BRAKE CRANES ARE LOCKED  |")
-                        .arg(1.0, 1, 'f', 0)    //shutoff
-                        .arg(0.0, 2, 'f', 0);   //combine_crane
+                        .arg(shutoff_crane[CAB1]->getHandlePosition(), 1, 'f', 0)
+                        .arg(combine_crane[CAB1]->getCombineCraneHandlePosition(), 2, 'f', 0);
     }
 
     if (sw_panel[CAB1].isKey())
@@ -45,10 +45,10 @@ void CHS2T::debugPrint(const simulator_time_t& t, const double& dt)
 
     if (km21KR2[CAB1].isReversHandle())
     {
-        DebugMsg += QString("R:%1%2|%3:%4|")
+        DebugMsg += QString("R:%1%2|%3%4|")
                         .arg(km21KR2[CAB1].getReversHandlePos(), 2)
                         .arg((km21KR2[CAB1].isChangeReversAllowed()) ? '*' : '#')
-                        .arg((km21KR2[CAB1].getMainHeight() < 0.99) ? "Controller" : "FieldWeak")
+                        .arg((km21KR2[CAB1].getMainHeight() < 0.99) ? "Controller" : "FieldWeak:")
                         .arg(km21KR2[CAB1].getMainPos(), 2);
     }
     else
@@ -138,11 +138,11 @@ void CHS2T::debugPrint(const simulator_time_t& t, const double& dt)
 
     DebugMsg += QString("\n");
     DebugMsg += QString("CABINE 2|");
-    if (true)//combine == 0
+    if (abs(combine_crane[CAB2]->getCombineCraneHandlePosition()) < 0.5)
     {
         DebugMsg += QString("fl%1|comb:%2|395:%3|pER%4|254:%5%|")
-                        .arg(1.0, 1, 'f', 0)    //shutoff
-                        .arg(0.0, 2, 'f', 0)    //combine
+                        .arg(shutoff_crane[CAB2]->getHandlePosition(), 1, 'f', 0)
+                        .arg(combine_crane[CAB2]->getCombineCraneHandlePosition(), 2, 'f', 0)
                         .arg(brake_crane[CAB2]->getPositionName(), 3)
                         .arg(10.0 * brake_crane[CAB2]->getERpressure(), 6, 'f', 2)
                         .arg(loco_crane[CAB2]->getHandlePosition() * 100.0, 3, 'f', 0);
@@ -150,13 +150,13 @@ void CHS2T::debugPrint(const simulator_time_t& t, const double& dt)
     else
     {
         DebugMsg += QString("fl%1|comb:%2| BRAKE CRANES ARE LOCKED  |")
-                        .arg(1.0, 1, 'f', 0)    //shutoff
-                        .arg(0.0, 2, 'f', 0);   //combine_crane
+                        .arg(shutoff_crane[CAB2]->getHandlePosition(), 1, 'f', 0)
+                        .arg(combine_crane[CAB2]->getCombineCraneHandlePosition(), 2, 'f', 0);
     }
 
-    if (sw_panel[CAB1].isKey())
+    if (sw_panel[CAB2].isKey())
     {
-        if (sw_panel[CAB1].isKeyOn())
+        if (sw_panel[CAB2].isKeyOn())
         {
             DebugMsg += QString("Switchers:UNLOCK|");
         }
@@ -172,10 +172,10 @@ void CHS2T::debugPrint(const simulator_time_t& t, const double& dt)
 
     if (km21KR2[CAB2].isReversHandle())
     {
-        DebugMsg += QString("R:%1%2|%3:%4|")
+        DebugMsg += QString("R:%1%2|%3%4|")
                         .arg(km21KR2[CAB2].getReversHandlePos(), 2)
                         .arg((km21KR2[CAB2].isChangeReversAllowed()) ? '*' : '#')
-                        .arg((km21KR2[CAB2].getMainHeight() < 0.99) ? "Controller" : "FieldWeak")
+                        .arg((km21KR2[CAB2].getMainHeight() < 0.99) ? "Controller" : "FieldWeak:")
                         .arg(km21KR2[CAB2].getMainPos(), 2);
     }
     else
@@ -220,76 +220,4 @@ void CHS2T::debugPrint(const simulator_time_t& t, const double& dt)
             DebugMsg += QString("EPK:NO KEY");
         }
     }
-
-
-/*
-    DebugMsg = "";
-    DebugMsg += QString("x%1 km|V%2 km/h|")
-                    .arg(profile_point_data.railway_coord / 1000.0, 10, 'f', 3)
-                    .arg(velocity * Physics::kmh, 6, 'f', 1);
-    DebugMsg += QString("pBP%1|pBC%2|pSR%3|")
-                    .arg(10.0 * brakepipe->getPressure(), 6, 'f', 2)
-                    .arg(10.0 * brake_mech[TROLLEY_FWD]->getBCpressure(), 6, 'f', 2)
-                    .arg(10.0 * supply_reservoir->getPressure(), 6, 'f', 2);
-    DebugMsg += QString("pFL%1|pER%2|395:%3|254:%4%|")
-                    .arg(10.0 * main_reservoir->getPressure(), 6, 'f', 2)
-                    .arg(10.0 * brake_crane[CAB1]->getERpressure(), 6, 'f', 2)
-                    .arg(brake_crane[CAB1]->getPositionName(), 3)
-                    .arg(loco_crane[CAB1]->getHandlePosition() * 100.0, 3, 'f', 0);
-    DebugMsg += QString("Rev%1|Pos %2%3|I%4 A|")
-                    .arg(stepSwitch->getReverseState(), 2)
-                    .arg(stepSwitch->getPoz(), 2)
-                    .arg(stepSwitch->getHod() ? "*" : " ")
-                    .arg(motor->getI56() - abs(generator->getIa()), 6, 'f', 1);
-
-    DebugMsg += QString("\n");
-    DebugMsg += QString("%1%2%3-%4-couplings-%5-%6%7%8")
-                    .arg(coupling_fwd->isLinked() ? "=" : " ")
-                    .arg(coupling_fwd->isCoupled() ? "=" : " ")
-                    .arg((coupling_fwd->getOutputSignal(COUPL_OUTPUT_REF_STATE) > -0.5) ? "=" : ">")
-                    .arg((oper_rod_fwd->getOperatingState() > -0.5) ? "|" : "/")
-                    .arg((oper_rod_bwd->getOperatingState() > -0.5) ? "|" : "\\")
-                    .arg((coupling_bwd->getOutputSignal(COUPL_OUTPUT_REF_STATE) > -0.5) ? "=" : "<")
-                    .arg(coupling_bwd->isCoupled() ? "=" : " ")
-                    .arg(coupling_bwd->isLinked() ? "=" : " ");
-    DebugMsg += QString("  |  ");
-    DebugMsg += QString("%1%2/=%3==BP==%4=\\%5%6")
-                    .arg(hose_bp_fwd->isLinked() ? "\\" : " ")
-                    .arg(hose_bp_fwd->isConnected() ? "_" : " ")
-                    .arg(anglecock_bp_fwd->isOpened() ? "/" : "|")
-                    .arg(anglecock_bp_bwd->isOpened() ? "\\" : "|")
-                    .arg(hose_bp_bwd->isConnected() ? "_" : " ")
-                    .arg(hose_bp_bwd->isLinked() ? "/" : " ");
-    DebugMsg += QString("  |  ");
-    DebugMsg += QString("%1%2/=%3==FL==%4=\\%5%6")
-                    .arg(hose_fl_fwd->isLinked() ? "\\" : " ")
-                    .arg(hose_fl_fwd->isConnected() ? "_" : " ")
-                    .arg(anglecock_fl_fwd->isOpened() ? "/" : "|")
-                    .arg(anglecock_fl_bwd->isOpened() ? "\\" : "|")
-                    .arg(hose_fl_bwd->isConnected() ? "_" : " ")
-                    .arg(hose_fl_bwd->isLinked() ? "/" : " ");
-
-    DebugMsg += QString("\n");
-    DebugMsg += QString("FWD Speed limit %1 km/h | Next %2 km/h (%3 m)")
-                    .arg(speedmap_fwd->getCurrentLimit(), 3, 'f', 0)
-                    .arg(speedmap_fwd->getNextLimit(), 3, 'f', 0)
-                    .arg(speedmap_fwd->getNextLimitDistance(), 6, 'f', 1);
-    DebugMsg += QString("  |  ");
-    DebugMsg += QString("BWD Speed limit %1 km/h | Next %2 km/h (%3 m)")
-                    .arg(speedmap_bwd->getCurrentLimit(), 3, 'f', 0)
-                    .arg(speedmap_bwd->getNextLimit(), 3, 'f', 0)
-                    .arg(speedmap_bwd->getNextLimitDistance(), 6, 'f', 1);
-
-    DebugMsg += QString("\n");
-    DebugMsg += QString("FWD Signal code %1 (%2 Hz) | Next %3 (%4 m)")
-                    .arg(coil_ALSN_fwd->getCode(), 1)
-                    .arg(coil_ALSN_fwd->getFrequency(), 3, 'f', 0)
-                    .arg(coil_ALSN_fwd->getNextSignalLiter())
-                    .arg(coil_ALSN_fwd->getNextSignalDistance(), 6, 'f', 1);
-    DebugMsg += QString("  |  ");
-    DebugMsg += QString("BWD Signal code %1 (%2 Hz) | Next %3 (%4 m)")
-                    .arg(coil_ALSN_bwd->getCode(), 1)
-                    .arg(coil_ALSN_bwd->getFrequency(), 3, 'f', 0)
-                    .arg(coil_ALSN_bwd->getNextSignalLiter())
-                    .arg(coil_ALSN_bwd->getNextSignalDistance(), 6, 'f', 1);*/
 }

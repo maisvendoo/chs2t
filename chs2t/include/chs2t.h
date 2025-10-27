@@ -198,6 +198,12 @@ private:
     /// Рукав питательной  магистрали сзади
     PneumoHose* hose_fl_bwd = nullptr;
 
+    /// Разобщительный кран усл.№328
+    PneumoShutoffValve* shutoff_crane[CABS_NUM] = {nullptr, nullptr};
+
+    /// Комбинированный кран усл.№114
+    PneumoCombineCrane* combine_crane[CABS_NUM] = {nullptr, nullptr};
+
     /// Поездной кран машиниста усл.№395
     BrakeCrane* brake_crane[CABS_NUM] = {nullptr, nullptr};
 

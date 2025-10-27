@@ -66,35 +66,31 @@ void CHS2T::load_brakes_config(QString path)
         {
             loco_crane[CAB2]->setHandlePosition(tmp_dbl);
         }
-/*
+
+        tmp_int = 1;
+        if (cfg.getInt(secName, "ShutoffCranePosCab1", tmp_int))
+        {
+            (tmp_int > 0) ? shutoff_crane[CAB1]->open() : shutoff_crane[CAB1]->close();
+        }
+
+        tmp_int = 0;
+        if (cfg.getInt(secName, "ShutoffCranePosCab2", tmp_int))
+        {
+            (tmp_int > 0) ? shutoff_crane[CAB2]->open() : shutoff_crane[CAB2]->close();
+        }
+
         tmp_int = 0;
         if (cfg.getInt(secName, "CombineCranePosCab1", tmp_int))
         {
-            brake_lock[CAB1]->setCombineCranePosition(tmp_int);
+            combine_crane[CAB1]->setCombineCranePosition(tmp_int);
         }
 
         tmp_int = -1;
         if (cfg.getInt(secName, "CombineCranePosCab2", tmp_int))
         {
-            brake_lock[CAB2]->setCombineCranePosition(tmp_int);
+            combine_crane[CAB2]->setCombineCranePosition(tmp_int);
         }
 
-        tmp_int = 1;
-        if (cfg.getInt(secName, "BrakeLockDeviceCab1", tmp_int))
-        {
-            brake_lock[CAB1]->setStateOn(tmp_int);
-        }
-        // Не допускаем двух рукояток в устройствах блокировки тормозов
-        brake_lock[CAB2]->allowLockHandle(!(brake_lock[CAB1]->isLockHandle()));
-
-        tmp_int = 0;
-        if (cfg.getInt(secName, "BrakeLockDeviceCab2", tmp_int))
-        {
-            brake_lock[CAB2]->setStateOn(tmp_int);
-        }
-        // Не допускаем двух рукояток в устройствах блокировки тормозов
-        brake_lock[CAB1]->allowLockHandle(!(brake_lock[CAB2]->isLockHandle()));
-*/
         tmp_int = 1;
         if (cfg.getInt(secName, "EPKCab1", tmp_int))
         {

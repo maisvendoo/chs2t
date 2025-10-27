@@ -35,11 +35,10 @@ public:
         EPB_OFF = 0,
         EPB_ON = 1,
 
-        FANS_NUM = 4,
-        FANS_NO_CTRL = 0,
+        FANS_NUM = 3,
+        FANS_ON = 0,
         FANS_OFF = 1,
         FANS_AUTO = 2,
-        FANS_ON = 3,
 
         COMPR_NUM = 4,
         COMPR_HEAT = 0,
@@ -55,7 +54,7 @@ public:
         AUTO_BLINDS_SAND = 4,
 
         PANT_NUM = 4,
-        PANT_OFF = 0,
+        PANT_GROUND = 0,
         PANT_DOWN = 1,
         PANT_UP = 2,
         PANT_ON = 3,
@@ -142,6 +141,7 @@ public:
 private:
 
     enum { SWITCHERS_NUMBER = 13 };
+    static constexpr std::uint8_t default_pos[] = {EPB_OFF, COMPR_OFF, PANT_DOWN, FAST_SW_OFF, FANS_OFF, COMPR_OFF, PANT_DOWN, BLINDS_OPEN, CAB_LIGHT_OFF, BUFLIGHT_OFF, BUFLIGHT_OFF, SPOTLIGHT_OFF, EDT_OFF};
     static constexpr std::uint8_t locked_idx[] = {EPB, COMPR_1, PANT_FWD, FAST_SW, FANS, COMPR_2, PANT_BWD, BLINDS};
     static constexpr std::uint8_t no_locked_idx[] = {CAB_LIGHT, BUFLIGHT_L, BUFLIGHT_R, SPOTLIGHT, EDT};
 

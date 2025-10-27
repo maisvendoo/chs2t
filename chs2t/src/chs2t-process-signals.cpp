@@ -20,7 +20,7 @@ void CHS2T::signalsOutput(const simulator_time_t& t, const double& dt)
     analogSignal[WHEELSET_5] = static_cast<float>(wheel_rotation_angle[4] / 2.0 / Physics::PI);
     analogSignal[WHEELSET_6] = static_cast<float>(wheel_rotation_angle[5] / 2.0 / Physics::PI);
 
-    // Открытие жалюзи охлаждение пуско-тормозных резисторов
+    // Открытие жалюзи охлаждения пуско-тормозных резисторов
     analogSignal[BLINDS] = blinds->getPosition();
 
     // Состояние токоприемников
@@ -42,10 +42,10 @@ void CHS2T::signalsOutput(const simulator_time_t& t, const double& dt)
         analogSignal[SPOTLIGHT_FWD + d] = 0.5f * static_cast<float>(s_low) + static_cast<float>(s_high);
 
         // Буферные огни
-        const bool l_w = sw_panel[CAB1].isSwitched(CHS2tSwitchers::BUFLIGHT_L, CHS2tSwitchers::BUFLIGHT_WHITE);
-        const bool l_r = sw_panel[CAB1].isSwitched(CHS2tSwitchers::BUFLIGHT_L, CHS2tSwitchers::BUFLIGHT_RED);
-        const bool r_w = sw_panel[CAB1].isSwitched(CHS2tSwitchers::BUFLIGHT_R, CHS2tSwitchers::BUFLIGHT_WHITE);
-        const bool r_r = sw_panel[CAB1].isSwitched(CHS2tSwitchers::BUFLIGHT_R, CHS2tSwitchers::BUFLIGHT_RED);
+        const bool l_w = sw_panel[cab_idx].isSwitched(CHS2tSwitchers::BUFLIGHT_L, CHS2tSwitchers::BUFLIGHT_WHITE);
+        const bool l_r = sw_panel[cab_idx].isSwitched(CHS2tSwitchers::BUFLIGHT_L, CHS2tSwitchers::BUFLIGHT_RED);
+        const bool r_w = sw_panel[cab_idx].isSwitched(CHS2tSwitchers::BUFLIGHT_R, CHS2tSwitchers::BUFLIGHT_WHITE);
+        const bool r_r = sw_panel[cab_idx].isSwitched(CHS2tSwitchers::BUFLIGHT_R, CHS2tSwitchers::BUFLIGHT_RED);
         analogSignal[BUFFERLIGHT_FWD_L_WHITE + d] = static_cast<float>(l_w);
         analogSignal[BUFFERLIGHT_FWD_L_RED + d] = static_cast<float>(l_r);
         analogSignal[BUFFERLIGHT_FWD_R_WHITE + d] = static_cast<float>(r_w);
@@ -88,9 +88,8 @@ void CHS2T::signalsOutput(const simulator_time_t& t, const double& dt)
         analogSignal[CAB1_SIGLIGHT_EPB_HOLD + d] = static_cast<float>(epb_control->stateHoldLamp());
         analogSignal[CAB1_SIGLIGHT_EPB_CONTROL + d] = static_cast<float>(epb_control->stateReleaseLamp());
 
-        // Скоростемер
-        analogSignal[CAB1_3SL2M_SPEED + d] = speed_meter[cab_idx]->getArrowPos();
-        analogSignal[CAB1_3SL2M_SHAFT + d] = speed_meter[cab_idx]->getShaftPos();
+        analogSignal[CAB1_SIGLIGHT_COMPR_1 + d] = static_cast<float>(motor_compressor[MK1]->isPowered());
+        analogSignal[CAB1_SIGLIGHT_COMPR_2 + d] = static_cast<float>(motor_compressor[MK2]->isPowered());
 
         // Циферблаты
         analogSignal[CAB1_BATTERY_VOLTAGE + d] = static_cast<float>(U_bat / 100.0);
@@ -126,8 +125,8 @@ void CHS2T::signalsOutput(const simulator_time_t& t, const double& dt)
         analogSignal[CAB1_BRAKE_STICK_POS + d] = handleEDT[cab_idx]->getHandlePos();
 
         // Приборы управления тормозами
-        analogSignal[CAB1_SHUTOFF_CRANE_POS + d] = 1.0f;
-        analogSignal[CAB1_COMBINE_CRANE_POS + d] = 0.0f;
+        analogSignal[CAB1_SHUTOFF_CRANE_POS + d] = static_cast<float>(shutoff_crane[cab_idx]->getHandlePosition());
+        analogSignal[CAB1_COMBINE_CRANE_POS + d] = static_cast<float>(combine_crane[cab_idx]->getCombineCraneHandlePosition());
         analogSignal[CAB1_BRAKE_CRANE_HANDLE_POS + d] = static_cast<float>(brake_crane[cab_idx]->getHandlePosition());
         analogSignal[CAB1_LOCO_CRANE_HANDLE_POS + d] = static_cast<float>(loco_crane[cab_idx]->getHandlePosition());
         analogSignal[CAB1_AUTOSTOP_IS_KEY + d] = static_cast<float>(epk[cab_idx]->isKey());
@@ -173,10 +172,16 @@ void CHS2T::signalsOutput(const simulator_time_t& t, const double& dt)
         // Выключатель ЭДТ
         analogSignal[CAB1_SWITCHER_EDT + d] = sw_panel[cab_idx].getSwitcherHandlePosition(CHS2tSwitchers::EDT);
 
-        analogSignal[CAB1_INDICATOR_FAST_SWITCH] = static_cast<float>(bv->getLampState());
-        analogSignal[CAB1_DIMMER_LIGHT_DEVICES] = 1.0f;
-        analogSignal[CAB1_POWER_TRAINHEAT_KEY] = 0.0f;
-        analogSignal[CAB1_POWER_TRAINHEAT_INDICATOR] = 0.0f;
-        analogSignal[CAB1_STOP_HANDLE] = 0.0f;
+        // Скоростемер
+        analogSignal[CAB1_3SL2M_SPEED + d] = speed_meter[cab_idx]->getArrowPos();
+        analogSignal[CAB1_3SL2M_SHAFT + d] = speed_meter[cab_idx]->getShaftPos();
+
+        // Прочее
+        analogSignal[CAB1_INDICATOR_FAST_SWITCH + d] = static_cast<float>(bv->getLampState());
+        analogSignal[CAB1_DIMMER_LIGHT_DEVICES + d] = 1.0f;
+        analogSignal[CAB1_POWER_TRAINHEAT_KEY + d] = 0.0f;
+        analogSignal[CAB1_POWER_TRAINHEAT_INDICATOR + d] = 0.0f;
+        analogSignal[CAB1_STOP_HANDLE + d] = 0.0f;
+        analogSignal[CAB1_SIGLIGHT_RESERVOIR_CLEAR + d] = 0.0f;
     }
 }

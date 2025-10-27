@@ -32,9 +32,9 @@ void CHS2T::soundsOutput(const simulator_time_t& t, const double& dt)
         analogSignal[CAB1_SOUND_SPEED_METER_SL2M + d] = speed_meter[cab_idx]->getSoundSignal();
 
         // Разобщительный и комбинированный краны
-        analogSignal[CAB1_SOUND_SHUTOFF_CRANE_CHANGE_POS + d] = sound_state_t::createSoundSignal(false);
-        analogSignal[CAB1_SOUND_COMB_CRANE_CHANGE_POS + d] = sound_state_t::createSoundSignal(false);
-        analogSignal[CAB1_SOUND_COMB_CRANE_BP_DRAIN_FLOW + d] = sound_state_t::createSoundSignal(false);
+        analogSignal[CAB1_SOUND_SHUTOFF_CRANE_CHANGE_POS + d] = shutoff_crane[cab_idx]->getSoundSignal(PneumoShutoffValve::CHANGE_SOUND);
+        analogSignal[CAB1_SOUND_COMB_CRANE_CHANGE_POS + d] = combine_crane[cab_idx]->getSoundSignal(PneumoCombineCrane::CHANGE_COMB_POS_SOUND);
+        analogSignal[CAB1_SOUND_COMB_CRANE_BP_DRAIN_FLOW + d] = combine_crane[cab_idx]->getSoundSignal(PneumoCombineCrane::BP_DRAIN_FLOW_SOUND);
 
         // ЭПК
         analogSignal[CAB1_SOUND_EPK_INSERT_KEY + d] = epk[cab_idx]->getSoundSignal(AutoTrainStop::KEY_INSERTED);

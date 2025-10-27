@@ -8,8 +8,8 @@ void CHS2T::stepBrakesEquipment(const double& t, const double& dt)
     // Тормозная магистраль
     double BP_flow = 0.0;
     BP_flow += air_dist->getBPflow();
-    BP_flow += brake_crane[CAB1]->getBPflow();
-//    BP_flow += brake_crane[CAB2]->getBPflow();
+    BP_flow += combine_crane[CAB1]->getBPflow();
+    BP_flow += combine_crane[CAB2]->getBPflow();
     BP_flow += epk[CAB1]->getBPflow();
     BP_flow += epk[CAB2]->getBPflow();
 

@@ -235,7 +235,7 @@ void CHS2tSwitchers::step(double t, double dt)
         else
         {
             // При заблокированной панели переключатели в нулевой позиции
-            switchers[idx].setPosition(0);
+            switchers[idx].setPosition(default_pos[idx]);
         }
     }
 
@@ -279,91 +279,94 @@ void CHS2tSwitchers::initControl()
     switchers[EPB].setKeyModifierIncrease(MODIFIER_OnlyShift);
     switchers[EPB].setKeySymbolDecrease(KEY_V);
     switchers[EPB].setKeyModifierDecrease(MODIFIER_OnlyControl);
-    switchers[EPB].setInitPosition(EPB_OFF);
+    switchers[EPB].setInitPosition(default_pos[EPB]);
 
     switchers[COMPR_1].setNumPositions(COMPR_NUM);
     switchers[COMPR_1].setKeySymbolIncrease(KEY_2);
     switchers[COMPR_1].setKeyModifierIncrease(MODIFIER_OnlyShift);
     switchers[COMPR_1].setKeySymbolDecrease(KEY_2);
     switchers[COMPR_1].setKeyModifierDecrease(MODIFIER_OnlyControl);
-    switchers[COMPR_1].setInitPosition(COMPR_HEAT);
+    switchers[COMPR_1].setInitPosition(default_pos[COMPR_1]);
 
     switchers[PANT_FWD].setNumPositions(PANT_NUM);
     switchers[PANT_FWD].setKeySymbolIncrease(KEY_I);
     switchers[PANT_FWD].setKeyModifierIncrease(MODIFIER_OnlyShift);
     switchers[PANT_FWD].setKeySymbolDecrease(KEY_I);
     switchers[PANT_FWD].setKeyModifierDecrease(MODIFIER_OnlyControl);
-    switchers[PANT_FWD].setInitPosition(PANT_OFF);
+    switchers[PANT_FWD].setSpringLast();
+    switchers[PANT_FWD].setInitPosition(default_pos[PANT_FWD]);
 
     switchers[FAST_SW].setNumPositions(FAST_SW_NUM);
     switchers[FAST_SW].setKeySymbolIncrease(KEY_P);
     switchers[FAST_SW].setKeyModifierIncrease(MODIFIER_OnlyShift);
     switchers[FAST_SW].setKeySymbolDecrease(KEY_P);
     switchers[FAST_SW].setKeyModifierDecrease(MODIFIER_OnlyControl);
-    switchers[FAST_SW].setInitPosition(FAST_SW_NO_CTRL);
+    switchers[FAST_SW].setSpringLast();
+    switchers[FAST_SW].setInitPosition(default_pos[FAST_SW]);
 
     switchers[FANS].setNumPositions(FANS_NUM);
     switchers[FANS].setKeySymbolIncrease(KEY_1);
     switchers[FANS].setKeyModifierIncrease(MODIFIER_OnlyShift);
     switchers[FANS].setKeySymbolDecrease(KEY_1);
     switchers[FANS].setKeyModifierDecrease(MODIFIER_OnlyControl);
-    switchers[FANS].setInitPosition(FANS_NO_CTRL);
+    switchers[FANS].setInitPosition(default_pos[FANS]);
 
     switchers[COMPR_2].setNumPositions(COMPR_NUM);
     switchers[COMPR_2].setKeySymbolIncrease(KEY_3);
     switchers[COMPR_2].setKeyModifierIncrease(MODIFIER_OnlyShift);
     switchers[COMPR_2].setKeySymbolDecrease(KEY_3);
     switchers[COMPR_2].setKeyModifierDecrease(MODIFIER_OnlyControl);
-    switchers[COMPR_2].setInitPosition(COMPR_HEAT);
+    switchers[COMPR_2].setInitPosition(default_pos[COMPR_2]);
 
     switchers[PANT_BWD].setNumPositions(PANT_NUM);
     switchers[PANT_BWD].setKeySymbolIncrease(KEY_O);
     switchers[PANT_BWD].setKeyModifierIncrease(MODIFIER_OnlyShift);
     switchers[PANT_BWD].setKeySymbolDecrease(KEY_O);
     switchers[PANT_BWD].setKeyModifierDecrease(MODIFIER_OnlyControl);
-    switchers[PANT_BWD].setInitPosition(PANT_OFF);
+    switchers[PANT_BWD].setSpringLast();
+    switchers[PANT_BWD].setInitPosition(default_pos[PANT_BWD]);
 
     switchers[BLINDS].setNumPositions(BLINDS_NUM);
     switchers[BLINDS].setKeySymbolIncrease(KEY_4);
     switchers[BLINDS].setKeyModifierIncrease(MODIFIER_OnlyShift);
     switchers[BLINDS].setKeySymbolDecrease(KEY_4);
     switchers[BLINDS].setKeyModifierDecrease(MODIFIER_OnlyControl);
-    switchers[BLINDS].setInitPosition(AUXCOMPR);
+    switchers[BLINDS].setInitPosition(default_pos[BLINDS]);
 
     switchers[CAB_LIGHT].setNumPositions(CAB_LIGHT_NUM);
     switchers[CAB_LIGHT].setKeySymbolIncrease(KEY_K);
     switchers[CAB_LIGHT].setKeyModifierIncrease(MODIFIER_OnlyShift);
     switchers[CAB_LIGHT].setKeySymbolDecrease(KEY_K);
     switchers[CAB_LIGHT].setKeyModifierDecrease(MODIFIER_OnlyControl);
-    switchers[CAB_LIGHT].setInitPosition(CAB_LIGHT_OFF);
+    switchers[CAB_LIGHT].setInitPosition(default_pos[CAB_LIGHT]);
 
     switchers[BUFLIGHT_L].setNumPositions(BUFLIGHT_NUM);
     switchers[BUFLIGHT_L].setKeySymbolIncrease(KEY_G);
     switchers[BUFLIGHT_L].setKeyModifierIncrease(MODIFIER_OnlyShift);
     switchers[BUFLIGHT_L].setKeySymbolDecrease(KEY_G);
     switchers[BUFLIGHT_L].setKeyModifierDecrease(MODIFIER_OnlyControl);
-    switchers[BUFLIGHT_L].setInitPosition(BUFLIGHT_OFF);
+    switchers[BUFLIGHT_L].setInitPosition(default_pos[BUFLIGHT_L]);
 
     switchers[BUFLIGHT_R].setNumPositions(BUFLIGHT_NUM);
     switchers[BUFLIGHT_R].setKeySymbolIncrease(KEY_J);
     switchers[BUFLIGHT_R].setKeyModifierIncrease(MODIFIER_OnlyShift);
     switchers[BUFLIGHT_R].setKeySymbolDecrease(KEY_J);
     switchers[BUFLIGHT_R].setKeyModifierDecrease(MODIFIER_OnlyControl);
-    switchers[BUFLIGHT_R].setInitPosition(BUFLIGHT_OFF);
+    switchers[BUFLIGHT_R].setInitPosition(default_pos[BUFLIGHT_R]);
 
     switchers[SPOTLIGHT].setNumPositions(SPOTLIGHT_NUM);
     switchers[SPOTLIGHT].setKeySymbolIncrease(KEY_H);
     switchers[SPOTLIGHT].setKeyModifierIncrease(MODIFIER_OnlyShift);
     switchers[SPOTLIGHT].setKeySymbolDecrease(KEY_H);
     switchers[SPOTLIGHT].setKeyModifierDecrease(MODIFIER_OnlyControl);
-    switchers[SPOTLIGHT].setInitPosition(SPOTLIGHT_OFF);
+    switchers[SPOTLIGHT].setInitPosition(default_pos[SPOTLIGHT]);
 
     switchers[EDT].setNumPositions(EDT_NUM);
     switchers[EDT].setKeySymbolIncrease(KEY_F);
     switchers[EDT].setKeyModifierIncrease(MODIFIER_OnlyShift);
     switchers[EDT].setKeySymbolDecrease(KEY_F);
     switchers[EDT].setKeyModifierDecrease(MODIFIER_OnlyControl);
-    switchers[EDT].setInitPosition(EDT_ON);
+    switchers[EDT].setInitPosition(default_pos[EDT]);
 }
 
 //------------------------------------------------------------------------------
@@ -373,7 +376,7 @@ bool CHS2tSwitchers::isSwitchersOff() const
 {
     for (const auto& idx : locked_idx)
     {
-        if (switchers[idx].getPosition() != 0)
+        if (switchers[idx].getPosition() != default_pos[idx])
         {
             return false;
         }

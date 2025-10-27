@@ -7,13 +7,23 @@ void CHS2T::stepBrakesControl(const double& t, const double& dt)
 {
     for (size_t cab_idx : {CAB1, CAB2})
     {
+        // Разобщительный кран усл.№328
+        shutoff_crane[cab_idx]->setPipePressure(main_reservoir->getPressure());
+        shutoff_crane[cab_idx]->setDeviceFlow(brake_crane[cab_idx]->getFLflow() + loco_crane[cab_idx]->getFLflow());
+        shutoff_crane[cab_idx]->step(t, dt);
+
+        // Комбинированный кран усл.№114
+        combine_crane[cab_idx]->setBPpressure(main_reservoir->getPressure());
+        combine_crane[cab_idx]->setCraneBPflow(brake_crane[cab_idx]->getBPflow());
+        combine_crane[cab_idx]->step(t, dt);
+
         // Поездной кран машиниста
-        brake_crane[cab_idx]->setFLpressure(main_reservoir->getPressure());
-        brake_crane[cab_idx]->setBPpressure(brakepipe->getPressure());
+        brake_crane[cab_idx]->setFLpressure(shutoff_crane[cab_idx]->getPressureToDevice());
+        brake_crane[cab_idx]->setBPpressure(combine_crane[cab_idx]->getCraneBPpressure());
         brake_crane[cab_idx]->step(t, dt);
 
         // Кран вспомогательного тормоза
-        loco_crane[cab_idx]->setFLpressure(main_reservoir->getPressure());
+        loco_crane[cab_idx]->setFLpressure(shutoff_crane[cab_idx]->getPressureToDevice());
         loco_crane[cab_idx]->setBCpressure(loco_crane_splitter->getInputPressure());
         loco_crane[cab_idx]->setILpressure(0.0);
         loco_crane[cab_idx]->step(t, dt);
@@ -36,7 +46,7 @@ void CHS2T::stepBrakesControl(const double& t, const double& dt)
     brake_ref_res->step(t, dt);
 
     // Разветвитель потока воздуха от локомотивного крана к тележкам
-    loco_crane_splitter->setInputFlow(loco_crane[CAB1]->getBCflow()/* + loco_crane[CAB2]->getBCflow()*/);
+    loco_crane_splitter->setInputFlow(loco_crane[CAB1]->getBCflow() + loco_crane[CAB2]->getBCflow());
     loco_crane_splitter->setPipePressure1(bc_switch_valve[TROLLEY_FWD]->getPressure1());
     loco_crane_splitter->setPipePressure2(bc_switch_valve[TROLLEY_BWD]->getPressure1());
     loco_crane_splitter->step(t, dt);

@@ -16,15 +16,15 @@
 		<LocoCranePosCab1>1.0</LocoCranePosCab1>
 		<LocoCranePosCab2>1.0</LocoCranePosCab2>
 
-		<!-- Состояние устройства блокировки тормозов 
-		(1 - разблокирована, 0 - заблокирована) -->
-		<BrakeLockDeviceCab1>1</BrakeLockDeviceCab1>
-		<BrakeLockDeviceCab2>0</BrakeLockDeviceCab2>
+		<!-- Положение разобщительного крана на подводе питательной магистрали к кранам машиниста
+		(1 - открыт, 0 - закрыт) -->
+		<ShutoffCranePosCab1>1</ShutoffCranePosCab1>
+		<ShutoffCranePosCab2>0</ShutoffCranePosCab2>
 
 		<!-- Положение комбинированного крана
 		( -1 - положение двойной тяги, 0 - поездное, 1 - экстренное торможение -->
 		<CombineCranePosCab1>0</CombineCranePosCab1>
-		<CombineCranePosCab2>0</CombineCranePosCab2>
+		<CombineCranePosCab2>-1</CombineCranePosCab2>
 
 		<!-- Ключ электропневматического клапана автостопа
 		( 0 - извлечён, 1 - вставлен, ЭПК выключен, 2 - вставлен, ЭПК включён -->

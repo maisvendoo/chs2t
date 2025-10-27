@@ -73,6 +73,16 @@ void CHS2T::initControl(const QString &modules_dir, const QString &custom_cfg_di
 
     for (auto cab_idx : {CAB1, CAB2})
     {
+        // Разобщительный кран усл.№328
+        shutoff_crane[cab_idx]->setKeySymbolOpen(KEY_BackSpace);
+        shutoff_crane[cab_idx]->setKeyModifierOpen(MODIFIER_OnlyAlt);
+        shutoff_crane[cab_idx]->setKeySymbolClose(KEY_BackSpace);
+        shutoff_crane[cab_idx]->setKeyModifierClose(MODIFIER_OnlyAlt);
+        shutoff_crane[cab_idx]->setControl(&pressed_keys_by_cabine[cab_idx]);
+
+        // Комбинированный кран усл.№114
+        combine_crane[cab_idx]->setControl(&pressed_keys_by_cabine[cab_idx]);
+
         // Электропневматический клапан автостопа
         epk[cab_idx]->setControl(&pressed_keys_by_cabine[cab_idx]);
 

@@ -9,6 +9,14 @@ void CHS2T::initBrakesControl(const QString& modules_dir, const QString& custom_
 {
     for (size_t cab_idx : {CAB1, CAB2})
     {
+        // Разобщительный кран усл.№328
+        shutoff_crane[cab_idx] = new PneumoShutoffValve();
+        shutoff_crane[cab_idx]->read_config("pneumo-shutoff-valve");
+
+        // Комбинированный кран усл.№114
+        combine_crane[cab_idx] = new PneumoCombineCrane();
+        combine_crane[cab_idx]->read_config("pneumo-combine-crane");
+
         // Поездной кран машиниста
         brake_crane[cab_idx] = loadBrakeCrane(
             modules_dir + QDir::separator() + brake_crane_module_name);

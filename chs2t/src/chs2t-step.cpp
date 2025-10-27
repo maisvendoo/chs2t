@@ -25,7 +25,7 @@ void CHS2T::stepPantographs(const double& t, const double& dt)
 
         for (const auto& cab : {CAB1, CAB2})
         {
-            const bool is_off = sw_panel[cab_idx[cab]].isSwitched(sw_idx[cab], CHS2tSwitchers::PANT_OFF);
+            const bool is_off = sw_panel[cab_idx[cab]].isSwitched(sw_idx[cab], CHS2tSwitchers::PANT_GROUND);
             const bool is_down = sw_panel[cab_idx[cab]].isSwitched(sw_idx[cab], CHS2tSwitchers::PANT_DOWN);
             const bool is_up = sw_panel[cab_idx[cab]].isSwitched(sw_idx[cab], CHS2tSwitchers::PANT_UP);
             const bool is_on = sw_panel[cab_idx[cab]].isSwitched(sw_idx[cab], CHS2tSwitchers::PANT_ON);
