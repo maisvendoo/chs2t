@@ -42,7 +42,14 @@ void CHS2T::stepEPB(const double& t, const double& dt)
         // Управление от задатчика ЭДТ ("карандаша") - до давления в 0.22 МПа
         if (brake_ref_res->getPressure() < 0.22)
         {
-            evr_U = handleEDT[CAB1]->getControlSignal() * epb_converter->getOutputVoltage();
+            if ((km21KR2[CAB1].getReversHandlePos() != 0))
+            {
+                evr_U = handleEDT[CAB1]->getControlSignal() * epb_converter->getOutputVoltage();
+            }
+            if ((km21KR2[CAB2].getReversHandlePos() != 0))
+            {
+                evr_U = handleEDT[CAB2]->getControlSignal() * epb_converter->getOutputVoltage();
+            }
         }
 
         // Если управления с задатчика нет, сигнал из рабочей линии ЭПТ

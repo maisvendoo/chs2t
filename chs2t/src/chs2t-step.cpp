@@ -18,7 +18,7 @@ void CHS2T::stepPantographs(const double& t, const double& dt)
     // Управление токоприемниками и их разъединителями
     for (const auto& [pant_idx, cab_idx, sw_idx] : pant_indexes)
     {
-        bool pant_off = true;
+        bool pant_off = false;
         bool pant_down = true;
         bool pant_up = false;
         bool pant_on = false;
@@ -30,7 +30,7 @@ void CHS2T::stepPantographs(const double& t, const double& dt)
             const bool is_up = sw_panel[cab_idx[cab]].isSwitched(sw_idx[cab], CHS2tSwitchers::PANT_UP);
             const bool is_on = sw_panel[cab_idx[cab]].isSwitched(sw_idx[cab], CHS2tSwitchers::PANT_ON);
 
-            pant_off &= is_off;
+            pant_off |= is_off;
             pant_down &= is_down;
             pant_up |= is_up;
             pant_on |= is_on;
