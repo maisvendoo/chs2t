@@ -198,7 +198,7 @@ private:
     /// Рукав питательной  магистрали сзади
     PneumoHose* hose_fl_bwd = nullptr;
 
-    /// Разобщительный кран усл.№328
+    /// Разобщительный кран питательной магистрали к кранам машиниста
     PneumoShutoffValve* shutoff_crane[CABS_NUM] = {nullptr, nullptr};
 
     /// Комбинированный кран усл.№114
@@ -237,7 +237,10 @@ private:
     /// Запасный резервуар
     Reservoir*   supply_reservoir = nullptr;
 
-    /// Разветвитель потока воздуха от локомотивного крана к тележкам
+    /// Переключательный клапан потоков от локомотивных кранов в кабинах
+    SwitchingValve*  loco_crane_switch_valve = nullptr;
+
+    /// Разветвитель потока воздуха от локомотивных кранов к тележкам
     PneumoSplitter*  loco_crane_splitter = nullptr;
 
     /// Скоростной клапан ДАКО

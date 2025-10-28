@@ -9,7 +9,7 @@ void CHS2T::initBrakesControl(const QString& modules_dir, const QString& custom_
 {
     for (size_t cab_idx : {CAB1, CAB2})
     {
-        // Разобщительный кран усл.№328
+        // Разобщительный кран питательной магистрали к кранам машиниста
         shutoff_crane[cab_idx] = new PneumoShutoffValve();
         shutoff_crane[cab_idx]->read_config("pneumo-shutoff-valve");
 
@@ -44,6 +44,10 @@ void CHS2T::initBrakesControl(const QString& modules_dir, const QString& custom_
 
     // Управляющая камера воздухораспределителя (ложный ТЦ)
     brake_ref_res = new Reservoir(0.01);
+
+    // Переключательный клапан потоков от локомотивных кранов в кабинах
+    loco_crane_switch_valve = new SwitchingValve();
+    loco_crane_switch_valve->read_config("zpk");
 
     // Разветвитель потока воздуха от локомотивного крана к тележкам
     loco_crane_splitter = new PneumoSplitter();

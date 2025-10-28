@@ -7,7 +7,7 @@ void CHS2T::stepBrakesControl(const double& t, const double& dt)
 {
     for (size_t cab_idx : {CAB1, CAB2})
     {
-        // Разобщительный кран усл.№328
+        // Разобщительный кран питательной магистрали к кранам машиниста
         shutoff_crane[cab_idx]->setPipePressure(main_reservoir->getPressure());
         shutoff_crane[cab_idx]->setDeviceFlow(brake_crane[cab_idx]->getFLflow() + loco_crane[cab_idx]->getFLflow());
         shutoff_crane[cab_idx]->step(t, dt);
@@ -24,7 +24,9 @@ void CHS2T::stepBrakesControl(const double& t, const double& dt)
 
         // Кран вспомогательного тормоза
         loco_crane[cab_idx]->setFLpressure(shutoff_crane[cab_idx]->getPressureToDevice());
-        loco_crane[cab_idx]->setBCpressure(loco_crane_splitter->getInputPressure());
+        loco_crane[cab_idx]->setBCpressure((cab_idx == CAB1) ?
+                                               loco_crane_switch_valve->getPressure1() :
+                                               loco_crane_switch_valve->getPressure2());
         loco_crane[cab_idx]->setILpressure(0.0);
         loco_crane[cab_idx]->step(t, dt);
 
@@ -45,8 +47,14 @@ void CHS2T::stepBrakesControl(const double& t, const double& dt)
     brake_ref_res->setFlow(electro_air_dist->getBCflow());
     brake_ref_res->step(t, dt);
 
+    // Переключательный клапан потоков от локомотивных кранов в кабинах
+    loco_crane_switch_valve->setInputFlow1(loco_crane[CAB1]->getBCflow());
+    loco_crane_switch_valve->setInputFlow2(loco_crane[CAB2]->getBCflow());
+    loco_crane_switch_valve->setOutputPressure(loco_crane_splitter->getInputPressure());
+    loco_crane_switch_valve->step(t, dt);
+
     // Разветвитель потока воздуха от локомотивного крана к тележкам
-    loco_crane_splitter->setInputFlow(loco_crane[CAB1]->getBCflow() + loco_crane[CAB2]->getBCflow());
+    loco_crane_splitter->setInputFlow(loco_crane_switch_valve->getOutputFlow());
     loco_crane_splitter->setPipePressure1(bc_switch_valve[TROLLEY_FWD]->getPressure1());
     loco_crane_splitter->setPipePressure2(bc_switch_valve[TROLLEY_BWD]->getPressure1());
     loco_crane_splitter->step(t, dt);

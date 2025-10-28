@@ -73,7 +73,7 @@ void CHS2T::initControl(const QString &modules_dir, const QString &custom_cfg_di
 
     for (auto cab_idx : {CAB1, CAB2})
     {
-        // Разобщительный кран усл.№328
+        // Разобщительный кран питательной магистрали к кранам машиниста
         shutoff_crane[cab_idx]->setKeySymbolOpen(KEY_BackSpace);
         shutoff_crane[cab_idx]->setKeyModifierOpen(MODIFIER_OnlyAlt);
         shutoff_crane[cab_idx]->setKeySymbolClose(KEY_BackSpace);

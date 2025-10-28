@@ -86,7 +86,7 @@ void Km21KR2::setReversHandlePos(int pos)
 {
     if (isReversHandle())
     {
-        if (is_reverse_change_allowed)
+        if (is_reverse_change_allowed && (getMainPos() == 0))
         {
             pos = std::clamp(pos, -1, 1);
         }
