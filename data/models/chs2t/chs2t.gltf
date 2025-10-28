@@ -72,6 +72,118 @@
 					"type":"spot",
 					"range":200,
 					"name":"SpotLight_high1"
+				},
+				{
+					"color":[
+						1,
+						1,
+						1
+					],
+					"intensity":489.16271759294034,
+					"spot":{
+						"innerConeAngle":0.8901179370451118,
+						"outerConeAngle":1.0471975803375244
+					},
+					"type":"spot",
+					"name":"BufLight_white_1L"
+				},
+				{
+					"color":[
+						1,
+						0,
+						0
+					],
+					"intensity":489.16271759294034,
+					"spot":{
+						"innerConeAngle":0.8901179370451118,
+						"outerConeAngle":1.0471975803375244
+					},
+					"type":"spot",
+					"name":"BufLight_red_1L"
+				},
+				{
+					"color":[
+						1,
+						1,
+						1
+					],
+					"intensity":489.16271759294034,
+					"spot":{
+						"innerConeAngle":0.8901179370451118,
+						"outerConeAngle":1.0471975803375244
+					},
+					"type":"spot",
+					"name":"BufLight_white_1R"
+				},
+				{
+					"color":[
+						1,
+						0,
+						0
+					],
+					"intensity":489.16271759294034,
+					"spot":{
+						"innerConeAngle":0.8901179370451118,
+						"outerConeAngle":1.0471975803375244
+					},
+					"type":"spot",
+					"name":"BufLight_red_1R"
+				},
+				{
+					"color":[
+						1,
+						1,
+						1
+					],
+					"intensity":489.16271759294034,
+					"spot":{
+						"innerConeAngle":0.8901179370451118,
+						"outerConeAngle":1.0471975803375244
+					},
+					"type":"spot",
+					"name":"BufLight_white_2L"
+				},
+				{
+					"color":[
+						1,
+						0,
+						0
+					],
+					"intensity":489.16271759294034,
+					"spot":{
+						"innerConeAngle":0.8901179370451118,
+						"outerConeAngle":1.0471975803375244
+					},
+					"type":"spot",
+					"name":"BufLight_red_2L"
+				},
+				{
+					"color":[
+						1,
+						1,
+						1
+					],
+					"intensity":489.16271759294034,
+					"spot":{
+						"innerConeAngle":0.8901179370451118,
+						"outerConeAngle":1.0471975803375244
+					},
+					"type":"spot",
+					"name":"BufLight_white_2R"
+				},
+				{
+					"color":[
+						1,
+						0,
+						0
+					],
+					"intensity":489.16271759294034,
+					"spot":{
+						"innerConeAngle":0.8901179370451118,
+						"outerConeAngle":1.0471975803375244
+					},
+					"type":"spot",
+					"name":"BufLight_red_2R"
 				}
 			]
 		}
@@ -185,7 +297,15 @@
 				101,
 				102,
 				113,
-				124
+				124,
+				125,
+				126,
+				127,
+				128,
+				129,
+				130,
+				131,
+				132
 			]
 		}
 	],
@@ -198,10 +318,10 @@
 			},
 			"name":"SpotLight_low2",
 			"rotation":[
+				1,
 				0,
-				-1,
 				0,
-				1.6292068494294654e-07
+				4.7414219217500886e-09
 			],
 			"translation":[
 				0,
@@ -230,10 +350,10 @@
 			},
 			"name":"SpotLight_high2",
 			"rotation":[
+				1,
 				0,
-				-1,
 				0,
-				1.6292068494294654e-07
+				4.7414219217500886e-09
 			],
 			"translation":[
 				0,
@@ -1273,6 +1393,134 @@
 				0,
 				4.6966118812561035,
 				6.172732830047607
+			]
+		},
+		{
+			"extensions":{
+				"KHR_lights_punctual":{
+					"light":4
+				}
+			},
+			"name":"BufLight_white_1L",
+			"translation":[
+				-0.973518967628479,
+				1.6012160778045654,
+				-8.717679977416992
+			]
+		},
+		{
+			"extensions":{
+				"KHR_lights_punctual":{
+					"light":5
+				}
+			},
+			"name":"BufLight_red_1L",
+			"translation":[
+				-1.1605887413024902,
+				1.6012160778045654,
+				-8.679295539855957
+			]
+		},
+		{
+			"extensions":{
+				"KHR_lights_punctual":{
+					"light":6
+				}
+			},
+			"name":"BufLight_white_1R",
+			"translation":[
+				0.9735190272331238,
+				1.6012160778045654,
+				-8.717679977416992
+			]
+		},
+		{
+			"extensions":{
+				"KHR_lights_punctual":{
+					"light":7
+				}
+			},
+			"name":"BufLight_red_1R",
+			"translation":[
+				1.1605900526046753,
+				1.6012160778045654,
+				-8.679295539855957
+			]
+		},
+		{
+			"extensions":{
+				"KHR_lights_punctual":{
+					"light":8
+				}
+			},
+			"name":"BufLight_white_2L",
+			"rotation":[
+				1,
+				0,
+				0,
+				4.7414219217500886e-09
+			],
+			"translation":[
+				-0.973518967628479,
+				1.6012160778045654,
+				8.717679977416992
+			]
+		},
+		{
+			"extensions":{
+				"KHR_lights_punctual":{
+					"light":9
+				}
+			},
+			"name":"BufLight_red_2L",
+			"rotation":[
+				1,
+				0,
+				0,
+				4.7414219217500886e-09
+			],
+			"translation":[
+				-1.1605887413024902,
+				1.6012160778045654,
+				8.679300308227539
+			]
+		},
+		{
+			"extensions":{
+				"KHR_lights_punctual":{
+					"light":10
+				}
+			},
+			"name":"BufLight_white_2R",
+			"rotation":[
+				1,
+				0,
+				0,
+				4.7414219217500886e-09
+			],
+			"translation":[
+				0.9735190272331238,
+				1.6012160778045654,
+				8.717679977416992
+			]
+		},
+		{
+			"extensions":{
+				"KHR_lights_punctual":{
+					"light":11
+				}
+			},
+			"name":"BufLight_red_2R",
+			"rotation":[
+				1,
+				0,
+				0,
+				4.7414219217500886e-09
+			],
+			"translation":[
+				1.1605900526046753,
+				1.6012160778045654,
+				8.679300308227539
 			]
 		}
 	],
