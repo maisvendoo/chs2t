@@ -109,8 +109,6 @@ void Km21KR2::setReversHandlePos(int pos)
         sounds[REVERS_CHANGE_POS_SOUND].play();
 
         reverseState = pos;
-        controlState.k01 = (reverseState == 1);
-        controlState.k02 = (reverseState == -1);
     }
 }
 
@@ -168,10 +166,6 @@ void Km21KR2::setControlPos(int pos)
         }
 
         mainShaftPos = pos;
-        controlState.k21 = (mainShaftPos == -2 || mainShaftPos == 0  || mainShaftPos == 2);
-        controlState.k22 = (mainShaftPos == 0   || mainShaftPos == 1  || mainShaftPos == 2);
-        controlState.k23 = (mainShaftPos == 1   || mainShaftPos == 2);
-        controlState.k25 = (mainShaftPos == -2 || mainShaftPos == -1 || mainShaftPos == 0);
     }
 }
 
@@ -207,9 +201,6 @@ void Km21KR2::setFieldWeakPos(int pos)
         sounds[MAIN_CHANGE_FIELDWEAK_SOUND].play();
 
         fieldWeakShaft = pos;
-        controlState.k31 = (fieldWeakShaft == 1 || fieldWeakShaft == 4 || fieldWeakShaft == 5 );
-        controlState.k32 = (fieldWeakShaft == 2 || fieldWeakShaft == 4);
-        controlState.k33 = (fieldWeakShaft == 3 || fieldWeakShaft == 5);
     }
 }
 
@@ -286,6 +277,18 @@ void Km21KR2::stepKeysControl(double t, double dt)
     (void) t;
     (void) dt;
 
+    controlState.k01 = (reverseState == 1);
+    controlState.k02 = (reverseState == -1);
+
+    controlState.k21 = (mainShaftPos == -2 || mainShaftPos == 0  || mainShaftPos == 2);
+    controlState.k22 = (mainShaftPos == 0   || mainShaftPos == 1  || mainShaftPos == 2);
+    controlState.k23 = (mainShaftPos == 1   || mainShaftPos == 2);
+    controlState.k25 = (mainShaftPos == -2 || mainShaftPos == -1 || mainShaftPos == 0);
+
+    controlState.k31 = (fieldWeakShaft == 1 || fieldWeakShaft == 4 || fieldWeakShaft == 5 );
+    controlState.k32 = (fieldWeakShaft == 2 || fieldWeakShaft == 4);
+    controlState.k33 = (fieldWeakShaft == 3 || fieldWeakShaft == 5);
+
     if (!pressed_keys)
     {
         old_key_state_fwd_or_bwd = false;
@@ -295,16 +298,17 @@ void Km21KR2::stepKeysControl(double t, double dt)
         {
             setControlPos(0);
         }
+        return;
     }
 
-    bool key_fwd = getKeyState(pressed_keys, KEY_W);
-    bool key_bwd = getKeyState(pressed_keys, KEY_S);
-    bool key_traction = getKeyState(pressed_keys, KEY_A);
-    bool key_reset = getKeyState(pressed_keys, KEY_D);
-    bool key_traction_auto = getKeyState(pressed_keys, KEY_Q);
-    bool key_reset_auto = getKeyState(pressed_keys, KEY_E);
-    bool isShift = isModifier(pressed_keys, MODIFIER_OnlyShift);
-    bool isControl = isModifier(pressed_keys, MODIFIER_OnlyControl);
+    bool key_fwd = getKeyState(*pressed_keys, KEY_W);
+    bool key_bwd = getKeyState(*pressed_keys, KEY_S);
+    bool key_traction = getKeyState(*pressed_keys, KEY_A);
+    bool key_reset = getKeyState(*pressed_keys, KEY_D);
+    bool key_traction_auto = getKeyState(*pressed_keys, KEY_Q);
+    bool key_reset_auto = getKeyState(*pressed_keys, KEY_E);
+    bool isShift = isModifier(*pressed_keys, MODIFIER_OnlyShift);
+    bool isControl = isModifier(*pressed_keys, MODIFIER_OnlyControl);
 
     if (key_fwd)
     {

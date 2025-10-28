@@ -144,7 +144,7 @@ void StepSwitch::stepDiscrete(double t, double dt)
     {
         poz_d += V * dt;
 
-        if (hod && prevPos != poz)
+        if (hod && (prevPos != poz))
         {
             ableToGainPositions = false;
             prevPos = poz;
@@ -186,6 +186,7 @@ void StepSwitch::stepDiscrete(double t, double dt)
     {
         ableToChangeOnePosition = true;
         ableToGainPositions = true;
+        prevPos = poz;
     }
 
     reverseState = (-1 * (!ctrlState.k01 && ctrlState.k02)) +
