@@ -103,7 +103,8 @@ void CHS2T::debugPrint(const simulator_time_t& t, const double& dt)
                     .arg(10.0 * brake_mech[TROLLEY_FWD]->getBCpressure(), 6, 'f', 2)
                     .arg(10.0 * supply_reservoir->getPressure(), 6, 'f', 2)
                     .arg(10.0 * main_reservoir->getPressure(), 6, 'f', 2);
-    DebugMsg += QString("Pos %1%2|I%3 A|")
+    DebugMsg += QString("%1|Pos %2%3|I%4 A|")
+                    .arg(stepSwitch->getReverseState(), 2)
                     .arg(stepSwitch->getPoz(), 2)
                     .arg(stepSwitch->getHod() ? "*" : " ")
                     .arg(motor->getI56() - abs(generator->getIa()), 6, 'f', 1);

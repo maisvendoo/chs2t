@@ -138,7 +138,7 @@ void CHS2T::stepTractionControl(const double& t, const double& dt)
     puskRez->setPoz(stepSwitch->getPoz());
     puskRez->step(t, dt);
 
-    if (EDT || (!epk[CAB1]->isKeyOn()) || (!emergency_valve->isTractionAllow()))
+    if (EDT || (!(epk[CAB1]->isKeyOn() || epk[CAB2]->isKeyOn())) || (!emergency_valve->isTractionAllow()))
     {
         allowTrac.reset();
     }
@@ -175,10 +175,12 @@ void CHS2T::stepSupportEquipment(const double& t, const double& dt)
     motor_fan_ptr->setPowerVoltage(R * (motor->getIa() * !hod + abs(generator->getIa())));
     motor_fan_ptr->step(t, dt);
 
+    // Управление мотор-вентиляторами ТЭД
     bool fan_off = true;
     bool fan_auto = false;
     bool fan_on = false;
-//    bool blinds_off = true;
+
+    // Управление жалюзи ПТР
     bool blinds_on = true;
     bool blinds_auto = false;
 
@@ -192,13 +194,12 @@ void CHS2T::stepSupportEquipment(const double& t, const double& dt)
         fan_auto |= is_auto;
         fan_on |= is_on;
 
-/*        is_off = sw_panel[cab_idx].isSwitched(CHS2tSwitchers::BLINDS, CHS2tSwitchers::AUXCOMPR) ||
-                 sw_panel[cab_idx].isSwitched(CHS2tSwitchers::BLINDS, CHS2tSwitchers::AUTO_SAND);*/
-        is_on = sw_panel[cab_idx].isSwitched(CHS2tSwitchers::BLINDS, CHS2tSwitchers::BLINDS_OPEN);
+
+        is_on = sw_panel[cab_idx].isSwitched(CHS2tSwitchers::BLINDS, CHS2tSwitchers::BLINDS_OPEN) &&
+                (km21KR2[cab_idx].getReversHandlePos() != 0);
         is_auto = sw_panel[cab_idx].isSwitched(CHS2tSwitchers::BLINDS, CHS2tSwitchers::AUTO_BLINDS) ||
                   sw_panel[cab_idx].isSwitched(CHS2tSwitchers::BLINDS, CHS2tSwitchers::AUTO_BLINDS_SAND);
 
-//        blinds_off &= is_off;
         blinds_on &= is_on;
         blinds_auto |= is_auto;
     }
@@ -224,23 +225,10 @@ void CHS2T::stepSupportEquipment(const double& t, const double& dt)
     motor_fan[0]->step(t, dt);
     motor_fan[1]->step(t, dt);
 
-    blinds->setState(false);
-/*
-    if (blinds_off)
-    {
-        blinds->setState(false);
-    }
-*/
-    if (blinds_on)
-    {
-        blinds->setState(true);
-    }
+    blinds_on |= EDT;
+    blinds_on |= blinds_auto && !(hod || stepSwitch->isZero());
 
-    if (blinds_auto)
-    {
-        blinds->setState((!hod && !stepSwitch->isZero()) || EDT);
-    }
-
+    blinds->setState(blinds_on);
     blinds->step(t, dt);
 
     energy_counter->setFullPower(Uks * (motor->getI12() + motor->getI34() + motor->getI56()) );

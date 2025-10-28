@@ -60,7 +60,7 @@ public:
         PANT_ON = 3,
 
         FAST_SW_NUM = 4,
-        FAST_SW_NO_CTRL = 0,
+        FAST_SW_MANUAL_CTRL = 0,
         FAST_SW_OFF = 1,
         FAST_SW_WORK = 2,
         FAST_SW_ON = 3,
