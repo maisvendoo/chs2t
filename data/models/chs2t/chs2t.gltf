@@ -141,34 +141,6 @@
 						"outerConeAngle":1.0471975803375244
 					},
 					"type":"spot",
-					"name":"BufLight_white_2L"
-				},
-				{
-					"color":[
-						1,
-						0,
-						0
-					],
-					"intensity":489.16271759294034,
-					"spot":{
-						"innerConeAngle":0.8901179370451118,
-						"outerConeAngle":1.0471975803375244
-					},
-					"type":"spot",
-					"name":"BufLight_red_2L"
-				},
-				{
-					"color":[
-						1,
-						1,
-						1
-					],
-					"intensity":489.16271759294034,
-					"spot":{
-						"innerConeAngle":0.8901179370451118,
-						"outerConeAngle":1.0471975803375244
-					},
-					"type":"spot",
 					"name":"BufLight_white_2R"
 				},
 				{
@@ -184,6 +156,34 @@
 					},
 					"type":"spot",
 					"name":"BufLight_red_2R"
+				},
+				{
+					"color":[
+						1,
+						1,
+						1
+					],
+					"intensity":489.16271759294034,
+					"spot":{
+						"innerConeAngle":0.8901179370451118,
+						"outerConeAngle":1.0471975803375244
+					},
+					"type":"spot",
+					"name":"BufLight_white_2L"
+				},
+				{
+					"color":[
+						1,
+						0,
+						0
+					],
+					"intensity":489.16271759294034,
+					"spot":{
+						"innerConeAngle":0.8901179370451118,
+						"outerConeAngle":1.0471975803375244
+					},
+					"type":"spot",
+					"name":"BufLight_red_2L"
 				}
 			]
 		}
@@ -1453,7 +1453,7 @@
 					"light":8
 				}
 			},
-			"name":"BufLight_white_2L",
+			"name":"BufLight_white_2R",
 			"rotation":[
 				1,
 				0,
@@ -1472,7 +1472,7 @@
 					"light":9
 				}
 			},
-			"name":"BufLight_red_2L",
+			"name":"BufLight_red_2R",
 			"rotation":[
 				1,
 				0,
@@ -1491,7 +1491,7 @@
 					"light":10
 				}
 			},
-			"name":"BufLight_white_2R",
+			"name":"BufLight_white_2L",
 			"rotation":[
 				1,
 				0,
@@ -1510,7 +1510,7 @@
 					"light":11
 				}
 			},
-			"name":"BufLight_red_2R",
+			"name":"BufLight_red_2L",
 			"rotation":[
 				1,
 				0,
