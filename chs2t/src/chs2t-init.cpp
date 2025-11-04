@@ -75,7 +75,6 @@ void CHS2T::initEDT(const QString& modules_dir, const QString& custom_cfg_dir)
 
     EDT_timer.setTimeout(3.0);
     EDT_timer.firstProcess(false);
-    connect(&EDT_timer, &Timer::process, this, &CHS2T::enableEDT);
 }
 
 //------------------------------------------------------------------------------

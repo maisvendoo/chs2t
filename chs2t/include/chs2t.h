@@ -484,17 +484,11 @@ private:
     /// Состояние удерживающей катушки БВ
     bool getHoldingCoilState() const;
 
-    void disableEDT() { EDT = allowEDT = false; }
-
     void load_brakes_config(QString path);
 
-private slots:
+    void disableEDT();
 
-    void enableEDT()
-    {
-        EDT = allowEDT = true;
-        EDT_timer.stop();
-    }
+    void enableEDT();
 };
 
 #endif // CHS2T_H

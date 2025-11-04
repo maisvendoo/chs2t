@@ -27,6 +27,10 @@ void CHS2T::stepEDT(const double& t, const double& dt)
     pulseConv->step(t, dt);
     generator->step(t, dt);
     BrakeReg->step(t, dt);
+    if (EDT_timer.step(t, dt))
+    {
+        enableEDT();
+    }
 
     if (EDT_cab1 || EDT_cab2)
     {
@@ -46,5 +50,8 @@ void CHS2T::stepEDT(const double& t, const double& dt)
             }
         }
     }
-    EDT_timer.step(t, dt);
+    else
+    {
+        disableEDT();
+    }
 }
