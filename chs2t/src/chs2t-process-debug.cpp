@@ -22,9 +22,10 @@ void CHS2T::debugPrint(const simulator_time_t& t, const double& dt)
     }
     else
     {
-        DebugMsg += QString("fl%1|comb:%2| BRAKE CRANES ARE LOCKED  |")
+        DebugMsg += QString("fl%1|comb:%2| CRANE IS LOCKED |254:%3%|")
                         .arg(shutoff_crane[CAB1]->getHandlePosition(), 1, 'f', 0)
-                        .arg(combine_crane[CAB1]->getCombineCraneHandlePosition(), 2, 'f', 0);
+                        .arg(combine_crane[CAB1]->getCombineCraneHandlePosition(), 2, 'f', 0)
+                        .arg(loco_crane[CAB1]->getHandlePosition() * 100.0, 3, 'f', 0);
     }
 
     if (sw_panel[CAB1].isKey())
@@ -149,9 +150,10 @@ void CHS2T::debugPrint(const simulator_time_t& t, const double& dt)
     }
     else
     {
-        DebugMsg += QString("fl%1|comb:%2| BRAKE CRANES ARE LOCKED  |")
+        DebugMsg += QString("fl%1|comb:%2| CRANE IS LOCKED |254:%3%|")
                         .arg(shutoff_crane[CAB2]->getHandlePosition(), 1, 'f', 0)
-                        .arg(combine_crane[CAB2]->getCombineCraneHandlePosition(), 2, 'f', 0);
+                        .arg(combine_crane[CAB2]->getCombineCraneHandlePosition(), 2, 'f', 0)
+                        .arg(loco_crane[CAB2]->getHandlePosition() * 100.0, 3, 'f', 0);
     }
 
     if (sw_panel[CAB2].isKey())

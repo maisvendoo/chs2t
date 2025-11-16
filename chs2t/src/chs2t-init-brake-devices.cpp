@@ -16,6 +16,8 @@ void CHS2T::initBrakeDevices(double p0, double pBP, double pFL)
     // Инициализация давления в приборах управления тормозами
     for (size_t cab_idx : {CAB1, CAB2})
     {
+        combine_crane[cab_idx]->init(pBP, pFL);
+
         brake_crane[cab_idx]->init(pBP, pFL);
         brake_crane[cab_idx]->setChargePressure(p0);
 

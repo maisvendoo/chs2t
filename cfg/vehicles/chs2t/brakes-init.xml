@@ -14,12 +14,12 @@
 		<!-- Положение рукоятки крана вспомогательного тормоза
 		(от 0.0 - тормоз отпущен  до 1.0 - тормоз применён полностью -->
 		<LocoCranePosCab1>1.0</LocoCranePosCab1>
-		<LocoCranePosCab2>1.0</LocoCranePosCab2>
+		<LocoCranePosCab2>0.0</LocoCranePosCab2>
 
 		<!-- Положение разобщительного крана на подводе питательной магистрали к кранам машиниста
 		(1 - открыт, 0 - закрыт) -->
 		<ShutoffCranePosCab1>1</ShutoffCranePosCab1>
-		<ShutoffCranePosCab2>0</ShutoffCranePosCab2>
+		<ShutoffCranePosCab2>1</ShutoffCranePosCab2>
 
 		<!-- Положение комбинированного крана
 		( -1 - положение двойной тяги, 0 - поездное, 1 - экстренное торможение -->
