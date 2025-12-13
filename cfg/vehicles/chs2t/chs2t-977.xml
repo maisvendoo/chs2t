@@ -11,13 +11,6 @@
 		<NumAxis>6</NumAxis>
 		<WheelInertia>100.0</WheelInertia>
 		<SoundDir>chs2t</SoundDir>
-		<AnimationsConfigDir>chs2t</AnimationsConfigDir>
-
-		<ExtModelName>chs2t/chs2t.gltf</ExtModelName>
-		<ModelShift>0.0 0.0 0.312</ModelShift>
-
-		<CabineModel>chs2t/chs2t-cabview.gltf</CabineModel>
-		<CabineShift>0.0 0.0 0.312</CabineShift>
 
 		<CouplingModule>sa3</CouplingModule>
 		<CouplingConfig>sa3</CouplingConfig>
@@ -35,6 +28,8 @@
 		<ElectroAirDistConfig>evr305</ElectroAirDistConfig>
 
 	</Vehicle>
+
+
 	<Cabine>
 		<DriverPos>0.492 7.776 3.98</DriverPos>
 		<DriverDir>0.0</DriverDir>
@@ -44,5 +39,18 @@
 		<DriverPos>-0.492 -7.776 3.98</DriverPos>
 		<DriverDir>180.0</DriverDir>
 	</Cabine>
+
+	<Model>
+		<ModelName>chs2t/chs2t.gltf</ModelName>
+		<ModelShift>0.0 0.0 0.312</ModelShift>
+		<AnimationsConfigDir>chs2t</AnimationsConfigDir>
+	</Model>
+
+
+	<Model>
+		<ModelName>chs2t/chs2t-cabview.gltf</ModelName>
+		<ModelShift>0.0 0.0 0.312</ModelShift>
+		<AnimationsConfigDir>chs2t</AnimationsConfigDir>
+	</Model>
 
 </Config>
