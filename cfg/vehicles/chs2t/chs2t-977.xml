@@ -31,25 +31,23 @@
 
 
 	<Cabine>
-		<DriverPos>0.492 7.776 3.98</DriverPos>
+		<DriverPos>0.492 7.776 3.66</DriverPos>
 		<DriverDir>0.0</DriverDir>
 	</Cabine>
 
 	<Cabine>
-		<DriverPos>-0.492 -7.776 3.98</DriverPos>
+		<DriverPos>-0.492 -7.776 3.66</DriverPos>
 		<DriverDir>180.0</DriverDir>
 	</Cabine>
 
+
 	<Model>
 		<ModelName>chs2t/chs2t.gltf</ModelName>
-		<ModelShift>0.0 0.0 0.312</ModelShift>
 		<AnimationsConfigDir>chs2t</AnimationsConfigDir>
 	</Model>
 
-
 	<Model>
 		<ModelName>chs2t/chs2t-cabview.gltf</ModelName>
-		<ModelShift>0.0 0.0 0.312</ModelShift>
 		<AnimationsConfigDir>chs2t</AnimationsConfigDir>
 	</Model>
 
