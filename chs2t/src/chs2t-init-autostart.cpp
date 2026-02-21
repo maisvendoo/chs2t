@@ -137,6 +137,55 @@ void CHS2T::slotAutostart()
 
         return;
     }
+
+    // Включаем мотор-вентиляторы
+    if (sw_panel[autostart_cab].getSwitcherPtr(CHS2tSwitchers::FANS)->getPosition() != CHS2tSwitchers::FANS_AUTO)
+    {
+        switcherController(sw_panel[autostart_cab].getSwitcherPtr(CHS2tSwitchers::FANS), CHS2tSwitchers::FANS_AUTO);
+
+        return;
+    }
+
+    // Жалюзи - автомат
+    if (sw_panel[autostart_cab].getSwitcherPtr(CHS2tSwitchers::BLINDS)->getPosition() != CHS2tSwitchers::AUTO_BLINDS)
+    {
+        switcherController(sw_panel[autostart_cab].getSwitcherPtr(CHS2tSwitchers::BLINDS), CHS2tSwitchers::AUTO_BLINDS);
+
+        return;
+    }
+
+    // Включаем ЭПК
+    if (!epk[autostart_cab]->isKeyOn())
+    {
+        epk[autostart_cab]->setKeyOn(true);
+        return;
+    }
+
+    // Проверка бдительности
+    if (!rb[autostart_cab][RBS].getState())
+    {
+        rb[autostart_cab][RBS].set();
+        return;
+    }
+
+    rb[autostart_cab][RBS].reset();
+
+    // Переводим реверс вперед
+    km21KR2[autostart_cab].setReversHandlePos(1);
+
+    sw_panel[CAB1].setControl(&pressed_keys_by_cabine[CAB1]);
+    sw_panel[CAB2].setControl(&pressed_keys_by_cabine[CAB2]);
+    km21KR2[CAB1].setControl(&pressed_keys_by_cabine[CAB1]);
+    km21KR2[CAB2].setControl(&pressed_keys_by_cabine[CAB2]);
+    epk[CAB1]->setControl(&pressed_keys_by_cabine[CAB1]);
+    epk[CAB2]->setControl(&pressed_keys_by_cabine[CAB2]);
+
+    autoStartTimer->stop();
+
+    if (auto_start_autopilot)
+    {
+        // TODO: запуск автоведения
+    }
 }
 
 
