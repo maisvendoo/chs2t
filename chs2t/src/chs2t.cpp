@@ -85,6 +85,8 @@ void CHS2T::initialization()
 
     for (size_t i = SWP2_POWER_1; i <= SWP2_POWER_10; ++i)
         feedback_signals.analogSignal[i].cur_value = 1;
+
+    connect(autoStartTimer, &Timer::process, this, &CHS2T::slotAutostart);
 }
 
 //------------------------------------------------------------------------------
@@ -147,6 +149,8 @@ void CHS2T::step(const double& t, const double& dt)
     stepSafetyDevices(t, dt);
 
     registrate(t, dt);
+
+    autoStartTimer->step(t, dt);
 }
 
 //------------------------------------------------------------------------------

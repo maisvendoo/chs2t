@@ -17,6 +17,24 @@ void CHS2T::keyProcess(const simulator_time_t& t, const double& dt)
     km21KR2[CAB2].allowReversHandle(!(km21KR2[CAB1].isReversHandle()));
     km21KR2[CAB1].allowReversHandle(!(km21KR2[CAB2].isReversHandle()));
 
+    // Автозапуск
+    if (autoStartTimer->isStarted())
+    {
+        return;
+    }
+
+    if (getKeyState(KEY_R, CAB1) && isAlt(CAB1) && initAutostartProgram(CAB1))
+    {
+        autoStartTimer->start();
+        return;
+    }
+
+    if (getKeyState(KEY_R, CAB2) && isAlt(CAB2) && initAutostartProgram(CAB2))
+    {
+        autoStartTimer->start();
+        return;
+    }
+
     for (size_t cab_idx : {CAB1, CAB2})
     {
         // Управляем краном, учитывая возможное наличие внешнего пульта

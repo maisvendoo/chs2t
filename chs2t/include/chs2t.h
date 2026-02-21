@@ -489,6 +489,18 @@ private:
     void disableEDT();
 
     void enableEDT();
+
+    Timer *autoStartTimer = new Timer(0.5, false);
+
+    std::vector<SwitcherControl *> autostart_sw;
+    size_t start_count = 0;
+    size_t autostart_cab = 0;
+
+    bool initAutostartProgram(int cab_autostart_request);
+
+private slots:
+
+    void slotAutostart();
 };
 
 #endif // CHS2T_H
