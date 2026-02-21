@@ -492,11 +492,15 @@ private:
 
     Timer *autoStartTimer = new Timer(0.5, false);
 
-    std::vector<SwitcherControl *> autostart_sw;
-    size_t start_count = 0;
     size_t autostart_cab = 0;
 
+    bool lock_pant_bwd_sw = false;
+
+    bool lock_pant_fwd_sw = false;
+
     bool initAutostartProgram(int cab_autostart_request);
+
+    void switcherController(SwitcherControl *sw, uint16_t ref_pos);
 
 private slots:
 

@@ -138,6 +138,11 @@ public:
 
     float getSoundSignal(size_t switcher_idx) const override;
 
+    SwitcherControl *getSwitcherPtr(size_t switcher_idx)
+    {
+        return &switchers[switcher_idx];
+    }
+
 private:
 
     enum { SWITCHERS_NUMBER = 13 };
