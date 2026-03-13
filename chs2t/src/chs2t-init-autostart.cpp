@@ -184,7 +184,7 @@ void CHS2T::slotAutostart()
 
     if (auto_start_autopilot)
     {
-        // TODO: запуск автоведения
+        autopilot_switcher[autostart_cab].set();
     }
 }
 

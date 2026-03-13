@@ -87,6 +87,8 @@ void CHS2T::initialization()
         feedback_signals.analogSignal[i].cur_value = 1;
 
     connect(autoStartTimer, &Timer::process, this, &CHS2T::slotAutostart);
+
+    initAutopilot(modules_dir, custom_cfg_dir);
 }
 
 //------------------------------------------------------------------------------
@@ -151,6 +153,8 @@ void CHS2T::step(const double& t, const double& dt)
     registrate(t, dt);
 
     autoStartTimer->step(t, dt);
+
+    stepAutopilot(t, dt);
 }
 
 //------------------------------------------------------------------------------

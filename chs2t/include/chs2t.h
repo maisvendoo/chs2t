@@ -94,6 +94,13 @@ private:
     /// Имя конфига электровоздухорапределителя
     QString electro_airdist_config_name = "evr305";
 
+    /// Имя модуля автоведения
+    QString autopilot_module_name = "chs2t-autopilot";
+    /// Имя конфига модуля автоведения
+    QString autopilot_config_name = "chs2t-autopilot";
+    /// Каталог поиска кастомных модулей
+    QString custom_modules_dir = "chs2t";
+
     /// Регистратор, для записи параметров
     Registrator *reg = nullptr;
 
@@ -502,9 +509,23 @@ private:
 
     void switcherController(SwitcherControl *sw, uint16_t ref_pos);
 
+    void initAutopilot(const QString& modules_dir, const QString& custom_cfg_dir);
+
+    void stepAutopilot(double t, double dt);
+
+    void prepareCabineForAutopilot(int my_cab_idx, int other_cab_idx);
+
+    void OnAutopilot() override;
+
+    void OffAutopilot() override;
+
+    TriggerControl autopilot_switcher[CABS_NUM];
+
 private slots:
 
     void slotAutostart();
+
+    void slotInitTrainForAutopilot();
 };
 
 #endif // CHS2T_H
