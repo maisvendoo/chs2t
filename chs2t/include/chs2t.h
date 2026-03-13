@@ -36,6 +36,8 @@
 #include    "energy-counter.h"
 #include    "alsn-ukbm.h"
 
+#include    <chs2t-autopilot-types.h>
+
 /*!
  * \class
  * \brief Основной класс, описывающий весь электровоз
@@ -520,6 +522,10 @@ private:
     void OffAutopilot() override;
 
     TriggerControl autopilot_switcher[CABS_NUM];
+
+    chs2t_control_t *auto_control[CABS_NUM] = {nullptr, nullptr};
+
+    chs2t_feedback_t *auto_feedback[CABS_NUM];
 
 private slots:
 

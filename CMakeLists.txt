@@ -4,4 +4,5 @@ project (chs2t)
 
 set(RRS_VERSION 1.8.0)
 
-add_subdirectory (chs2t)
+add_subdirectory(chs2t)
+add_subdirectory(chs2t-autopilot)

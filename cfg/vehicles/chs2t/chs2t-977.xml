@@ -27,6 +27,11 @@
 		<ElectroAirDistModule>evr305</ElectroAirDistModule>
 		<ElectroAirDistConfig>evr305</ElectroAirDistConfig>
 
+		<CustomModulesDir>chs2t</CustomModulesDir>
+
+		<AutopilotModule>chs2t-autopilot</AutopilotModule>
+		<AutopilotConfig>chs2t-autopilot</AutopilotConfig>
+
 	</Vehicle>
 
 
