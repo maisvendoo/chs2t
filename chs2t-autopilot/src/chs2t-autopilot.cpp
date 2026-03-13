@@ -47,7 +47,14 @@ void CHS2TAutopilot::initAutoBrakeControl(const QString &config_name,
 //------------------------------------------------------------------------------
 void CHS2TAutopilot::preStep(state_vector_t &Y, double t)
 {
+    auto_feedback = dynamic_cast<chs2t_feedback_t *>(feedback);
 
+    if (auto_feedback)
+    {
+        return;
+    }
+
+    auto_control->press_RB = auto_feedback->is_vigilance_control;
 }
 
 //------------------------------------------------------------------------------

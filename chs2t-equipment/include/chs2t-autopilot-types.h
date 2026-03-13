@@ -10,6 +10,10 @@ class chs2t_control_t : public auto_control_t
 {
 public:
 
+    int krm_pos = 1;
+
+    double kvt_pos = 0.0;
+
     chs2t_control_t() : auto_control_t()
     {
 
