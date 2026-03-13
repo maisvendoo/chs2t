@@ -21,6 +21,8 @@ void CHS2T::initBrakeDevices(double p0, double pBP, double pFL)
         brake_crane[cab_idx]->init(pBP, pFL);
         brake_crane[cab_idx]->setChargePressure(p0);
 
+        charge_press = p0;
+
         loco_crane[cab_idx]->init(pBP, pFL);
 
         epk[cab_idx]->init(pBP, pFL);

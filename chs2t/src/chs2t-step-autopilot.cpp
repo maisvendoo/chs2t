@@ -45,7 +45,20 @@ void CHS2T::stepAutopilot(double t, double dt)
 
     // Сигнал контроля бдительности от цепей прибора безопасности
     auto_feedback[cab_idx]->is_vigilance_control = safety_device[cab_idx]->getEPKstate();
-    // TODO: специфичные для данного локомотива сигналы обратной связи
+    auto_feedback[cab_idx]->I_motor = motor->getI12();
+    auto_feedback[cab_idx]->km_pos = km21KR2[cab_idx].getMainPos();
+    auto_feedback[cab_idx]->pos = stepSwitch->getPoz();
+    auto_feedback[cab_idx]->v_cur = qAbs(velocity * Physics::kmh);
+    auto_feedback[cab_idx]->v_tau = qAbs(wheel_omega[0] * wheel_diameter[0] / 2.0 * Physics::kmh);
+    auto_feedback[cab_idx]->v_lim = v_lim;
+    auto_feedback[cab_idx]->v_lim_next = v_lim_next;
+    auto_feedback[cab_idx]->limit_dist = limit_dist;
+    auto_feedback[cab_idx]->alsn_code = alsn_code;
+    auto_feedback[cab_idx]->signal_dist = signal_dist;
+    auto_feedback[cab_idx]->pBC = brake_mech[TROLLEY_FWD]->getBCpressure();
+    auto_feedback[cab_idx]->pEQ = brake_crane[cab_idx]->getERpressure();
+    auto_feedback[cab_idx]->p_charge = charge_press;
+    auto_feedback[cab_idx]->is_EPB_on = epb_control->stateReleaseLamp();
 
 
     // Принимаем сигналы обратной связи от оборудования
@@ -64,7 +77,7 @@ void CHS2T::stepAutopilot(double t, double dt)
         auto_control[cab_idx]->press_RB ? rb[cab_idx][RBS].set() : rb[cab_idx][RBS].reset();
 
         // Управление КМ
-        //controller[cab_idx]->setMainHandlePos(auto_control[cab_idx]->km_pos_ref);
+        km21KR2[cab_idx].setControlPos(auto_control[cab_idx]->km_pos_ref);
 
         // Управление КрМ
         brake_crane[cab_idx]->setHandlePosition(auto_control[cab_idx]->krm_pos);

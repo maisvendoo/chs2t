@@ -54,6 +54,18 @@ private:
                     double t) override;
 
     void load_config(CfgReader &cfg) override;
+
+    const double KM_POS_DELAY = 1.0;
+
+    Timer *km_pos_timer = new Timer(KM_POS_DELAY, false);
+
+    void plusPos();
+
+    void minusPos();
+
+private slots:
+
+    void slotPosDelay();
 };
 
 #endif

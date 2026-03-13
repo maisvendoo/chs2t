@@ -159,6 +159,8 @@ private:
     /// Напряжение аккумуляторной батареи
     double U_bat = 55.0;
 
+    double charge_press = 0.0;
+
     /// Схема тяги
     Motor* motor = nullptr;
 
