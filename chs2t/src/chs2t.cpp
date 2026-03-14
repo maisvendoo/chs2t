@@ -155,6 +155,8 @@ void CHS2T::step(const double& t, const double& dt)
     autoStartTimer->step(t, dt);
 
     stepAutopilot(t, dt);
+
+    pantCtrlTimer->step(t, dt);
 }
 
 //------------------------------------------------------------------------------

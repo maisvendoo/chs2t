@@ -162,7 +162,7 @@ void CHS2T::slotAutostart()
 
     if (auto_start_autopilot)
     {
-        autopilot_switcher[autostart_cab].set();
+        autopilot_switcher[autostart_cab].set();        
     }
 }
 
@@ -199,5 +199,19 @@ bool CHS2T::UpPantograph(int pant_idx, int cab_idx)
 //------------------------------------------------------------------------------
 bool CHS2T::DownPantograph(int pant_idx, int cab_idx)
 {
+    int sw_idx = CHS2tSwitchers::PANT_BWD;
+
+    pant_idx == PANT1 ? sw_idx = CHS2tSwitchers::PANT_FWD : sw_idx = CHS2tSwitchers::PANT_BWD;
+
+    if (!pantographs[pant_idx]->isDown())
+    {
+        switcherController(sw_panel[cab_idx].getSwitcherPtr(sw_idx), CHS2tSwitchers::PANT_DOWN);
+        return true;
+    }
+    else
+    {
+        lock_pant_sw[pant_idx] = false;
+    }
+
     return false;
 }

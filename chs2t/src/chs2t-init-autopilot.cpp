@@ -32,6 +32,8 @@ void CHS2T::initAutopilot(const QString &modules_dir,
 
         auto_feedback[cab_idx] = new chs2t_feedback_t();
     }
+
+    connect(pantCtrlTimer, &Timer::process, this, &CHS2T::slotPantCtrl);
 }
 
 //------------------------------------------------------------------------------

@@ -531,11 +531,19 @@ private:
 
     bool DownPantograph(int pant_idx, int cab_idx);
 
+    Timer *pantCtrlTimer = new Timer(0.5, false);
+
+    int cab_idx = 0;
+
+    int front_pant_idx = 0;
+
 private slots:
 
     void slotAutostart();
 
     void slotInitTrainForAutopilot();
+
+    void slotPantCtrl();
 };
 
 #endif // CHS2T_H

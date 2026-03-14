@@ -10,9 +10,9 @@ void CHS2T::stepAutopilot(double t, double dt)
     double limit_dist = 0;
     double signal_dist = 0;
     ALSN alsn_code = ALSN::NO_CODE;
-    int cab_idx = 0;
+    //int cab_idx = 0;
     // Индекс переднего по ходу движения токоприемника
-    int front_pant_idx = 0;
+    //int front_pant_idx = 0;
 
     if (km21KR2[CAB1].isReversHandle())
     {
@@ -44,7 +44,16 @@ void CHS2T::stepAutopilot(double t, double dt)
     }
 
     // Включение и выключение автоведения
-    autopilot_switcher[cab_idx].getState() ? autopilot[cab_idx]->on() : autopilot[cab_idx]->off();
+    if (autopilot_switcher[cab_idx].getState())
+    {
+        autopilot[cab_idx]->on();
+        pantCtrlTimer->start();
+    }
+    else
+    {
+        autopilot[cab_idx]->off();
+        pantCtrlTimer->stop();
+    }
 
     // Сигнал контроля бдительности от цепей прибора безопасности
     auto_feedback[cab_idx]->is_vigilance_control = safety_device[cab_idx]->getEPKstate();
@@ -93,5 +102,30 @@ void CHS2T::stepAutopilot(double t, double dt)
             sw_panel[cab_idx].getSwitcherPtr(CHS2tSwitchers::SPOTLIGHT)->setPosition(CHS2tSwitchers::SPOTLIGHT_OFF);
 
         sand_system->setSandDeliveryOn(auto_control[cab_idx]->sand_ON);
+    }
+}
+
+//------------------------------------------------------------------------------
+//
+//------------------------------------------------------------------------------
+void CHS2T::slotPantCtrl()
+{
+    if (autopilot[cab_idx] == nullptr)
+    {
+        return;
+    }
+
+    if (!autopilot[cab_idx]->isActive())
+    {
+        return;
+    }
+
+    if (auto_control[cab_idx]->up_front_pant)
+    {
+        UpPantograph(front_pant_idx, cab_idx);
+    }
+    else
+    {
+        DownPantograph(front_pant_idx, cab_idx);
     }
 }

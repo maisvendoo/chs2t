@@ -131,6 +131,16 @@ void CHS2TAutopilot::preStep(state_vector_t &Y, double t)
     auto_control->spotlight_ON = is_motion_allowed;
 
     auto_control->press_RB = auto_feedback->is_vigilance_control;
+
+    if (auto_feedback->v_cur > 10.0)
+    {
+        auto_control->up_front_pant = false;
+    }
+
+    if (auto_feedback->v_cur <= 5.0)
+    {
+        auto_control->up_front_pant = true;
+    }
 }
 
 //------------------------------------------------------------------------------

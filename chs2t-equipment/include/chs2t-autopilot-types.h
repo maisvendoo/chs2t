@@ -14,6 +14,7 @@ public:
 
     double kvt_pos = 0.0;
 
+    bool up_front_pant = false;
 
     enum
     {
