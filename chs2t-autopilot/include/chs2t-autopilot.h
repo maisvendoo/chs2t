@@ -65,6 +65,8 @@ private:
 
     void minusPos();
 
+    void setPosKM(int &km_pos, int km_pos_ref);
+
 private slots:
 
     void slotPosDelay();

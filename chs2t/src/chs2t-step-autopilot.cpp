@@ -89,6 +89,7 @@ void CHS2T::stepAutopilot(double t, double dt)
         auto_control[cab_idx]->press_RB ? rb[cab_idx][RBS].set() : rb[cab_idx][RBS].reset();
 
         // Управление КМ
+        km21KR2[cab_idx].lockManualControl(true);
         km21KR2[cab_idx].setControlPos(auto_control[cab_idx]->km_pos_ref);
 
         // Управление КрМ
@@ -102,6 +103,10 @@ void CHS2T::stepAutopilot(double t, double dt)
             sw_panel[cab_idx].getSwitcherPtr(CHS2tSwitchers::SPOTLIGHT)->setPosition(CHS2tSwitchers::SPOTLIGHT_OFF);
 
         sand_system->setSandDeliveryOn(auto_control[cab_idx]->sand_ON);
+    }
+    else
+    {
+        km21KR2[cab_idx].lockManualControl(false);
     }
 }
 

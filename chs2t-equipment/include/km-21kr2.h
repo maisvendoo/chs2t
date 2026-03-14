@@ -74,6 +74,11 @@ public:
     /// Сигнал состояния звука
     float getSoundSignal(size_t idx = REVERS_CHANGE_POS_SOUND) const;
 
+    void lockManualControl(bool lock)
+    {
+        lock_manual_control = lock;
+    }
+
 private:
 
     void ode_system(const state_vector_t &Y, state_vector_t &dYdt, double t);
@@ -114,6 +119,8 @@ private:
 
     /// Счётчик и состояние звуков
     std::array <sound_state_t, NUM_SOUNDS> sounds;
+
+    bool lock_manual_control = false;
 };
 
 #endif // KM21KR2_H

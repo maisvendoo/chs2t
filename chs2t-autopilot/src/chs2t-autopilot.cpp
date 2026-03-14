@@ -105,9 +105,9 @@ void CHS2TAutopilot::preStep(state_vector_t &Y, double t)
     if (dv < -dV_traction_off)
     {
         if (auto_feedback->pos != 0)
-            auto_control->km_pos_ref = chs2t_control_t::KM_POS_AUTO_MINUS;
+            setPosKM(auto_control->km_pos_ref, chs2t_control_t::KM_POS_AUTO_MINUS);
         else
-            auto_control->km_pos_ref = chs2t_control_t::KM_POS_ZERO;
+            setPosKM(auto_control->km_pos_ref, chs2t_control_t::KM_POS_ZERO);
     }
 
     brake_control->setBrakePressures(auto_feedback->pEQ,
@@ -176,13 +176,13 @@ void CHS2TAutopilot::plusPos()
 {
     if (lock_traction)
     {
-        auto_control->km_pos_ref = chs2t_control_t::KM_POS_ZERO;
+        setPosKM(auto_control->km_pos_ref, chs2t_control_t::KM_POS_ZERO);
         return;
     }
 
     if (auto_feedback->pos == 42)
     {
-        auto_control->km_pos_ref = chs2t_control_t::KM_POS_ZERO;
+        setPosKM(auto_control->km_pos_ref, chs2t_control_t::KM_POS_ZERO);
         return;
     }
 
@@ -190,7 +190,7 @@ void CHS2TAutopilot::plusPos()
     {
         if (auto_control->km_pos_ref == 0)
         {
-            auto_control->km_pos_ref = chs2t_control_t::KM_POS_PLUS;
+            setPosKM(auto_control->km_pos_ref, chs2t_control_t::KM_POS_PLUS);
             km_pos_timer->start();
         }
     }
@@ -205,9 +205,20 @@ void CHS2TAutopilot::minusPos()
     {
         if (auto_control->km_pos_ref == 0)
         {
-            auto_control->km_pos_ref = chs2t_control_t::KM_POS_MINUS;
+            setPosKM(auto_control->km_pos_ref, chs2t_control_t::KM_POS_MINUS);
             km_pos_timer->start();
         }
+    }
+}
+
+//------------------------------------------------------------------------------
+//
+//------------------------------------------------------------------------------
+void CHS2TAutopilot::setPosKM(int &km_pos, int km_pos_ref)
+{
+    if (km_pos != km_pos_ref)
+    {
+        km_pos = km_pos_ref;
     }
 }
 

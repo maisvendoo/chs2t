@@ -289,6 +289,11 @@ void Km21KR2::stepKeysControl(double t, double dt)
     controlState.k32 = (fieldWeakShaft == 2 || fieldWeakShaft == 4);
     controlState.k33 = (fieldWeakShaft == 3 || fieldWeakShaft == 5);
 
+    if (lock_manual_control)
+    {
+        return;
+    }
+
     if (!pressed_keys)
     {
         old_key_state_fwd_or_bwd = false;
