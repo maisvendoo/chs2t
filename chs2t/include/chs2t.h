@@ -505,9 +505,7 @@ private:
 
     size_t autostart_cab = 0;
 
-    bool lock_pant_bwd_sw = false;
-
-    bool lock_pant_fwd_sw = false;
+    bool lock_pant_sw[CABS_NUM] = {false, false};
 
     bool initAutostartProgram(int cab_autostart_request);
 
@@ -528,6 +526,10 @@ private:
     chs2t_control_t *auto_control[CABS_NUM] = {nullptr, nullptr};
 
     chs2t_feedback_t *auto_feedback[CABS_NUM];
+
+    bool UpPantograph(int pant_idx, int cab_idx);
+
+    bool DownPantograph(int pant_idx, int cab_idx);
 
 private slots:
 

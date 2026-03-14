@@ -10,8 +10,9 @@ void CHS2T::stepAutopilot(double t, double dt)
     double limit_dist = 0;
     double signal_dist = 0;
     ALSN alsn_code = ALSN::NO_CODE;
-
     int cab_idx = 0;
+    // Индекс переднего по ходу движения токоприемника
+    int front_pant_idx = 0;
 
     if (km21KR2[CAB1].isReversHandle())
     {
@@ -22,6 +23,7 @@ void CHS2T::stepAutopilot(double t, double dt)
         signal_dist = coil_ALSN_fwd->getNextSignalDistance();
 
         cab_idx = CAB1;
+        front_pant_idx = PANT1;
     }
 
     if (km21KR2[CAB2].isReversHandle())
@@ -33,6 +35,7 @@ void CHS2T::stepAutopilot(double t, double dt)
         signal_dist = coil_ALSN_bwd->getNextSignalDistance();
 
         cab_idx = CAB2;
+        front_pant_idx = PANT2;
     }
 
     if (autopilot[cab_idx] == nullptr)
@@ -59,7 +62,7 @@ void CHS2T::stepAutopilot(double t, double dt)
     auto_feedback[cab_idx]->pEQ = brake_crane[cab_idx]->getERpressure();
     auto_feedback[cab_idx]->p_charge = charge_press;
     auto_feedback[cab_idx]->is_EPB_on = epb_control->stateReleaseLamp();
-
+    auto_feedback[cab_idx]->is_front_pant_up = pantographs[front_pant_idx]->isUp();
 
     // Принимаем сигналы обратной связи от оборудования
     autopilot[cab_idx]->setFeedback(auto_feedback[cab_idx]);

@@ -47,6 +47,8 @@ public:
 
     int pos = 0;
 
+    bool is_front_pant_up = false;
+
     chs2t_feedback_t() : auto_feedback_t()
     {
 

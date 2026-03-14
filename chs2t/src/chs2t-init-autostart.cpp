@@ -74,36 +74,14 @@ void CHS2T::slotAutostart()
     }
 
     // Поднимаем задние рога
-    if (!pantographs[PANT2]->isUp())
+    if (UpPantograph(PANT2, autostart_cab))
     {
-        if (sw_panel[autostart_cab].getSwitcherPtr(CHS2tSwitchers::PANT_BWD)->getPosition() != CHS2tSwitchers::PANT_ON)
-        {
-            if (!lock_pant_bwd_sw)
-                switcherController(sw_panel[autostart_cab].getSwitcherPtr(CHS2tSwitchers::PANT_BWD), CHS2tSwitchers::PANT_ON);
-        }
-        else
-        {
-            switcherController(sw_panel[autostart_cab].getSwitcherPtr(CHS2tSwitchers::PANT_BWD), CHS2tSwitchers::PANT_UP);
-            lock_pant_bwd_sw = true;
-        }
-
         return;
     }
 
     // Поднимаем передние рога
-    if (!pantographs[PANT1]->isUp())
+    if (UpPantograph(PANT1, autostart_cab))
     {
-        if (sw_panel[autostart_cab].getSwitcherPtr(CHS2tSwitchers::PANT_FWD)->getPosition() != CHS2tSwitchers::PANT_ON)
-        {
-            if (!lock_pant_fwd_sw)
-                switcherController(sw_panel[autostart_cab].getSwitcherPtr(CHS2tSwitchers::PANT_FWD), CHS2tSwitchers::PANT_ON);
-        }
-        else
-        {
-            switcherController(sw_panel[autostart_cab].getSwitcherPtr(CHS2tSwitchers::PANT_FWD), CHS2tSwitchers::PANT_UP);
-            lock_pant_fwd_sw = true;
-        }
-
         return;
     }
 
@@ -188,4 +166,38 @@ void CHS2T::slotAutostart()
     }
 }
 
+//------------------------------------------------------------------------------
+//
+//------------------------------------------------------------------------------
+bool CHS2T::UpPantograph(int pant_idx, int cab_idx)
+{
+    int sw_idx = CHS2tSwitchers::PANT_BWD;
 
+    pant_idx == PANT1 ? sw_idx = CHS2tSwitchers::PANT_FWD : sw_idx = CHS2tSwitchers::PANT_BWD;
+
+    if (!pantographs[pant_idx]->isUp())
+    {
+        if (sw_panel[cab_idx].getSwitcherPtr(sw_idx)->getPosition() != CHS2tSwitchers::PANT_ON)
+        {
+            if (!lock_pant_sw[pant_idx])
+                switcherController(sw_panel[cab_idx].getSwitcherPtr(sw_idx), CHS2tSwitchers::PANT_ON);
+        }
+        else
+        {
+            switcherController(sw_panel[cab_idx].getSwitcherPtr(sw_idx), CHS2tSwitchers::PANT_UP);
+            lock_pant_sw[pant_idx] = true;
+        }
+
+        return true;
+    }
+
+    return false;
+}
+
+//------------------------------------------------------------------------------
+//
+//------------------------------------------------------------------------------
+bool CHS2T::DownPantograph(int pant_idx, int cab_idx)
+{
+    return false;
+}
