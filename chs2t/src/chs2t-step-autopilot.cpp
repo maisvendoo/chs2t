@@ -86,8 +86,8 @@ void CHS2T::stepAutopilot(double t, double dt)
         loco_crane[cab_idx]->setHandlePosition(auto_control[cab_idx]->kvt_pos);
 
         // Управление прожектором
-        //auto_control[cab_idx]->spotlight_ON ? spotlight_low_tumbler[cab_idx].set() :
-        //    spotlight_low_tumbler[cab_idx].reset();
+        auto_control[cab_idx]->spotlight_ON ? sw_panel[cab_idx].getSwitcherPtr(CHS2tSwitchers::SPOTLIGHT)->setPosition(CHS2tSwitchers::SPOTLIGHT_HIGH) :
+            sw_panel[cab_idx].getSwitcherPtr(CHS2tSwitchers::SPOTLIGHT)->setPosition(CHS2tSwitchers::SPOTLIGHT_OFF);
 
         sand_system->setSandDeliveryOn(auto_control[cab_idx]->sand_ON);
     }

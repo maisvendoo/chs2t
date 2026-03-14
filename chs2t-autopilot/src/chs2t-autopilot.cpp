@@ -59,7 +59,7 @@ void CHS2TAutopilot::preStep(state_vector_t &Y, double t)
     Y[0] = cut(Y[0], -1.0, 1.0);
 
     // Ошибка по скорости
-    double dv = v_ref - auto_feedback->v_cur;
+    dv = v_ref - auto_feedback->v_cur;
 
     // Вычисляем задание по току ТЭД
     double kp = Kp * train_mass / ref_mass;
@@ -105,9 +105,9 @@ void CHS2TAutopilot::preStep(state_vector_t &Y, double t)
     if (dv < -dV_traction_off)
     {
         if (auto_feedback->pos != 0)
-            auto_control->km_pos_ref = -2;
+            auto_control->km_pos_ref = chs2t_control_t::KM_POS_AUTO_MINUS;
         else
-            auto_control->km_pos_ref = 0;
+            auto_control->km_pos_ref = chs2t_control_t::KM_POS_ZERO;
     }
 
     brake_control->setBrakePressures(auto_feedback->pEQ,
@@ -140,7 +140,7 @@ void CHS2TAutopilot::ode_system(const state_vector_t &Y,
                                 state_vector_t &dYdt,
                                 double t)
 {
-
+    dYdt[0] = Ki * dv;
 }
 
 //------------------------------------------------------------------------------

@@ -74,6 +74,13 @@ void CHS2T::prepareCabineForAutopilot(int my_cab_idx, int other_cab_idx)
     {
         sw_panel[my_cab_idx].getSwitcherPtr(CHS2tSwitchers::EPB)->setPosition(CHS2tSwitchers::EPB_ON);
     }
+
+    // Включаем буферные фонари
+    sw_panel[my_cab_idx].getSwitcherPtr(CHS2tSwitchers::BUFLIGHT_L)->setPosition(CHS2tSwitchers::BUFLIGHT_WHITE);
+    sw_panel[my_cab_idx].getSwitcherPtr(CHS2tSwitchers::BUFLIGHT_R)->setPosition(CHS2tSwitchers::BUFLIGHT_WHITE);
+
+    // В другой кабине
+    sw_panel[other_cab_idx].getSwitcherPtr(CHS2tSwitchers::BUFLIGHT_L)->setPosition(CHS2tSwitchers::BUFLIGHT_WHITE);
 }
 
 //------------------------------------------------------------------------------

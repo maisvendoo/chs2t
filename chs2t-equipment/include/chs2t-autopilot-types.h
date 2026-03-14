@@ -17,9 +17,11 @@ public:
 
     enum
     {
+        KM_POS_AUTO_MINUS = -2,
         KM_POS_MINUS = -1,
         KM_POS_ZERO = 0,
-        KM_POS_PLUS = 1
+        KM_POS_PLUS = 1,
+        KM_POS_AUTO_PLUS = 2
     };
 
     int km_pos_ref = KM_POS_ZERO;

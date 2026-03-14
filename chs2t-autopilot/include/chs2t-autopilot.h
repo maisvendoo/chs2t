@@ -35,6 +35,8 @@ private:
 
     double Ks = 0.0;
 
+    double dv = 0.0;
+
     /// Тормозной контроллер
     AutopilotBrakeController *brake_control = new AutopilotBrakeController;
 
