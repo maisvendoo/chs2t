@@ -37,6 +37,9 @@ private:
 
     double dv = 0.0;
 
+    /// Флаг сброса позиций
+    bool is_pos_reset = false;
+
     /// Тормозной контроллер
     AutopilotBrakeController *brake_control = new AutopilotBrakeController;
 

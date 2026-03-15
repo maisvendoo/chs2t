@@ -85,7 +85,7 @@ void CHS2TAutopilot::preStep(state_vector_t &Y, double t)
     }
 
     // Если ток упал ниже уставки
-    if ( (auto_feedback->I_motor < I_ref - delta_I) && (auto_feedback->I_motor < Imax) )
+    if ( (auto_feedback->I_motor < I_ref - delta_I) && !is_pos_reset )
     {
         if (!lock_traction)
         {
@@ -95,7 +95,7 @@ void CHS2TAutopilot::preStep(state_vector_t &Y, double t)
     }
 
     // Если ток сильно выше уставки
-    if (auto_feedback->I_motor > I_ref + delta_I)
+    if ( (auto_feedback->I_motor > I_ref + delta_I) && !is_pos_reset )
     {
         // - позиция
         minusPos();
@@ -105,9 +105,20 @@ void CHS2TAutopilot::preStep(state_vector_t &Y, double t)
     if (dv < -dV_traction_off)
     {
         if (auto_feedback->pos != 0)
+        {
             setPosKM(auto_control->km_pos_ref, chs2t_control_t::KM_POS_AUTO_MINUS);
-        else
+            is_pos_reset = true;
+        }
+    }
+
+    if (auto_feedback->pos == 0)
+    {
+        is_pos_reset = false;
+
+        if (auto_control->km_pos_ref == chs2t_control_t::KM_POS_AUTO_MINUS)
+        {
             setPosKM(auto_control->km_pos_ref, chs2t_control_t::KM_POS_ZERO);
+        }
     }
 
     brake_control->setBrakePressures(auto_feedback->pEQ,
@@ -174,15 +185,23 @@ void CHS2TAutopilot::load_config(CfgReader &cfg)
 //------------------------------------------------------------------------------
 void CHS2TAutopilot::plusPos()
 {
-    if (lock_traction)
+    if (auto_feedback->pos == 42)
     {
         setPosKM(auto_control->km_pos_ref, chs2t_control_t::KM_POS_ZERO);
         return;
     }
 
-    if (auto_feedback->pos == 42)
+    if (auto_control->km_pos_ref == chs2t_control_t::KM_POS_AUTO_MINUS)
     {
-        setPosKM(auto_control->km_pos_ref, chs2t_control_t::KM_POS_ZERO);
+        if (auto_feedback->pos == 0)
+        {
+            setPosKM(auto_control->km_pos_ref, chs2t_control_t::KM_POS_ZERO);
+        }
+        else
+        {
+            setPosKM(auto_control->km_pos_ref, chs2t_control_t::KM_POS_AUTO_MINUS);
+        }
+
         return;
     }
 
@@ -201,6 +220,26 @@ void CHS2TAutopilot::plusPos()
 //------------------------------------------------------------------------------
 void CHS2TAutopilot::minusPos()
 {
+    if (auto_feedback->pos == 0)
+    {
+        setPosKM(auto_control->km_pos_ref, chs2t_control_t::KM_POS_ZERO);
+        return;
+    }
+
+    if (auto_control->km_pos_ref == chs2t_control_t::KM_POS_AUTO_MINUS)
+    {
+        if (auto_feedback->pos == 0)
+        {
+            setPosKM(auto_control->km_pos_ref, chs2t_control_t::KM_POS_ZERO);
+        }
+        else
+        {
+            setPosKM(auto_control->km_pos_ref, chs2t_control_t::KM_POS_AUTO_MINUS);
+        }
+
+        return;
+    }
+
     if (!km_pos_timer->isStarted())
     {
         if (auto_control->km_pos_ref == 0)
@@ -231,8 +270,10 @@ void CHS2TAutopilot::slotPosDelay()
     {
         km_pos_timer->stop();
     }
-
-    auto_control->km_pos_ref = chs2t_control_t::KM_POS_ZERO;
+    else if (auto_control->km_pos_ref == chs2t_control_t::KM_POS_PLUS || auto_control->km_pos_ref == chs2t_control_t::KM_POS_MINUS)
+    {
+        auto_control->km_pos_ref = chs2t_control_t::KM_POS_ZERO;
+    }
 }
 
 GET_AUTOPILOT(CHS2TAutopilot)
