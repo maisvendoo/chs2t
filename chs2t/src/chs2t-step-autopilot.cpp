@@ -57,7 +57,7 @@ void CHS2T::stepAutopilot(double t, double dt)
 
     // Сигнал контроля бдительности от цепей прибора безопасности
     auto_feedback[cab_idx]->is_vigilance_control = safety_device[cab_idx]->getEPKstate();
-    auto_feedback[cab_idx]->I_motor = motor->getI12();
+    auto_feedback[cab_idx]->I_motor = motor->getI56();
     auto_feedback[cab_idx]->km_pos = km21KR2[cab_idx].getMainPos();
     auto_feedback[cab_idx]->pos = stepSwitch->getPoz();
     auto_feedback[cab_idx]->v_cur = qAbs(velocity * Physics::kmh);

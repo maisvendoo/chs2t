@@ -57,7 +57,7 @@ private:
 
     void load_config(CfgReader &cfg) override;
 
-    const double KM_POS_DELAY = 1.0;
+    const double KM_POS_DELAY = 0.5;
 
     Timer *km_pos_timer = new Timer(KM_POS_DELAY, false);
 

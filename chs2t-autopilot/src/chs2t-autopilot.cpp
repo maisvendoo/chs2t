@@ -85,7 +85,7 @@ void CHS2TAutopilot::preStep(state_vector_t &Y, double t)
     }
 
     // Если ток упал ниже уставки
-    if (auto_feedback->I_motor < I_ref - delta_I)
+    if ( (auto_feedback->I_motor < I_ref - delta_I) && (auto_feedback->I_motor < Imax) )
     {
         if (!lock_traction)
         {
