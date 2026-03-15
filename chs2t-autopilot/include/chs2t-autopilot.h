@@ -40,6 +40,9 @@ private:
     /// Флаг сброса позиций
     bool is_pos_reset = false;
 
+    /// Запрет ЭДТ
+    bool edb_disable = true;
+
     /// Тормозной контроллер
     AutopilotBrakeController *brake_control = new AutopilotBrakeController;
 

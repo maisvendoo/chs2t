@@ -152,6 +152,8 @@ void CHS2TAutopilot::preStep(state_vector_t &Y, double t)
     {
         auto_control->up_front_pant = true;
     }
+
+    auto_control->is_EDB_ON = !edb_disable;
 }
 
 //------------------------------------------------------------------------------
@@ -178,6 +180,8 @@ void CHS2TAutopilot::load_config(CfgReader &cfg)
     cfg.getDouble(secName, "Kp", Kp);
     cfg.getDouble(secName, "Ki", Ki);
     cfg.getDouble(secName, "Ks", Ks);
+
+    cfg.getBool(secName, "DisableEDB", edb_disable);
 }
 
 //------------------------------------------------------------------------------

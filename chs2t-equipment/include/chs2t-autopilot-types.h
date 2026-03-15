@@ -16,6 +16,8 @@ public:
 
     bool up_front_pant = false;
 
+    bool is_EDB_ON = false;
+
     enum
     {
         KM_POS_AUTO_MINUS = -2,

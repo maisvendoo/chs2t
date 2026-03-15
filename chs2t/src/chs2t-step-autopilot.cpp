@@ -103,6 +103,15 @@ void CHS2T::stepAutopilot(double t, double dt)
             sw_panel[cab_idx].getSwitcherPtr(CHS2tSwitchers::SPOTLIGHT)->setPosition(CHS2tSwitchers::SPOTLIGHT_OFF);
 
         sand_system->setSandDeliveryOn(auto_control[cab_idx]->sand_ON);
+
+        if (auto_control[cab_idx]->is_EDB_ON)
+        {
+            sw_panel[cab_idx].getSwitcherPtr(CHS2tSwitchers::EDT)->setPosition(CHS2tSwitchers::EDT_ON);
+        }
+        else
+        {
+            sw_panel[cab_idx].getSwitcherPtr(CHS2tSwitchers::EDT)->setPosition(CHS2tSwitchers::EDT_OFF);
+        }
     }
     else
     {
