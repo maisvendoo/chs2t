@@ -104,5 +104,7 @@ void CHS2T::keyProcess(const simulator_time_t& t, const double& dt)
         rb[cab_idx][RBP].step();
 
         autopilot_switcher[cab_idx].step();
+
+        shunting_mode_switcher[cab_idx].step();
     }
 }

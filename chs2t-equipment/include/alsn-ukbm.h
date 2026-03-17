@@ -56,6 +56,12 @@ public:
 
     float getWhiteLamp() const { return lamps[WHITE_LAMP]; }
 
+    /// Прием сигнала от переключателя маневрового режима
+    void setShuntingModeState(bool is_shunting_mode)
+    {
+        this->is_shunting_mode = is_shunting_mode;
+    }
+
 private:
 
     int code_alsn;
@@ -91,6 +97,8 @@ private:
     void off_all_lamps();
 
     void lamp_on(size_t lamp_idx);
+
+    bool is_shunting_mode = false;
 
 private slots:
 

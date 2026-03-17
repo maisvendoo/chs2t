@@ -537,6 +537,8 @@ private:
 
     int front_pant_idx = 0;
 
+    TriggerControl shunting_mode_switcher[CABS_NUM];
+
 private slots:
 
     void slotAutostart();

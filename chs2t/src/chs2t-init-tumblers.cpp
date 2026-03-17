@@ -151,5 +151,11 @@ void CHS2T::initControl(const QString &modules_dir, const QString &custom_cfg_di
         rb[cab_idx][RBP].setKeySymbolOff(KEY_Undefined);
         rb[cab_idx][RBP].setKeyModifierOff(KEY_Undefined);
         rb[cab_idx][RBP].setControl(&pressed_keys_by_cabine[cab_idx]);
+
+        shunting_mode_switcher[cab_idx].setKeySymbolOn(KEY_Tilde);
+        shunting_mode_switcher[cab_idx].setKeyModifierOn(MODIFIER_OnlyShift);
+        shunting_mode_switcher[cab_idx].setKeySymbolOff(KEY_Tilde);
+        shunting_mode_switcher[cab_idx].setKeyModifierOff(MODIFIER_OnlyControl);
+        shunting_mode_switcher[cab_idx].setControl(&pressed_keys_by_cabine[cab_idx]);
     }
 }

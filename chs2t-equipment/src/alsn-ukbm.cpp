@@ -51,11 +51,17 @@ void SafetyDevice::preStep(state_vector_t &Y, double t)
         return;
     }
 
-    if (is_red.getState())
+    if (is_red.getState() && v_kmh > 20.0)
         return;
 
     if (code_alsn < old_code_alsn)
         epk_state.reset();
+
+    // Отрезаем сигнал с дешифратора АЛСН при маневровом режиме
+    if (is_shunting_mode)
+    {
+        code_alsn = 0;
+    }
 
     if (code_alsn == 0)
     {
@@ -64,11 +70,16 @@ void SafetyDevice::preStep(state_vector_t &Y, double t)
             is_red.set();
             epk_state.reset();
             lamp_on(RED_LAMP);
-            return;
+
+            if (v_kmh > 20.0)
+            {
+                return;
+            }
         }
         else
         {
-            lamp_on(WHITE_LAMP);
+            if (!is_red.getState())
+                lamp_on(WHITE_LAMP);
         }
     }
 
@@ -128,6 +139,17 @@ void SafetyDevice::preStep(state_vector_t &Y, double t)
     {
         epk_state.set();
         safety_timer->stop();
+    }
+
+    if (state_RBS)
+    {
+        // Если отбиваем красный, то включаем белый
+        if (is_red.getState())
+        {
+            is_red.reset();
+        }
+
+        epk_state.set();
     }
 }
 
