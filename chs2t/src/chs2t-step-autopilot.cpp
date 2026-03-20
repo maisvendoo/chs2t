@@ -112,6 +112,9 @@ void CHS2T::stepAutopilot(double t, double dt)
         {
             sw_panel[cab_idx].getSwitcherPtr(CHS2tSwitchers::EDT)->setPosition(CHS2tSwitchers::EDT_OFF);
         }
+
+        horn[cab_idx]->setSvistokOn(auto_control[cab_idx]->whistle);
+        horn[cab_idx]->setTifonOn(auto_control[cab_idx]->typhoid);
     }
     else
     {
