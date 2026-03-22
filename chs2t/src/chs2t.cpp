@@ -105,6 +105,8 @@ void CHS2T::process(const simulator_time_t& t, const double& dt)
 
     soundsOutput(t, dt);
 
+    stepAutopilot(t.simulation_seconds, dt);
+
     hardwareOutput();
 }
 
@@ -152,9 +154,7 @@ void CHS2T::step(const double& t, const double& dt)
 
     registrate(t, dt);
 
-    autoStartTimer->step(t, dt);
-
-    stepAutopilot(t, dt);
+    autoStartTimer->step(t, dt);    
 
     pantCtrlTimer->step(t, dt);
 }

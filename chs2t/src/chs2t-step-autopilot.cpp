@@ -5,6 +5,11 @@
 //------------------------------------------------------------------------------
 void CHS2T::stepAutopilot(double t, double dt)
 {
+    if (autopilot.empty())
+    {
+        return;
+    }
+
     double v_lim = 0;
     double v_lim_next = 0;
     double limit_dist = 0;

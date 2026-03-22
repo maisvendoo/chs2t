@@ -26,14 +26,14 @@ void CHS2T::initAutopilot(const QString &modules_dir,
             autopilot_switcher[cab_idx].setControl(&pressed_keys);
 
             connect(autopilot, &Autopilot::sigInitTrainParams, this, &CHS2T::slotInitTrainForAutopilot);
-        }
 
-        this->autopilot.push_back(autopilot);
+            this->autopilot.push_back(autopilot);
 
-        auto_feedback[cab_idx] = new chs2t_feedback_t();
-    }
+            auto_feedback[cab_idx] = new chs2t_feedback_t();
 
-    connect(pantCtrlTimer, &Timer::process, this, &CHS2T::slotPantCtrl);
+            connect(pantCtrlTimer, &Timer::process, this, &CHS2T::slotPantCtrl);
+        }        
+    }    
 }
 
 //------------------------------------------------------------------------------
