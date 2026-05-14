@@ -13,7 +13,49 @@
 #ifndef     CHS2T_H
 #define     CHS2T_H
 
-#include    "vehicle-api.h"
+#include    <vehicle.h>
+#include    <physics.h>
+#include    <datetime.h>
+#include    <sound-signal.h>
+#include    <airdistributor.h>
+#include    <ALSN-coil.h>
+#include    <ALSN-decoder.h>
+#include    <automatic-train-stop.h>
+#include    <battery.h>
+#include    <brake-auto-mode.h>
+#include    <brake-crane.h>
+#include    <brake-mech.h>
+#include    <combine-relay.h>
+#include    <coupling.h>
+#include    <coupling-operating-rod.h>
+#include    <electro-airdistributor.h>
+#include    <epb-converter.h>
+#include    <epb-2line-control.h>
+#include    <loco-crane.h>
+#include    <motor-compressor-ac.h>
+#include    <motor-compressor-dc.h>
+#include    <motor-fan-ac.h>
+#include    <motor-fan-dc.h>
+#include    <oscillator.h>
+#include    <pantograph.h>
+#include    <pneumo-anglecock.h>
+#include    <pneumo-brake-lock.h>
+#include    <pneumo-electro-valve.h>
+#include    <pneumo-hose-epb.h>
+#include    <pneumo-hose.h>
+#include    <pneumo-reducer.h>
+#include    <pneumo-relay.h>
+#include    <pneumo-shutoff-valve.h>
+#include    <pneumo-splitter.h>
+#include    <pneumo-switching-valve.h>
+#include    <pressure-regulator.h>
+#include    <protective-device.h>
+#include    <relay.h>
+#include    <reservoir.h>
+#include    <sanding-system.h>
+#include    <speedmap.h>
+#include    <time-relay.h>
+#include    <traction-controller.h>
 
 #include    "switchers-panel.h"
 #include    "km-21kr2.h"
@@ -34,9 +76,11 @@ class       OverloadRelay;
 class       PhysToModbus;
 class       PulseConverter;
 class       PuskRez;
+class       Registrator;
 class       SL2M;
 class       SafetyDevice;
 class       StepSwitch;
+class       TrainHorn;
 
 /*!
  * \class

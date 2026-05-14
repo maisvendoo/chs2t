@@ -11,6 +11,8 @@
 #include    "pusk-rez.h"
 #include    "stepswitch.h"
 
+#include    <train-horn.h>
+
 #include    <QDir>
 
 //------------------------------------------------------------------------------
