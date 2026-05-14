@@ -2,6 +2,7 @@
 
 #include    "handle-edt.h"
 
+#include    <coupling-operating-rod.h>
 #include    <pneumo-anglecock.h>
 #include    <pneumo-combine-crane.h>
 #include    <pneumo-hose.h>

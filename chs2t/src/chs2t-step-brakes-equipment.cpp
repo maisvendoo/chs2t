@@ -1,5 +1,6 @@
 #include    "chs2t.h"
 
+#include    <electro-airdistributor.h>
 #include    <pneumo-anglecock.h>
 #include    <pneumo-combine-crane.h>
 #include    <pneumo-hose-epb.h>

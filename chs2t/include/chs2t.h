@@ -27,8 +27,6 @@
 #include    <brake-mech.h>
 #include    <combine-relay.h>
 #include    <coupling.h>
-#include    <coupling-operating-rod.h>
-#include    <electro-airdistributor.h>
 
 #include    "switchers-panel.h"
 #include    "km-21kr2.h"
@@ -42,6 +40,7 @@ class       DCMotorFan;
 class       Dako;
 class       EPBControl;
 class       EPBConverter;
+class       ElectroAirDistributor;
 class       ElectroPneumoValveEmergency;
 class       ElectroPneumoValveRelease;
 class       EnergyCounter;
@@ -49,6 +48,7 @@ class       Generator;
 class       HandleEDT;
 class       LocoCrane;
 class       Motor;
+class       OperatingRod;
 class       OverloadRelay;
 class       Pantograph;
 class       PhysToModbus;
