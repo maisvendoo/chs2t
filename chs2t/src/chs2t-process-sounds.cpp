@@ -5,6 +5,7 @@
 #include    "motor.h"
 #include    "sl2m.h"
 
+#include    <pneumo-combine-crane.h>
 #include    <pneumo-shutoff-valve.h>
 #include    <protective-device.h>
 #include    <sanding-system.h>

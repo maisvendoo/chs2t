@@ -2,6 +2,7 @@
 
 #include    "dako.h"
 
+#include    <pneumo-anglecock.h>
 #include    <pneumo-hose.h>
 #include    <pneumo-relay.h>
 #include    <pneumo-shutoff-valve.h>

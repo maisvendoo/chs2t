@@ -38,9 +38,6 @@
 #include    <motor-fan-dc.h>
 #include    <oscillator.h>
 #include    <pantograph.h>
-#include    <pneumo-anglecock.h>
-#include    <pneumo-brake-lock.h>
-#include    <pneumo-electro-valve.h>
 
 #include    "switchers-panel.h"
 #include    "km-21kr2.h"
@@ -59,6 +56,8 @@ class       HandleEDT;
 class       Motor;
 class       OverloadRelay;
 class       PhysToModbus;
+class       PneumoAngleCock;
+class       PneumoCombineCrane;
 class       PneumoHose;
 class       PneumoHoseEPB;
 class       PneumoRelay;

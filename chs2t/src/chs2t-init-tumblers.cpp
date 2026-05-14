@@ -2,6 +2,8 @@
 
 #include    "handle-edt.h"
 
+#include    <pneumo-anglecock.h>
+#include    <pneumo-combine-crane.h>
 #include    <pneumo-hose.h>
 #include    <pneumo-hose-epb.h>
 #include    <pneumo-shutoff-valve.h>

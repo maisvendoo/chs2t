@@ -6,6 +6,7 @@
 #include    "generator.h"
 #include    "handle-edt.h"
 
+#include    <pneumo-combine-crane.h>
 #include    <pneumo-relay.h>
 #include    <pneumo-shutoff-valve.h>
 #include    <pneumo-splitter.h>
