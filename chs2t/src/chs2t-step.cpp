@@ -1,5 +1,6 @@
 #include "chs2t.h"
 
+#include    "electropneumovalve-emergency.h"
 #include    "motor.h"
 #include    "overload-relay.h"
 #include    "pusk-rez.h"

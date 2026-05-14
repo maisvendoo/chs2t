@@ -1,5 +1,8 @@
 #include    "chs2t.h"
 
+#include    "electropneumovalve-emergency.h"
+#include    "electropneumovalve-release.h"
+
 #include    <QDir>
 
 //------------------------------------------------------------------------
