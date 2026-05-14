@@ -3,6 +3,8 @@
 #include    "alsn-ukbm.h"
 #include    "sl2m.h"
 
+#include    <ALSN-coil.h>
+#include    <ALSN-decoder.h>
 #include    <automatic-train-stop.h>
 #include    <reservoir.h>
 

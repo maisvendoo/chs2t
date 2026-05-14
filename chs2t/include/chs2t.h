@@ -18,8 +18,6 @@
 #include    <datetime.h>
 #include    <sound-signal.h>
 #include    <airdistributor.h>
-#include    <ALSN-coil.h>
-#include    <ALSN-decoder.h>
 
 #include    "switchers-panel.h"
 #include    "km-21kr2.h"
@@ -31,10 +29,12 @@ class       Blinds;
 class       BrakeCrane;
 class       BrakeMech;
 class       BrakeRegulator;
+class       CoilALSN;
 class       Coupling;
 class       DCMotorCompressor;
 class       DCMotorFan;
 class       Dako;
+class       DecoderALSN;
 class       EPBControl;
 class       EPBConverter;
 class       ElectroAirDistributor;

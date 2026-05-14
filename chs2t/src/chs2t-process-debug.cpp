@@ -5,6 +5,7 @@
 #include    "motor.h"
 #include    "stepswitch.h"
 
+#include    <ALSN-coil.h>
 #include    <automatic-train-stop.h>
 #include    <brake-crane.h>
 #include    <brake-mech.h>
