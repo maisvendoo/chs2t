@@ -2,6 +2,7 @@
 
 #include    "handle-edt.h"
 
+#include    <pneumo-shutoff-valve.h>
 #include    <sanding-system.h>
 #include    <train-horn.h>
 

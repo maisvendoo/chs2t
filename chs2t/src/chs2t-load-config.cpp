@@ -1,5 +1,6 @@
 #include    "chs2t.h"
 
+#include    <pneumo-shutoff-valve.h>
 #include    <reservoir.h>
 
 //------------------------------------------------------------------------------

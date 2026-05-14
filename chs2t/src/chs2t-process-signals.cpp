@@ -9,6 +9,7 @@
 #include    "sl2m.h"
 #include    "stepswitch.h"
 
+#include    <pneumo-shutoff-valve.h>
 #include    <protective-device.h>
 #include    <reservoir.h>
 #include    <sanding-system.h>

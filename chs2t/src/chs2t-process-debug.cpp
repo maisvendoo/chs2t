@@ -5,6 +5,7 @@
 #include    "motor.h"
 #include    "stepswitch.h"
 
+#include    <pneumo-shutoff-valve.h>
 #include    <reservoir.h>
 #include    <speedmap.h>
 
