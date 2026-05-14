@@ -17,8 +17,6 @@
 
 #include    "switchers-panel.h"
 #include    "km-21kr2.h"
-#include    "energy-counter.h"
-#include    "alsn-ukbm.h"
 
 #include    <chs2t-autopilot-types.h>
 
@@ -28,6 +26,7 @@ class       DCMotorFan;
 class       Dako;
 class       ElectroPneumoValveEmergency;
 class       ElectroPneumoValveRelease;
+class       EnergyCounter;
 class       Generator;
 class       HandleEDT;
 class       Motor;
@@ -36,6 +35,7 @@ class       PhysToModbus;
 class       PulseConverter;
 class       PuskRez;
 class       SL2M;
+class       SafetyDevice;
 class       StepSwitch;
 
 /*!

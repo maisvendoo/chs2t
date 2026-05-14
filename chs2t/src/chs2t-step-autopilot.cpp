@@ -1,5 +1,6 @@
 #include    <chs2t.h>
 
+#include    "alsn-ukbm.h"
 #include    "motor.h"
 #include    "stepswitch.h"
 

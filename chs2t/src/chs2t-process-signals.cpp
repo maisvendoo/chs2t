@@ -1,5 +1,6 @@
 #include    "chs2t.h"
 
+#include    "alsn-ukbm.h"
 #include    "blinds.h"
 #include    "generator.h"
 #include    "handle-edt.h"

@@ -2,6 +2,7 @@
 
 #include    "blinds.h"
 #include    "electropneumovalve-emergency.h"
+#include    "energy-counter.h"
 #include    "generator.h"
 #include    "motor.h"
 #include    "overload-relay.h"
