@@ -29,8 +29,6 @@
 #include    <coupling.h>
 #include    <coupling-operating-rod.h>
 #include    <electro-airdistributor.h>
-#include    <epb-converter.h>
-#include    <epb-2line-control.h>
 
 #include    "switchers-panel.h"
 #include    "km-21kr2.h"
@@ -42,6 +40,8 @@ class       BrakeRegulator;
 class       DCMotorCompressor;
 class       DCMotorFan;
 class       Dako;
+class       EPBControl;
+class       EPBConverter;
 class       ElectroPneumoValveEmergency;
 class       ElectroPneumoValveRelease;
 class       EnergyCounter;

@@ -4,6 +4,7 @@
 #include    "motor.h"
 #include    "stepswitch.h"
 
+#include    <epb-2line-control.h>
 #include    <loco-crane.h>
 #include    <pantograph.h>
 #include    <sanding-system.h>

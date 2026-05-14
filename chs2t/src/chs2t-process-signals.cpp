@@ -9,6 +9,8 @@
 #include    "sl2m.h"
 #include    "stepswitch.h"
 
+#include    <epb-2line-control.h>
+#include    <epb-converter.h>
 #include    <loco-crane.h>
 #include    <motor-compressor-dc.h>
 #include    <motor-fan-dc.h>

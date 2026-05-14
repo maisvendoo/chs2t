@@ -2,6 +2,8 @@
 
 #include    "handle-edt.h"
 
+#include    <epb-2line-control.h>
+#include    <epb-converter.h>
 #include    <pneumo-hose-epb.h>
 #include    <reservoir.h>
 
