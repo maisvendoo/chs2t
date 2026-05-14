@@ -1,5 +1,7 @@
 #include    "chs2t.h"
 
+#include    "motor.h"
+#include    "overload-relay.h"
 #include    "pusk-rez.h"
 #include    "stepswitch.h"
 
