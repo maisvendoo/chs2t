@@ -86,11 +86,11 @@ private:
 
     Timer *safety_timer;
 
-    void preStep(state_vector_t &Y, double t);
+    virtual void preStep(state_vector_t &Y, double t) override;
 
-    void ode_system(const state_vector_t &Y, state_vector_t &dYdt, double t);
+    virtual void ode_system(const state_vector_t &Y, state_vector_t &dYdt, double t) override;
 
-    void load_config(CfgReader &cfg);
+    virtual void load_config(CfgReader &cfg) override;
 
     void alsn_process(int code_alsn);
 

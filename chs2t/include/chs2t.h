@@ -56,7 +56,7 @@ public:
     ~CHS2T();
 
     /// Инициализация тормозных приборов
-    void initBrakeDevices(double p0, double pBP, double pFL) override;
+    virtual void initBrakeDevices(double p0, double pBP, double pFL) override;
 
 private:
 

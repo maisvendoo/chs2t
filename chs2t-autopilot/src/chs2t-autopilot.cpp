@@ -48,6 +48,8 @@ void CHS2TAutopilot::initAutoBrakeControl(const QString &config_name,
 //------------------------------------------------------------------------------
 void CHS2TAutopilot::preStep(state_vector_t &Y, double t)
 {
+    (void)t;
+
     auto_feedback = dynamic_cast<chs2t_feedback_t *>(feedback);
 
     if (auto_feedback == nullptr)
@@ -163,6 +165,9 @@ void CHS2TAutopilot::ode_system(const state_vector_t &Y,
                                 state_vector_t &dYdt,
                                 double t)
 {
+    (void)Y;
+    (void)t;
+
     dYdt[0] = Ki * dv;
 }
 
