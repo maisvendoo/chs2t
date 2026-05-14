@@ -20,17 +20,15 @@
 #include    <airdistributor.h>
 #include    <ALSN-coil.h>
 #include    <ALSN-decoder.h>
-#include    <automatic-train-stop.h>
-#include    <battery.h>
-#include    <brake-auto-mode.h>
-#include    <brake-crane.h>
 
 #include    "switchers-panel.h"
 #include    "km-21kr2.h"
 
 #include    <chs2t-autopilot-types.h>
 
+class       AutoTrainStop;
 class       Blinds;
+class       BrakeCrane;
 class       BrakeMech;
 class       BrakeRegulator;
 class       Coupling;

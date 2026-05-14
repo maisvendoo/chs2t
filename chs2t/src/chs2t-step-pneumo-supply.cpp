@@ -2,6 +2,7 @@
 
 #include    "dako.h"
 
+#include    <automatic-train-stop.h>
 #include    <motor-compressor-dc.h>
 #include    <pneumo-anglecock.h>
 #include    <pneumo-hose.h>

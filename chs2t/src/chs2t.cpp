@@ -16,6 +16,7 @@
 #include    "chs2t-signals.h"
 #include    "convert-physics-to-modbus.h"
 
+#include    <brake-crane.h>
 #include    <brake-mech.h>
 #include    <reservoir.h>
 

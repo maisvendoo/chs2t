@@ -9,6 +9,7 @@
 #include    "pusk-rez.h"
 #include    "stepswitch.h"
 
+#include    <automatic-train-stop.h>
 #include    <motor-fan-dc.h>
 #include    <pantograph.h>
 #include    <protective-device.h>

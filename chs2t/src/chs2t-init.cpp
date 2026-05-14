@@ -99,7 +99,8 @@ void CHS2T::initEDT(const QString& modules_dir, const QString& custom_cfg_dir)
 //------------------------------------------------------------------------------
 void CHS2T::initOtherEquipment(const QString& modules_dir, const QString& custom_cfg_dir)
 {
-    (void) modules_dir;
+    (void)modules_dir;
+    (void)custom_cfg_dir;
 
     for (auto cab_idx : {CAB1, CAB2})
     {

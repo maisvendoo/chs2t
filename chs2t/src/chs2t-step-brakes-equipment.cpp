@@ -1,5 +1,6 @@
 #include    "chs2t.h"
 
+#include    <automatic-train-stop.h>
 #include    <brake-mech.h>
 #include    <electro-airdistributor.h>
 #include    <pneumo-anglecock.h>

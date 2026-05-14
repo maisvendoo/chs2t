@@ -1,5 +1,6 @@
 #include    <chs2t.h>
 
+#include    <automatic-train-stop.h>
 #include    <pantograph.h>
 #include    <protective-device.h>
 

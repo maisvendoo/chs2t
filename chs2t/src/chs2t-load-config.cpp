@@ -1,5 +1,7 @@
 #include    "chs2t.h"
 
+#include    <automatic-train-stop.h>
+#include    <brake-crane.h>
 #include    <loco-crane.h>
 #include    <pneumo-combine-crane.h>
 #include    <pneumo-shutoff-valve.h>

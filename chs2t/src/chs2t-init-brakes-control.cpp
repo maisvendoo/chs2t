@@ -5,6 +5,7 @@
 #include    "electropneumovalve-release.h"
 #include    "handle-edt.h"
 
+#include    <brake-crane.h>
 #include    <loco-crane.h>
 #include    <pneumo-combine-crane.h>
 #include    <pneumo-relay.h>

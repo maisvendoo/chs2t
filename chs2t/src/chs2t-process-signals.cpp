@@ -9,6 +9,8 @@
 #include    "sl2m.h"
 #include    "stepswitch.h"
 
+#include    <automatic-train-stop.h>
+#include    <brake-crane.h>
 #include    <brake-mech.h>
 #include    <epb-2line-control.h>
 #include    <epb-converter.h>

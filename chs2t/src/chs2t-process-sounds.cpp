@@ -5,6 +5,8 @@
 #include    "motor.h"
 #include    "sl2m.h"
 
+#include    <automatic-train-stop.h>
+#include    <brake-crane.h>
 #include    <loco-crane.h>
 #include    <motor-compressor-dc.h>
 #include    <motor-fan-dc.h>

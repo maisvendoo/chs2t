@@ -3,6 +3,7 @@
 #include    "alsn-ukbm.h"
 #include    "sl2m.h"
 
+#include    <automatic-train-stop.h>
 #include    <reservoir.h>
 
 //------------------------------------------------------------------------------

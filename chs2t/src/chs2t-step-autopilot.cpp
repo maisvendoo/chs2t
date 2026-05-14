@@ -4,6 +4,7 @@
 #include    "motor.h"
 #include    "stepswitch.h"
 
+#include    <brake-crane.h>
 #include    <brake-mech.h>
 #include    <epb-2line-control.h>
 #include    <loco-crane.h>

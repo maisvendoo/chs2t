@@ -2,6 +2,7 @@
 
 #include    "handle-edt.h"
 
+#include    <brake-crane.h>
 #include    <electro-airdistributor.h>
 #include    <epb-2line-control.h>
 #include    <epb-converter.h>

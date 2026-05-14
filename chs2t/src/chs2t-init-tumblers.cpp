@@ -2,6 +2,7 @@
 
 #include    "handle-edt.h"
 
+#include    <automatic-train-stop.h>
 #include    <coupling-operating-rod.h>
 #include    <pneumo-anglecock.h>
 #include    <pneumo-combine-crane.h>
