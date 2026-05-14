@@ -31,8 +31,6 @@
 #include    <electro-airdistributor.h>
 #include    <epb-converter.h>
 #include    <epb-2line-control.h>
-#include    <loco-crane.h>
-#include    <motor-compressor-dc.h>
 
 #include    "switchers-panel.h"
 #include    "km-21kr2.h"
@@ -41,6 +39,7 @@
 
 class       Blinds;
 class       BrakeRegulator;
+class       DCMotorCompressor;
 class       DCMotorFan;
 class       Dako;
 class       ElectroPneumoValveEmergency;
@@ -48,6 +47,7 @@ class       ElectroPneumoValveRelease;
 class       EnergyCounter;
 class       Generator;
 class       HandleEDT;
+class       LocoCrane;
 class       Motor;
 class       OverloadRelay;
 class       Pantograph;
