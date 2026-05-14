@@ -17,7 +17,6 @@
 
 #include    "switchers-panel.h"
 #include    "km-21kr2.h"
-#include    "pusk-rez.h"
 #include    "motor.h"
 #include    "overload-relay.h"
 #include    "electropneumovalve-emergency.h"
@@ -36,6 +35,7 @@
 
 #include    <chs2t-autopilot-types.h>
 
+class       PuskRez;
 class       StepSwitch;
 
 /*!
