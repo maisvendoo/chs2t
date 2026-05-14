@@ -1,5 +1,7 @@
 #include    "chs2t.h"
 
+#include    <pneumo-hose.h>
+#include    <pneumo-hose-epb.h>
 #include    <reservoir.h>
 
 #include    "filesystem.h"

@@ -41,10 +41,6 @@
 #include    <pneumo-anglecock.h>
 #include    <pneumo-brake-lock.h>
 #include    <pneumo-electro-valve.h>
-#include    <pneumo-hose-epb.h>
-#include    <pneumo-hose.h>
-#include    <pneumo-reducer.h>
-#include    <pneumo-relay.h>
 
 #include    "switchers-panel.h"
 #include    "km-21kr2.h"
@@ -63,6 +59,9 @@ class       HandleEDT;
 class       Motor;
 class       OverloadRelay;
 class       PhysToModbus;
+class       PneumoHose;
+class       PneumoHoseEPB;
+class       PneumoRelay;
 class       PneumoShutoffValve;
 class       PneumoSplitter;
 class       PressureRegulator;

@@ -2,6 +2,8 @@
 
 #include    "dako.h"
 
+#include    <pneumo-hose.h>
+#include    <pneumo-relay.h>
 #include    <pneumo-shutoff-valve.h>
 #include    <pressure-regulator.h>
 #include    <protective-device.h>

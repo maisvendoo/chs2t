@@ -2,6 +2,7 @@
 
 #include    "handle-edt.h"
 
+#include    <pneumo-hose-epb.h>
 #include    <reservoir.h>
 
 //------------------------------------------------------------------------

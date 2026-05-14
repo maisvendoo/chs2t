@@ -5,6 +5,7 @@
 #include    "electropneumovalve-release.h"
 #include    "handle-edt.h"
 
+#include    <pneumo-relay.h>
 #include    <pneumo-shutoff-valve.h>
 #include    <pneumo-splitter.h>
 #include    <pneumo-switching-valve.h>
