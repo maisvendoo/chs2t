@@ -14,16 +14,14 @@
 #define     CHS2T_H
 
 #include    <vehicle.h>
-#include    <physics.h>
 #include    <datetime.h>
-#include    <sound-signal.h>
-#include    <airdistributor.h>
 
 #include    "switchers-panel.h"
 #include    "km-21kr2.h"
 
 #include    <chs2t-autopilot-types.h>
 
+class       AirDistributor;
 class       AutoTrainStop;
 class       Blinds;
 class       BrakeCrane;
