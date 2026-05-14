@@ -5,6 +5,8 @@
 #include    "motor.h"
 #include    "stepswitch.h"
 
+#include    <brake-mech.h>
+#include    <coupling.h>
 #include    <coupling-operating-rod.h>
 #include    <loco-crane.h>
 #include    <pneumo-anglecock.h>

@@ -1,5 +1,6 @@
 #include    "chs2t.h"
 
+#include    <coupling.h>
 #include    <coupling-operating-rod.h>
 
 #include    <QDir>

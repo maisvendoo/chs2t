@@ -24,9 +24,6 @@
 #include    <battery.h>
 #include    <brake-auto-mode.h>
 #include    <brake-crane.h>
-#include    <brake-mech.h>
-#include    <combine-relay.h>
-#include    <coupling.h>
 
 #include    "switchers-panel.h"
 #include    "km-21kr2.h"
@@ -34,7 +31,9 @@
 #include    <chs2t-autopilot-types.h>
 
 class       Blinds;
+class       BrakeMech;
 class       BrakeRegulator;
+class       Coupling;
 class       DCMotorCompressor;
 class       DCMotorFan;
 class       Dako;
