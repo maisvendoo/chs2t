@@ -17,7 +17,6 @@
 
 #include    "switchers-panel.h"
 #include    "km-21kr2.h"
-#include    "stepswitch.h"
 #include    "pusk-rez.h"
 #include    "motor.h"
 #include    "overload-relay.h"
@@ -30,13 +29,14 @@
 #include    "handle-edt.h"
 #include    "motor-fan-dc.h"
 #include    "blinds.h"
-#include    "hardware-signals.h"
 #include    "convert-physics-to-modbus.h"
 #include    "sl2m.h"
 #include    "energy-counter.h"
 #include    "alsn-ukbm.h"
 
 #include    <chs2t-autopilot-types.h>
+
+class       StepSwitch;
 
 /*!
  * \class
