@@ -9,6 +9,7 @@
 #include    "sl2m.h"
 #include    "stepswitch.h"
 
+#include    <sanding-system.h>
 #include    <train-horn.h>
 
 //------------------------------------------------------------------------------

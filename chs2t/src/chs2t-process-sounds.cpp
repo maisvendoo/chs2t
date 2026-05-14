@@ -5,6 +5,7 @@
 #include    "motor.h"
 #include    "sl2m.h"
 
+#include    <sanding-system.h>
 #include    <train-horn.h>
 
 //------------------------------------------------------------------------------

@@ -2,6 +2,7 @@
 
 #include    "dako.h"
 
+#include    <sanding-system.h>
 #include    <train-horn.h>
 
 //------------------------------------------------------------------------

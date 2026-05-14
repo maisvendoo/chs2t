@@ -52,10 +52,6 @@
 #include    <protective-device.h>
 #include    <relay.h>
 #include    <reservoir.h>
-#include    <sanding-system.h>
-#include    <speedmap.h>
-#include    <time-relay.h>
-#include    <traction-controller.h>
 
 #include    "switchers-panel.h"
 #include    "km-21kr2.h"
@@ -79,6 +75,8 @@ class       PuskRez;
 class       Registrator;
 class       SL2M;
 class       SafetyDevice;
+class       SandingSystem;
+class       SpeedMap;
 class       StepSwitch;
 class       TrainHorn;
 
