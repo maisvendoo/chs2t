@@ -12,7 +12,9 @@
 //------------------------------------------------------------------------------
 
 #include    "chs2t.h"
+
 #include    "chs2t-signals.h"
+#include    "convert-physics-to-modbus.h"
 
 #include    "filesystem.h"
 
@@ -154,7 +156,7 @@ void CHS2T::step(const double& t, const double& dt)
 
     registrate(t, dt);
 
-    autoStartTimer->step(t, dt);    
+    autoStartTimer->step(t, dt);
 
     pantCtrlTimer->step(t, dt);
 }

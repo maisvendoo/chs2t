@@ -17,8 +17,6 @@
 
 #include    "switchers-panel.h"
 #include    "km-21kr2.h"
-#include    "convert-physics-to-modbus.h"
-#include    "sl2m.h"
 #include    "energy-counter.h"
 #include    "alsn-ukbm.h"
 
@@ -34,8 +32,10 @@ class       Generator;
 class       HandleEDT;
 class       Motor;
 class       OverloadRelay;
+class       PhysToModbus;
 class       PulseConverter;
 class       PuskRez;
+class       SL2M;
 class       StepSwitch;
 
 /*!

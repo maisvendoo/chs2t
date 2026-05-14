@@ -5,6 +5,7 @@
 #include    "handle-edt.h"
 #include    "motor.h"
 #include    "chs2t-signals.h"
+#include    "sl2m.h"
 #include    "stepswitch.h"
 
 //------------------------------------------------------------------------------

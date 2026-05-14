@@ -2,6 +2,7 @@
 
 #include    "blinds.h"
 #include    "brake-regulator.h"
+#include    "convert-physics-to-modbus.h"
 #include    "generator.h"
 #include    "motor.h"
 #include    "overload-relay.h"
