@@ -47,8 +47,6 @@
 #include    <pneumo-relay.h>
 #include    <pneumo-shutoff-valve.h>
 #include    <pneumo-splitter.h>
-#include    <pneumo-switching-valve.h>
-#include    <pressure-regulator.h>
 
 #include    "switchers-panel.h"
 #include    "km-21kr2.h"
@@ -67,6 +65,7 @@ class       HandleEDT;
 class       Motor;
 class       OverloadRelay;
 class       PhysToModbus;
+class       PressureRegulator;
 class       ProtectiveDevice;
 class       PulseConverter;
 class       PuskRez;
@@ -75,6 +74,7 @@ class       Reservoir;
 class       SL2M;
 class       SafetyDevice;
 class       SandingSystem;
+class       SwitchingValve;
 class       SpeedMap;
 class       StepSwitch;
 class       TrainHorn;

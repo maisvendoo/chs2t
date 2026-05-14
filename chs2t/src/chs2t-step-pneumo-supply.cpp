@@ -2,6 +2,7 @@
 
 #include    "dako.h"
 
+#include    <pressure-regulator.h>
 #include    <protective-device.h>
 #include    <reservoir.h>
 #include    <sanding-system.h>

@@ -5,6 +5,7 @@
 #include    "electropneumovalve-release.h"
 #include    "handle-edt.h"
 
+#include    <pneumo-switching-valve.h>
 #include    <reservoir.h>
 
 #include    <QDir>

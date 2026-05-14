@@ -1,5 +1,6 @@
 #include    "chs2t.h"
 
+#include    <pressure-regulator.h>
 #include    <reservoir.h>
 
 //------------------------------------------------------------------------
