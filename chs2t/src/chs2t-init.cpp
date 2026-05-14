@@ -11,6 +11,7 @@
 #include    "pusk-rez.h"
 #include    "stepswitch.h"
 
+#include    <protective-device.h>
 #include    <sanding-system.h>
 #include    <train-horn.h>
 

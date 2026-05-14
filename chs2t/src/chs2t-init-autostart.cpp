@@ -1,5 +1,7 @@
 #include    <chs2t.h>
 
+#include    <protective-device.h>
+
 //------------------------------------------------------------------------------
 //
 //------------------------------------------------------------------------------
@@ -162,7 +164,7 @@ void CHS2T::slotAutostart()
 
     if (auto_start_autopilot)
     {
-        autopilot_switcher[autostart_cab].set();        
+        autopilot_switcher[autostart_cab].set();
     }
 }
 

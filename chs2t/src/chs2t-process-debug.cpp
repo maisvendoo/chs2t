@@ -5,6 +5,7 @@
 #include    "motor.h"
 #include    "stepswitch.h"
 
+#include    <reservoir.h>
 #include    <speedmap.h>
 
 //------------------------------------------------------------------------------

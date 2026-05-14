@@ -16,6 +16,8 @@
 #include    "chs2t-signals.h"
 #include    "convert-physics-to-modbus.h"
 
+#include    <reservoir.h>
+
 #include    "filesystem.h"
 
 //------------------------------------------------------------------------------

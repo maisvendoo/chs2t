@@ -49,9 +49,6 @@
 #include    <pneumo-splitter.h>
 #include    <pneumo-switching-valve.h>
 #include    <pressure-regulator.h>
-#include    <protective-device.h>
-#include    <relay.h>
-#include    <reservoir.h>
 
 #include    "switchers-panel.h"
 #include    "km-21kr2.h"
@@ -70,9 +67,11 @@ class       HandleEDT;
 class       Motor;
 class       OverloadRelay;
 class       PhysToModbus;
+class       ProtectiveDevice;
 class       PulseConverter;
 class       PuskRez;
 class       Registrator;
+class       Reservoir;
 class       SL2M;
 class       SafetyDevice;
 class       SandingSystem;
