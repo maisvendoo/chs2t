@@ -17,9 +17,6 @@
 
 #include    "switchers-panel.h"
 #include    "km-21kr2.h"
-#include    "handle-edt.h"
-#include    "motor-fan-dc.h"
-#include    "blinds.h"
 #include    "convert-physics-to-modbus.h"
 #include    "sl2m.h"
 #include    "energy-counter.h"
@@ -27,11 +24,14 @@
 
 #include    <chs2t-autopilot-types.h>
 
+class       Blinds;
 class       BrakeRegulator;
+class       DCMotorFan;
 class       Dako;
 class       ElectroPneumoValveEmergency;
 class       ElectroPneumoValveRelease;
 class       Generator;
+class       HandleEDT;
 class       Motor;
 class       OverloadRelay;
 class       PulseConverter;

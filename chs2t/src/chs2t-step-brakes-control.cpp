@@ -4,6 +4,7 @@
 #include    "electropneumovalve-emergency.h"
 #include    "electropneumovalve-release.h"
 #include    "generator.h"
+#include    "handle-edt.h"
 
 //------------------------------------------------------------------------
 //

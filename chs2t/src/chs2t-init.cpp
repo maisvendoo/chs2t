@@ -1,5 +1,6 @@
 #include    "chs2t.h"
 
+#include    "blinds.h"
 #include    "brake-regulator.h"
 #include    "generator.h"
 #include    "motor.h"
