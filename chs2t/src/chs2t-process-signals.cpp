@@ -9,6 +9,8 @@
 #include    "sl2m.h"
 #include    "stepswitch.h"
 
+#include    <motor-fan-dc.h>
+#include    <pantograph.h>
 #include    <pneumo-combine-crane.h>
 #include    <pneumo-shutoff-valve.h>
 #include    <protective-device.h>

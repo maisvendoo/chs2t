@@ -9,6 +9,8 @@
 #include    "pusk-rez.h"
 #include    "stepswitch.h"
 
+#include    <motor-fan-dc.h>
+#include    <pantograph.h>
 #include    <protective-device.h>
 #include    <reservoir.h>
 #include    <sanding-system.h>

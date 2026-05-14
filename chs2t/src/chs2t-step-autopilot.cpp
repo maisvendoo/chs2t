@@ -4,6 +4,7 @@
 #include    "motor.h"
 #include    "stepswitch.h"
 
+#include    <pantograph.h>
 #include    <sanding-system.h>
 #include    <speedmap.h>
 #include    <train-horn.h>

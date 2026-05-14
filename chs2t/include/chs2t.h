@@ -32,12 +32,7 @@
 #include    <epb-converter.h>
 #include    <epb-2line-control.h>
 #include    <loco-crane.h>
-#include    <motor-compressor-ac.h>
 #include    <motor-compressor-dc.h>
-#include    <motor-fan-ac.h>
-#include    <motor-fan-dc.h>
-#include    <oscillator.h>
-#include    <pantograph.h>
 
 #include    "switchers-panel.h"
 #include    "km-21kr2.h"
@@ -55,6 +50,7 @@ class       Generator;
 class       HandleEDT;
 class       Motor;
 class       OverloadRelay;
+class       Pantograph;
 class       PhysToModbus;
 class       PneumoAngleCock;
 class       PneumoCombineCrane;
