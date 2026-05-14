@@ -17,8 +17,6 @@
 
 #include    "switchers-panel.h"
 #include    "km-21kr2.h"
-#include    "dako.h"
-#include    "generator.h"
 #include    "pulse-converter.h"
 #include    "brake-regulator.h"
 #include    "handle-edt.h"
@@ -31,8 +29,10 @@
 
 #include    <chs2t-autopilot-types.h>
 
+class       Dako;
 class       ElectroPneumoValveEmergency;
 class       ElectroPneumoValveRelease;
+class       Generator;
 class       Motor;
 class       OverloadRelay;
 class       PuskRez;

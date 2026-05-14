@@ -1,6 +1,7 @@
 #include    "chs2t.h"
 
 #include    "chs2t-signals.h"
+#include    "generator.h"
 #include    "motor.h"
 
 //------------------------------------------------------------------------------

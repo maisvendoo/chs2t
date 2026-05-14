@@ -1,5 +1,6 @@
 #include    "chs2t.h"
 
+#include    "dako.h"
 #include    "electropneumovalve-emergency.h"
 #include    "electropneumovalve-release.h"
 

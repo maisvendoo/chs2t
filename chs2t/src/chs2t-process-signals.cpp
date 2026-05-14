@@ -1,5 +1,6 @@
 #include    "chs2t.h"
 
+#include    "generator.h"
 #include    "motor.h"
 #include    "chs2t-signals.h"
 #include    "stepswitch.h"
