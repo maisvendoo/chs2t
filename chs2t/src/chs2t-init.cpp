@@ -1,8 +1,10 @@
 #include    "chs2t.h"
 
+#include    "brake-regulator.h"
 #include    "generator.h"
 #include    "motor.h"
 #include    "overload-relay.h"
+#include    "pulse-converter.h"
 #include    "pusk-rez.h"
 #include    "stepswitch.h"
 

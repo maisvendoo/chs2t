@@ -1,7 +1,9 @@
-#include "chs2t.h"
+#include    "chs2t.h"
 
+#include    "brake-regulator.h"
 #include    "dako.h"
 #include    "generator.h"
+#include    "pulse-converter.h"
 
 //------------------------------------------------------------------------------
 //
