@@ -7,6 +7,7 @@
 #include    <ALSN-decoder.h>
 #include    <automatic-train-stop.h>
 #include    <speedmap.h>
+#include    <core/load_module.h>
 
 #include    <QDir>
 
@@ -41,7 +42,7 @@ void CHS2T::initSafetyDevices(const QString& modules_dir, const QString& custom_
         speed_meter[cab_idx]->read_config("3SL-2M", custom_cfg_dir);
 
         // ЭПК автостопа
-        epk[cab_idx] = loadAutoTrainStop(modules_dir + QDir::separator() + "epk150");
+        epk[cab_idx] = LOAD_MODULE(AutoTrainStop, modules_dir + QDir::separator() + "epk150");
         epk[cab_idx]->read_config("epk150");
 
         // Дешифратор АЛСН
