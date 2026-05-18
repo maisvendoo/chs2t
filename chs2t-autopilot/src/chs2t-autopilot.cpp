@@ -1,5 +1,7 @@
 #include    <chs2t-autopilot.h>
 
+#include    <core/get_module.h>
+
 //------------------------------------------------------------------------------
 //
 //------------------------------------------------------------------------------
@@ -285,4 +287,4 @@ void CHS2TAutopilot::slotPosDelay()
     }
 }
 
-GET_AUTOPILOT(CHS2TAutopilot)
+GET_MODULE(CHS2TAutopilot)

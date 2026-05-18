@@ -1,6 +1,7 @@
 #include    <chs2t.h>
 
 #include    <epb-2line-control.h>
+#include    <core/load_module.h>
 
 #include    <QDir>
 
@@ -13,9 +14,10 @@ void CHS2T::initAutopilot(const QString &modules_dir,
     // Модули автоведения
     for (auto cab_idx : {CAB1, CAB2})
     {
-        Autopilot *autopilot = loadAutopilot(modules_dir + QDir::separator()
-                                             + custom_modules_dir + QDir::separator() +
-                                             autopilot_module_name);
+        Autopilot* autopilot = LOAD_MODULE(Autopilot,
+            modules_dir + QDir::separator() +
+            custom_modules_dir + QDir::separator() +
+            autopilot_module_name);
 
         if (autopilot != nullptr)
         {
