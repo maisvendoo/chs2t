@@ -18,13 +18,11 @@ class       Timer;
 //------------------------------------------------------------------------------
 class SafetyDevice : public Device
 {
-    Q_OBJECT
-
 public:
 
     explicit SafetyDevice(QObject* parent = nullptr);
 
-    ~SafetyDevice();
+    virtual ~SafetyDevice() override;
 
     virtual void step(double t, double dt) override;
 
