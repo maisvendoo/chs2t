@@ -13,6 +13,7 @@
 #include    <pneumo-splitter.h>
 #include    <pneumo-switching-valve.h>
 #include    <reservoir.h>
+#include    <core/load_module.h>
 
 #include    <QDir>
 
@@ -32,7 +33,7 @@ void CHS2T::initBrakesControl(const QString& modules_dir, const QString& custom_
         combine_crane[cab_idx]->read_config("pneumo-combine-crane");
 
         // Поездной кран машиниста
-        brake_crane[cab_idx] = loadBrakeCrane(
+        brake_crane[cab_idx] = LOAD_MODULE(BrakeCrane,
             modules_dir + QDir::separator() + brake_crane_module_name);
         brake_crane[cab_idx]->read_config(brake_crane_config_name);
 
