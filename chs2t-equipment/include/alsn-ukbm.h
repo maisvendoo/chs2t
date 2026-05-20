@@ -1,17 +1,16 @@
 #ifndef     ALSN_UKBM_H
 #define     ALSN_UKBM_H
 
-#include    <device.h>
-#include    <solver-types.h>
-#include    <trigger.h>
+#include    "device.h"
 
-#include    <QObject>
-
-#include    <array>
-#include    <cstddef>
-
-class       CfgReader;
-class       Timer;
+enum
+{
+    RED_LAMP = 0,
+    RED_YELLOW_LAMP = 1,
+    YELLOW_LAMP = 2,
+    GREEN_LAMP = 3,
+    WHITE_LAMP = 4
+};
 
 //------------------------------------------------------------------------------
 //
@@ -20,51 +19,48 @@ class SafetyDevice : public Device
 {
 public:
 
-    explicit SafetyDevice(QObject* parent = nullptr);
+    SafetyDevice(QObject *parent = Q_NULLPTR);
 
-    virtual ~SafetyDevice() override;
+    ~SafetyDevice();
 
-    virtual void step(double t, double dt) override;
+    void step(double t, double dt) override;
 
-    /// Приём кода АЛСН
-    void setAlsnCode(int code_alsn);
+    /// Прием кода АЛСН
+    void setAlsnCode(int code_alsn)
+    {
+        old_code_alsn = this->code_alsn;
+        this->code_alsn = code_alsn;
+    };
 
-    /// Приём состояния РБ
-    void setRBstate(bool state);
+    /// Прием состояния РБ
+    void setRBstate(bool state) { state_RB = state; };
 
-    /// Приём состояния РБС
-    void setRBSstate(bool state);
+    /// Прием состояния РБС
+    void setRBSstate(bool state) { state_RBS = state; };
 
-    /// Приём скорости от скоростемера
-    void setVelocity(double v);
+    /// Прием скорости от скоростемера
+    void setVelocity(double v) { v_kmh = v * Physics::kmh; }
 
-    void setKeyEPK(bool key_epk);
+    void setKeyEPK(bool key_epk) { this->key_epk = key_epk; }
 
     /// Выдача состояния цепи удерживающей катушки ЭПК
-    bool getEPKstate() const;
+    bool getEPKstate() { return epk_state.getState(); };
 
-    float getRedLamp() const;
-    float getRedYellowLamp() const;
-    float getYellowLamp() const;
-    float getGreenLamp() const;
-    float getWhiteLamp() const;
+    float getGreenLamp() const { return lamps[GREEN_LAMP]; }
 
-    /// Приём сигнала от переключателя маневрового режима
-    void setShuntingModeState(bool is_shunting_mode);
+    float getYellowLamp() const { return lamps[YELLOW_LAMP]; }
 
-private:
+    float getRedYellowLamp() const { return lamps[RED_YELLOW_LAMP]; }
 
-    virtual void preStep(state_vector_t& Y, double t) override;
+    float getRedLamp() const { return lamps[RED_LAMP]; }
 
-    virtual void ode_system(const state_vector_t& Y, state_vector_t& dYdt, double t) override;
+    float getWhiteLamp() const { return lamps[WHITE_LAMP]; }
 
-    virtual void load_config(CfgReader& cfg) override;
-
-    void alsn_process(int code_alsn);
-
-    void off_all_lamps();
-
-    void lamp_on(std::size_t lamp_idx);
+    /// Прием сигнала от переключателя маневрового режима
+    void setShuntingModeState(bool is_shunting_mode)
+    {
+        this->is_shunting_mode = is_shunting_mode;
+    }
 
 private:
 
@@ -88,9 +84,25 @@ private:
 
     Trigger epk_state;
 
-    Timer* safety_timer;
+    Timer *safety_timer;
 
-    bool is_shunting_mode;
+    virtual void preStep(state_vector_t &Y, double t) override;
+
+    virtual void ode_system(const state_vector_t &Y, state_vector_t &dYdt, double t) override;
+
+    virtual void load_config(CfgReader &cfg) override;
+
+    void alsn_process(int code_alsn);
+
+    void off_all_lamps();
+
+    void lamp_on(size_t lamp_idx);
+
+    bool is_shunting_mode = false;
+
+private slots:
+
+    void onSafetyTimer();
 };
 
 #endif // ALSN_UKBM_H
