@@ -172,7 +172,7 @@ void CHS2T::initRegistrator(const QString& modules_dir, const QString& custom_cf
     (void) modules_dir;
     (void) custom_cfg_dir;
 /*
-    reg = new Registrator(0.1);
-    reg->setFileName("motor");
-    reg->init();*/
+    registrator = new Registrator(0.1);
+    registrator->setFileName("motor");
+    registrator->init();*/
 }

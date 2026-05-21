@@ -10,7 +10,7 @@
 //------------------------------------------------------------------------------
 void CHS2T::registrate(const double& t, const double& dt)
 {
-    if (reg == nullptr)
+    if (registrator == nullptr)
         return;
 
     QString msg = "";
@@ -18,5 +18,5 @@ void CHS2T::registrate(const double& t, const double& dt)
     msg += QString("omega%1|").arg(wheel_omega[0], 10, 'f', 5);
     msg += QString("motor%1|").arg(motor->getTorque(), 12, 'f', 5);
     msg += QString("gener%1|").arg(generator->getTorque(), 12, 'f', 5);
-    reg->print(msg, t, dt);
+    registrator->print(msg, t, dt);
 }

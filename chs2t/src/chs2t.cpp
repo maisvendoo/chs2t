@@ -23,6 +23,7 @@
 #include    "filesystem.h"
 
 #include    <core/get_module.h>
+#include    <registrator.h>
 
 //------------------------------------------------------------------------------
 // Конструктор
