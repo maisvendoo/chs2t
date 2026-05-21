@@ -13,7 +13,6 @@
 #ifndef     CHS2T_H
 #define     CHS2T_H
 
-#include    <memory>
 #include    <vehicle.h>
 #include    <datetime.h>
 
@@ -135,7 +134,7 @@ private:
     QString custom_modules_dir = "chs2t";
 
     /// Регистратор, для записи параметров
-    std::unique_ptr<Registrator> registrator;
+    Registrator *reg = nullptr;
 
     /// Сцепка спереди
     Coupling *coupling_fwd = nullptr;
