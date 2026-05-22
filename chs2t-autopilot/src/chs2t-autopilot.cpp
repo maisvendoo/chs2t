@@ -71,7 +71,7 @@ void CHS2TAutopilot::preStep(state_vector_t &Y, double t)
     I_ref = cut(I_ref, 0.0, Imax);
 
     // Блокирование тяги по давлению в ТЦ
-    if ((auto_feedback->pBC > 0.04) || !(auto_feedback->is_allow_traction))
+    if (auto_feedback->pBC > 0.04)
     {
         lock_traction = true;
     }
