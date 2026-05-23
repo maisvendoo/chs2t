@@ -25,11 +25,12 @@ void CHS2T::initAutopilot(const QString &modules_dir,
             autopilot_switcher[cab_idx].setKeySymbolOff(KEY_F);
             autopilot_switcher[cab_idx].setControl(&pressed_keys);
 
+            auto_feedback[cab_idx] = new chs2t_feedback_t();
+            autopilot->setFeedback(auto_feedback[cab_idx]);
+
             connect(autopilot, &Autopilot::sigInitTrainParams, this, &CHS2T::slotInitTrainForAutopilot);
 
             this->autopilot.push_back(autopilot);
-
-            auto_feedback[cab_idx] = new chs2t_feedback_t();
 
             connect(pantCtrlTimer, &Timer::process, this, &CHS2T::slotPantCtrl);
         }        

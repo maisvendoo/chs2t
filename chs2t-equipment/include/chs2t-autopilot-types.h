@@ -44,11 +44,13 @@ public:
 
     double I_motor = 0.0;
 
-    bool is_EPB_on = false;
-
     int km_pos = 0;
 
     int pos = 0;
+
+    bool is_allow_traction = false;
+
+    bool is_EPB_on = false;
 
     bool is_front_pant_up = false;
 
