@@ -20,7 +20,7 @@ file (GLOB EQP_INCLUDES "../chs2t-equipment/include/*.h")
 file (GLOB SOURCES "./src/*.cpp")
 file (GLOB EQP_SOURCES "../chs2t-equipment/src/*.cpp")
 
-add_library (${TARGET} MODULE ${SOURCES} ${INCLUDES} ${EQP_SOURCES} ${EQP_INCLUDES})
+add_library (${TARGET} SHARED ${SOURCES} ${INCLUDES} ${EQP_SOURCES} ${EQP_INCLUDES})
 
 target_include_directories (${TARGET} PRIVATE ./include/)
 target_include_directories (${TARGET} PRIVATE ../chs2t-equipment/include)
