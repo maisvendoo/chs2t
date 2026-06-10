@@ -245,16 +245,16 @@ void CHS2T::debugPrint(const simulator_time_t& t, const double& dt)
 
     if (autopilot[CAB1] != nullptr && autopilot[CAB2] != nullptr)
     {
-        QString auto_mode = "";
+        QString auto_mode = QString("\n");
 
         if (km21KR2[CAB1].isReversHandle())
         {
-            auto_mode = autopilot[CAB1]->getDbgMsg();
+            auto_mode += autopilot[CAB1]->getDbgMsg();
         }
 
         if (km21KR2[CAB2].isReversHandle())
         {
-            auto_mode = autopilot[CAB2]->getDbgMsg();
+            auto_mode += autopilot[CAB2]->getDbgMsg();
         }
 
         DebugMsg += auto_mode;

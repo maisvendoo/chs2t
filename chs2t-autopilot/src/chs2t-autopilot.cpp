@@ -106,7 +106,7 @@ void CHS2TAutopilot::preStep(state_vector_t &Y, double t)
     }
 
     // Если превышаем скорость - мотаем вниз до упора
-    if (dv < -dV_traction_off)
+    if ((dv < -dV_traction_off) || !(auto_feedback->is_allow_traction))
     {
         if (auto_feedback->pos != 0)
         {

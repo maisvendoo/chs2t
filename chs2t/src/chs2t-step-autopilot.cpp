@@ -89,6 +89,7 @@ void CHS2T::stepAutopilot(double t, double dt)
     auto_feedback[cab_idx]->pBC = brake_mech[TROLLEY_FWD]->getBCpressure();
     auto_feedback[cab_idx]->pEQ = brake_crane[cab_idx]->getERpressure();
     auto_feedback[cab_idx]->p_charge = charge_press;
+    auto_feedback[cab_idx]->is_allow_traction = allowTrac.getState();
     auto_feedback[cab_idx]->is_EPB_on = epb_control->stateReleaseLamp();
     auto_feedback[cab_idx]->is_front_pant_up = pantographs[front_pant_idx]->isUp();
 
