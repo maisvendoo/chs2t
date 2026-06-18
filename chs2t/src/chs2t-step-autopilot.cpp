@@ -1,5 +1,19 @@
 #include    <chs2t.h>
 
+#include    "alsn-ukbm.h"
+#include    "motor.h"
+#include    "stepswitch.h"
+
+#include    <ALSN-coil.h>
+#include    <brake-crane.h>
+#include    <brake-mech.h>
+#include    <epb-2line-control.h>
+#include    <loco-crane.h>
+#include    <pantograph.h>
+#include    <sanding-system.h>
+#include    <speedmap.h>
+#include    <train-horn.h>
+
 //------------------------------------------------------------------------------
 //
 //------------------------------------------------------------------------------

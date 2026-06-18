@@ -1,5 +1,17 @@
 #include    "chs2t.h"
 
+#include    "handle-edt.h"
+
+#include    <automatic-train-stop.h>
+#include    <coupling-operating-rod.h>
+#include    <pneumo-anglecock.h>
+#include    <pneumo-combine-crane.h>
+#include    <pneumo-hose.h>
+#include    <pneumo-hose-epb.h>
+#include    <pneumo-shutoff-valve.h>
+#include    <sanding-system.h>
+#include    <train-horn.h>
+
 //------------------------------------------------------------------------
 //
 //------------------------------------------------------------------------

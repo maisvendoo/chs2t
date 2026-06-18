@@ -1,5 +1,25 @@
 #include "chs2t.h"
 
+#include    "alsn-ukbm.h"
+#include    "generator.h"
+#include    "motor.h"
+#include    "stepswitch.h"
+
+#include    <ALSN-coil.h>
+#include    <automatic-train-stop.h>
+#include    <brake-crane.h>
+#include    <brake-mech.h>
+#include    <coupling.h>
+#include    <coupling-operating-rod.h>
+#include    <loco-crane.h>
+#include    <pneumo-anglecock.h>
+#include    <pneumo-combine-crane.h>
+#include    <pneumo-hose.h>
+#include    <pneumo-hose-epb.h>
+#include    <pneumo-shutoff-valve.h>
+#include    <reservoir.h>
+#include    <speedmap.h>
+
 //------------------------------------------------------------------------------
 //
 //------------------------------------------------------------------------------

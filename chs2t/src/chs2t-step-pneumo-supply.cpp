@@ -1,5 +1,19 @@
 #include    "chs2t.h"
 
+#include    "dako.h"
+
+#include    <automatic-train-stop.h>
+#include    <motor-compressor-dc.h>
+#include    <pneumo-anglecock.h>
+#include    <pneumo-hose.h>
+#include    <pneumo-relay.h>
+#include    <pneumo-shutoff-valve.h>
+#include    <pressure-regulator.h>
+#include    <protective-device.h>
+#include    <reservoir.h>
+#include    <sanding-system.h>
+#include    <train-horn.h>
+
 //------------------------------------------------------------------------
 //
 //------------------------------------------------------------------------

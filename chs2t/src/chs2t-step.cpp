@@ -1,5 +1,22 @@
 #include "chs2t.h"
 
+#include    "blinds.h"
+#include    "electropneumovalve-emergency.h"
+#include    "energy-counter.h"
+#include    "generator.h"
+#include    "motor.h"
+#include    "overload-relay.h"
+#include    "pusk-rez.h"
+#include    "stepswitch.h"
+
+#include    <automatic-train-stop.h>
+#include    <motor-fan-dc.h>
+#include    <pantograph.h>
+#include    <protective-device.h>
+#include    <reservoir.h>
+#include    <sanding-system.h>
+#include    <train-horn.h>
+
 //------------------------------------------------------------------------------
 //
 //------------------------------------------------------------------------------

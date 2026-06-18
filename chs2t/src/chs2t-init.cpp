@@ -1,5 +1,22 @@
 #include    "chs2t.h"
 
+#include    "blinds.h"
+#include    "brake-regulator.h"
+#include    "convert-physics-to-modbus.h"
+#include    "energy-counter.h"
+#include    "generator.h"
+#include    "motor.h"
+#include    "overload-relay.h"
+#include    "pulse-converter.h"
+#include    "pusk-rez.h"
+#include    "stepswitch.h"
+
+#include    <motor-fan-dc.h>
+#include    <pantograph.h>
+#include    <protective-device.h>
+#include    <sanding-system.h>
+#include    <train-horn.h>
+
 #include    <QDir>
 
 //------------------------------------------------------------------------------
@@ -82,7 +99,8 @@ void CHS2T::initEDT(const QString& modules_dir, const QString& custom_cfg_dir)
 //------------------------------------------------------------------------------
 void CHS2T::initOtherEquipment(const QString& modules_dir, const QString& custom_cfg_dir)
 {
-    (void) modules_dir;
+    (void)modules_dir;
+    (void)custom_cfg_dir;
 
     for (auto cab_idx : {CAB1, CAB2})
     {

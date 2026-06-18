@@ -1,5 +1,22 @@
 #include    "chs2t.h"
 
+#include    "dako.h"
+#include    "electropneumovalve-emergency.h"
+#include    "electropneumovalve-release.h"
+#include    "generator.h"
+#include    "handle-edt.h"
+
+#include    <brake-crane.h>
+#include    <brake-mech.h>
+#include    <electro-airdistributor.h>
+#include    <loco-crane.h>
+#include    <pneumo-combine-crane.h>
+#include    <pneumo-relay.h>
+#include    <pneumo-shutoff-valve.h>
+#include    <pneumo-splitter.h>
+#include    <pneumo-switching-valve.h>
+#include    <reservoir.h>
+
 //------------------------------------------------------------------------
 //
 //------------------------------------------------------------------------

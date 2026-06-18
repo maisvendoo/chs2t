@@ -1,5 +1,21 @@
 #include    "chs2t.h"
+
 #include    "chs2t-signals.h"
+#include    "generator.h"
+#include    "motor.h"
+#include    "sl2m.h"
+
+#include    <automatic-train-stop.h>
+#include    <brake-crane.h>
+#include    <loco-crane.h>
+#include    <motor-compressor-dc.h>
+#include    <motor-fan-dc.h>
+#include    <pantograph.h>
+#include    <pneumo-combine-crane.h>
+#include    <pneumo-shutoff-valve.h>
+#include    <protective-device.h>
+#include    <sanding-system.h>
+#include    <train-horn.h>
 
 //------------------------------------------------------------------------------
 //

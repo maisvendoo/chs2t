@@ -1,4 +1,8 @@
-#include "chs2t.h"
+#include    "chs2t.h"
+
+#include    <automatic-train-stop.h>
+#include    <brake-crane.h>
+#include    <loco-crane.h>
 
 //------------------------------------------------------------------------------
 //

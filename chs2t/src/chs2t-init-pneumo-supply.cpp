@@ -1,5 +1,11 @@
 #include    "chs2t.h"
 
+#include    <motor-compressor-dc.h>
+#include    <pneumo-anglecock.h>
+#include    <pneumo-hose.h>
+#include    <pressure-regulator.h>
+#include    <reservoir.h>
+
 //------------------------------------------------------------------------
 //
 //------------------------------------------------------------------------

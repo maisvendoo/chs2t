@@ -13,30 +13,60 @@
 #ifndef     CHS2T_H
 #define     CHS2T_H
 
-#include    "vehicle-api.h"
+#include    <vehicle.h>
+#include    <datetime.h>
 
 #include    "switchers-panel.h"
 #include    "km-21kr2.h"
-#include    "stepswitch.h"
-#include    "pusk-rez.h"
-#include    "motor.h"
-#include    "overload-relay.h"
-#include    "electropneumovalve-emergency.h"
-#include    "electropneumovalve-release.h"
-#include    "dako.h"
-#include    "generator.h"
-#include    "pulse-converter.h"
-#include    "brake-regulator.h"
-#include    "handle-edt.h"
-#include    "motor-fan-dc.h"
-#include    "blinds.h"
-#include    "hardware-signals.h"
-#include    "convert-physics-to-modbus.h"
-#include    "sl2m.h"
-#include    "energy-counter.h"
-#include    "alsn-ukbm.h"
 
 #include    <chs2t-autopilot-types.h>
+
+class       AirDistributor;
+class       AutoTrainStop;
+class       Blinds;
+class       BrakeCrane;
+class       BrakeMech;
+class       BrakeRegulator;
+class       CoilALSN;
+class       Coupling;
+class       DCMotorCompressor;
+class       DCMotorFan;
+class       Dako;
+class       DecoderALSN;
+class       EPBControl;
+class       EPBConverter;
+class       ElectroAirDistributor;
+class       ElectroPneumoValveEmergency;
+class       ElectroPneumoValveRelease;
+class       EnergyCounter;
+class       Generator;
+class       HandleEDT;
+class       LocoCrane;
+class       Motor;
+class       OperatingRod;
+class       OverloadRelay;
+class       Pantograph;
+class       PhysToModbus;
+class       PneumoAngleCock;
+class       PneumoCombineCrane;
+class       PneumoHose;
+class       PneumoHoseEPB;
+class       PneumoRelay;
+class       PneumoShutoffValve;
+class       PneumoSplitter;
+class       PressureRegulator;
+class       ProtectiveDevice;
+class       PulseConverter;
+class       PuskRez;
+class       Registrator;
+class       Reservoir;
+class       SL2M;
+class       SafetyDevice;
+class       SandingSystem;
+class       SwitchingValve;
+class       SpeedMap;
+class       StepSwitch;
+class       TrainHorn;
 
 /*!
  * \class
@@ -56,7 +86,7 @@ public:
     ~CHS2T();
 
     /// Инициализация тормозных приборов
-    void initBrakeDevices(double p0, double pBP, double pFL) override;
+    virtual void initBrakeDevices(double p0, double pBP, double pFL) override;
 
 private:
 

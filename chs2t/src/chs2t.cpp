@@ -12,9 +12,17 @@
 //------------------------------------------------------------------------------
 
 #include    "chs2t.h"
+
 #include    "chs2t-signals.h"
+#include    "convert-physics-to-modbus.h"
+
+#include    <brake-crane.h>
+#include    <brake-mech.h>
+#include    <reservoir.h>
 
 #include    "filesystem.h"
+
+#include    <core/get_module.h>
 
 //------------------------------------------------------------------------------
 // Конструктор
@@ -154,7 +162,7 @@ void CHS2T::step(const double& t, const double& dt)
 
     registrate(t, dt);
 
-    autoStartTimer->step(t, dt);    
+    autoStartTimer->step(t, dt);
 
     pantCtrlTimer->step(t, dt);
 }
@@ -192,4 +200,4 @@ void CHS2T::hardwareOutput()
     feedback_signals.analogSignal[4].cur_value = TC_manometer->getModbus(brake_mech[0]->getBCpressure());
 }
 
-GET_VEHICLE(CHS2T)
+GET_MODULE(CHS2T)

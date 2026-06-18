@@ -1,5 +1,16 @@
 #include    "chs2t.h"
 
+#include    <airdistributor.h>
+#include    <automatic-train-stop.h>
+#include    <brake-crane.h>
+#include    <electro-airdistributor.h>
+#include    <loco-crane.h>
+#include    <pneumo-anglecock.h>
+#include    <pneumo-combine-crane.h>
+#include    <pneumo-hose.h>
+#include    <pneumo-hose-epb.h>
+#include    <reservoir.h>
+
 #include    "filesystem.h"
 
 //------------------------------------------------------------------------

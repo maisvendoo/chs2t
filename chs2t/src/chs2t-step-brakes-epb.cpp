@@ -1,5 +1,14 @@
 #include    "chs2t.h"
 
+#include    "handle-edt.h"
+
+#include    <brake-crane.h>
+#include    <electro-airdistributor.h>
+#include    <epb-2line-control.h>
+#include    <epb-converter.h>
+#include    <pneumo-hose-epb.h>
+#include    <reservoir.h>
+
 //------------------------------------------------------------------------
 //
 //------------------------------------------------------------------------

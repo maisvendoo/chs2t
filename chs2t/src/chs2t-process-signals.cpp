@@ -1,6 +1,29 @@
 #include    "chs2t.h"
 
+#include    "alsn-ukbm.h"
+#include    "blinds.h"
+#include    "generator.h"
+#include    "handle-edt.h"
+#include    "motor.h"
 #include    "chs2t-signals.h"
+#include    "sl2m.h"
+#include    "stepswitch.h"
+
+#include    <automatic-train-stop.h>
+#include    <brake-crane.h>
+#include    <brake-mech.h>
+#include    <epb-2line-control.h>
+#include    <epb-converter.h>
+#include    <loco-crane.h>
+#include    <motor-compressor-dc.h>
+#include    <motor-fan-dc.h>
+#include    <pantograph.h>
+#include    <pneumo-combine-crane.h>
+#include    <pneumo-shutoff-valve.h>
+#include    <protective-device.h>
+#include    <reservoir.h>
+#include    <sanding-system.h>
+#include    <train-horn.h>
 
 //------------------------------------------------------------------------------
 //
