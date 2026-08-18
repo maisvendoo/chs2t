@@ -105,23 +105,23 @@ void CHS2T::slotAutostop()
         }
     }
 
-    // Опускаем передний токоприемник
-    if (sw_panel[autostop_cab].getSwitcherPtr((autostop_cab == CAB1) ? CHS2tSwitchers::PANT_FWD : CHS2tSwitchers::PANT_BWD)->getPosition() != CHS2tSwitchers::PANT_DOWN)
+    // Опускаем передний токоприемник (переключатель "вперед")
+    if (sw_panel[autostop_cab].getSwitcherPtr(CHS2tSwitchers::PANT_FWD)->getPosition() != CHS2tSwitchers::PANT_DOWN)
     {
-        switcherController(sw_panel[autostop_cab].getSwitcherPtr((autostop_cab == CAB1) ? CHS2tSwitchers::PANT_FWD : CHS2tSwitchers::PANT_BWD), CHS2tSwitchers::PANT_DOWN);
+        switcherController(sw_panel[autostop_cab].getSwitcherPtr(CHS2tSwitchers::PANT_FWD), CHS2tSwitchers::PANT_DOWN);
         return;
     }
 
-    lock_pant_sw[PANT1] = false;
+    lock_pant_sw[(autostop_cab == CAB1) ? PANT1 : PANT2] = false;
 
-    // Опускаем задний токоприемник
-    if (sw_panel[autostop_cab].getSwitcherPtr((autostop_cab == CAB1) ? CHS2tSwitchers::PANT_BWD : CHS2tSwitchers::PANT_FWD)->getPosition() != CHS2tSwitchers::PANT_DOWN)
+    // Опускаем задний токоприемник (переключатель "назад")
+    if (sw_panel[autostop_cab].getSwitcherPtr(CHS2tSwitchers::PANT_BWD)->getPosition() != CHS2tSwitchers::PANT_DOWN)
     {
-        switcherController(sw_panel[autostop_cab].getSwitcherPtr((autostop_cab == CAB1) ? CHS2tSwitchers::PANT_BWD : CHS2tSwitchers::PANT_FWD), CHS2tSwitchers::PANT_DOWN);
+        switcherController(sw_panel[autostop_cab].getSwitcherPtr(CHS2tSwitchers::PANT_BWD), CHS2tSwitchers::PANT_DOWN);
         return;
     }
 
-    lock_pant_sw[PANT2] = false;
+    lock_pant_sw[(autostop_cab == CAB1) ? PANT2 : PANT1] = false;
 
     // Выключаем ключ панели
     if (sw_panel[autostop_cab].isKeyOn())

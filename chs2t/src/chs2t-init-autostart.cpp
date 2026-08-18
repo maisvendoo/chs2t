@@ -77,14 +77,14 @@ void CHS2T::slotAutostart()
         return;
     }
 
-    // Поднимаем задние рога
-    if (UpPantograph(PANT2, autostart_cab))
+    // Поднимаем задние рога (по ходу движения)
+    if (UpPantograph((autostart_cab == CAB1) ? PANT2 : PANT1, autostart_cab))
     {
         return;
     }
 
-    // Поднимаем передние рога
-    if (UpPantograph(PANT1, autostart_cab))
+    // Поднимаем передние рога (по ходу движения)
+    if (UpPantograph((autostart_cab == CAB1) ? PANT1 : PANT2, autostart_cab))
     {
         return;
     }
