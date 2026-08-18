@@ -533,11 +533,17 @@ private:
 
     Timer *autoStartTimer = new Timer(0.5, false);
 
+    Timer *autoStopTimer = new Timer(0.5, false);
+
     size_t autostart_cab = 0;
+
+    size_t autostop_cab = 0;
 
     bool lock_pant_sw[CABS_NUM] = {false, false};
 
     bool initAutostartProgram(int cab_autostart_request);
+
+    bool initAutostopProgram(int cab_autostop_request);
 
     void switcherController(SwitcherControl *sw, uint16_t ref_pos);
 
@@ -572,6 +578,8 @@ private:
 private slots:
 
     void slotAutostart();
+
+    void slotAutostop();
 
     void slotInitTrainForAutopilot();
 
