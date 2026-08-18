@@ -21,8 +21,8 @@ void CHS2T::keyProcess(const simulator_time_t& t, const double& dt)
     km21KR2[CAB2].allowReversHandle(!(km21KR2[CAB1].isReversHandle()));
     km21KR2[CAB1].allowReversHandle(!(km21KR2[CAB2].isReversHandle()));
 
-    // Автозапуск
-    if (autoStartTimer->isStarted())
+    // Автозапуск и автовыключение
+    if (autoStartTimer->isStarted() || autoStopTimer->isStarted())
     {
         return;
     }
@@ -36,6 +36,19 @@ void CHS2T::keyProcess(const simulator_time_t& t, const double& dt)
     if (getKeyState(KEY_R, CAB2) && isAlt(CAB2) && initAutostartProgram(CAB2))
     {
         autoStartTimer->start();
+        return;
+    }
+
+    // Автовыключение
+    if (getKeyState(KEY_T, CAB1) && isAlt(CAB1) && initAutostopProgram(CAB1))
+    {
+        autoStopTimer->start();
+        return;
+    }
+
+    if (getKeyState(KEY_T, CAB2) && isAlt(CAB2) && initAutostopProgram(CAB2))
+    {
+        autoStopTimer->start();
         return;
     }
 
