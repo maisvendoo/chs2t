@@ -175,9 +175,16 @@ void CHS2T::slotAutostart()
 //------------------------------------------------------------------------------
 bool CHS2T::UpPantograph(int pant_idx, int cab_idx)
 {
-    int sw_idx = CHS2tSwitchers::PANT_BWD;
+    int sw_idx = CHS2tSwitchers::PANT_FWD;
 
-    pant_idx == PANT1 ? sw_idx = CHS2tSwitchers::PANT_FWD : sw_idx = CHS2tSwitchers::PANT_BWD;
+    if (pant_idx == PANT1)
+    {
+        sw_idx = (cab_idx == CAB1) ? CHS2tSwitchers::PANT_FWD : CHS2tSwitchers::PANT_BWD;
+    }
+    else
+    {
+        sw_idx = (cab_idx == CAB1) ? CHS2tSwitchers::PANT_BWD : CHS2tSwitchers::PANT_FWD;
+    }
 
     if (!pantographs[pant_idx]->isUp())
     {
@@ -203,9 +210,16 @@ bool CHS2T::UpPantograph(int pant_idx, int cab_idx)
 //------------------------------------------------------------------------------
 bool CHS2T::DownPantograph(int pant_idx, int cab_idx)
 {
-    int sw_idx = CHS2tSwitchers::PANT_BWD;
+    int sw_idx = CHS2tSwitchers::PANT_FWD;
 
-    pant_idx == PANT1 ? sw_idx = CHS2tSwitchers::PANT_FWD : sw_idx = CHS2tSwitchers::PANT_BWD;
+    if (pant_idx == PANT1)
+    {
+        sw_idx = (cab_idx == CAB1) ? CHS2tSwitchers::PANT_FWD : CHS2tSwitchers::PANT_BWD;
+    }
+    else
+    {
+        sw_idx = (cab_idx == CAB1) ? CHS2tSwitchers::PANT_BWD : CHS2tSwitchers::PANT_FWD;
+    }
 
     if (!pantographs[pant_idx]->isDown())
     {
