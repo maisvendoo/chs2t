@@ -47,3 +47,96 @@ bool CHS2T::initAutostopProgram(int cab_autostop_request)
 
     return true;
 }
+
+//------------------------------------------------------------------------------
+//
+//------------------------------------------------------------------------------
+void CHS2T::slotAutostop()
+{
+    // Возвращаем реверс в нейтраль
+    if (km21KR2[autostop_cab].isReversHandle() && km21KR2[autostop_cab].getReversHandlePos() != 0)
+    {
+        km21KR2[autostop_cab].setReversHandlePos(0);
+        return;
+    }
+
+    // Выключаем ЭПК
+    if (epk[autostop_cab]->isKeyOn())
+    {
+        epk[autostop_cab]->setKeyOn(false);
+        return;
+    }
+
+    // Жалюзи - открыто
+    if (sw_panel[autostop_cab].getSwitcherPtr(CHS2tSwitchers::BLINDS)->getPosition() != CHS2tSwitchers::BLINDS_OPEN)
+    {
+        switcherController(sw_panel[autostop_cab].getSwitcherPtr(CHS2tSwitchers::BLINDS), CHS2tSwitchers::BLINDS_OPEN);
+        return;
+    }
+
+    // Выключаем мотор-вентиляторы
+    if (sw_panel[autostop_cab].getSwitcherPtr(CHS2tSwitchers::FANS)->getPosition() != CHS2tSwitchers::FANS_OFF)
+    {
+        switcherController(sw_panel[autostop_cab].getSwitcherPtr(CHS2tSwitchers::FANS), CHS2tSwitchers::FANS_OFF);
+        return;
+    }
+
+    // Выключаем компрессор 2
+    if (sw_panel[autostop_cab].getSwitcherPtr(CHS2tSwitchers::COMPR_2)->getPosition() != CHS2tSwitchers::COMPR_OFF)
+    {
+        switcherController(sw_panel[autostop_cab].getSwitcherPtr(CHS2tSwitchers::COMPR_2), CHS2tSwitchers::COMPR_OFF);
+        return;
+    }
+
+    // Выключаем компрессор 1
+    if (sw_panel[autostop_cab].getSwitcherPtr(CHS2tSwitchers::COMPR_1)->getPosition() != CHS2tSwitchers::COMPR_OFF)
+    {
+        switcherController(sw_panel[autostop_cab].getSwitcherPtr(CHS2tSwitchers::COMPR_1), CHS2tSwitchers::COMPR_OFF);
+        return;
+    }
+
+    // Выключаем БВ: переключатели ГВ обеих кабин в положение OFF
+    for (auto cab_idx : {CAB1, CAB2})
+    {
+        if (sw_panel[cab_idx].getSwitcherPtr(CHS2tSwitchers::FAST_SW)->getPosition() != CHS2tSwitchers::FAST_SW_OFF)
+        {
+            switcherController(sw_panel[cab_idx].getSwitcherPtr(CHS2tSwitchers::FAST_SW), CHS2tSwitchers::FAST_SW_OFF);
+            return;
+        }
+    }
+
+    // Опускаем передний токоприемник
+    if (sw_panel[autostop_cab].getSwitcherPtr(CHS2tSwitchers::PANT_FWD)->getPosition() != CHS2tSwitchers::PANT_DOWN)
+    {
+        switcherController(sw_panel[autostop_cab].getSwitcherPtr(CHS2tSwitchers::PANT_FWD), CHS2tSwitchers::PANT_DOWN);
+        return;
+    }
+
+    lock_pant_sw[PANT1] = false;
+
+    // Опускаем задний токоприемник
+    if (sw_panel[autostop_cab].getSwitcherPtr(CHS2tSwitchers::PANT_BWD)->getPosition() != CHS2tSwitchers::PANT_DOWN)
+    {
+        switcherController(sw_panel[autostop_cab].getSwitcherPtr(CHS2tSwitchers::PANT_BWD), CHS2tSwitchers::PANT_DOWN);
+        return;
+    }
+
+    lock_pant_sw[PANT2] = false;
+
+    // Выключаем ключ панели
+    if (sw_panel[autostop_cab].isKeyOn())
+    {
+        sw_panel[autostop_cab].setKeyOn(false);
+        return;
+    }
+
+    // Возвращаем управление клавиатуре
+    sw_panel[CAB1].setControl(&pressed_keys_by_cabine[CAB1]);
+    sw_panel[CAB2].setControl(&pressed_keys_by_cabine[CAB2]);
+    km21KR2[CAB1].setControl(&pressed_keys_by_cabine[CAB1]);
+    km21KR2[CAB2].setControl(&pressed_keys_by_cabine[CAB2]);
+    epk[CAB1]->setControl(&pressed_keys_by_cabine[CAB1]);
+    epk[CAB2]->setControl(&pressed_keys_by_cabine[CAB2]);
+
+    autoStopTimer->stop();
+}

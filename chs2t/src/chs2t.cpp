@@ -96,6 +96,8 @@ void CHS2T::initialization()
 
     connect(autoStartTimer, &Timer::process, this, &CHS2T::slotAutostart);
 
+    connect(autoStopTimer, &Timer::process, this, &CHS2T::slotAutostop);
+
     initAutopilot(modules_dir, custom_cfg_dir);
 }
 
