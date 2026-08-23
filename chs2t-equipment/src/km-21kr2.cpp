@@ -82,13 +82,13 @@ bool Km21KR2::isChangeReversAllowed() const
 //------------------------------------------------------------------------------
 //
 //------------------------------------------------------------------------------
-void Km21KR2::setReversHandlePos(int pos)
+void Km21KR2::setReversHandlePos(std::int8_t pos)
 {
     if (isReversHandle())
     {
         if (is_reverse_change_allowed && (getMainPos() == 0))
         {
-            pos = std::clamp(pos, -1, 1);
+            pos = std::clamp(pos, std::int8_t(-1), std::int8_t(1));
         }
         else
         {
@@ -115,7 +115,7 @@ void Km21KR2::setReversHandlePos(int pos)
 //------------------------------------------------------------------------------
 //
 //------------------------------------------------------------------------------
-int Km21KR2::getReversHandlePos() const
+std::int8_t Km21KR2::getReversHandlePos() const
 {
     return reverseState;
 }
@@ -123,11 +123,11 @@ int Km21KR2::getReversHandlePos() const
 //------------------------------------------------------------------------------
 //
 //------------------------------------------------------------------------------
-void Km21KR2::setControlPos(int pos)
+void Km21KR2::setControlPos(std::int8_t pos)
 {
     if ((reverseState != 0) && (getMainHeight() < 0.01))
     {
-        pos = std::clamp(pos, -2, 2);
+        pos = std::clamp(pos, std::int8_t(-2), std::int8_t(2));
     }
     else
     {
@@ -172,7 +172,7 @@ void Km21KR2::setControlPos(int pos)
 //------------------------------------------------------------------------------
 //
 //------------------------------------------------------------------------------
-void Km21KR2::setFieldWeakPos(int pos)
+void Km21KR2::setFieldWeakPos(std::int8_t pos)
 {
     if ((reverseState != 0) && (mainShaftPos == 0))
     {
@@ -181,7 +181,7 @@ void Km21KR2::setFieldWeakPos(int pos)
 
         if (getMainHeight() > 0.99)
         {
-            pos = std::clamp(pos, 0, 5);
+            pos = std::clamp(pos, std::int8_t(0), std::int8_t(5));
         }
         else
         {
@@ -207,7 +207,7 @@ void Km21KR2::setFieldWeakPos(int pos)
 //------------------------------------------------------------------------------
 //
 //------------------------------------------------------------------------------
-int Km21KR2::getMainPos() const
+std::int8_t Km21KR2::getMainPos() const
 {
     if (getMainHeight() < 0.01)
     {

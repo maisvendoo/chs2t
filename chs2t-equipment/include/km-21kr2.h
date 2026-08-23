@@ -32,23 +32,23 @@ public:
     /// Задать состояние электромагнитной защёлки, разрешающей переключение реверса
     void allowChangeReversPos(bool allow);
 
-    /// Задать состояние электромагнитной защёлки, разрешающей переключение реверса
+    /// Состояние электромагнитной защёлки, разрешающей переключение реверса
     bool isChangeReversAllowed() const;
 
     /// Задать положение реверсивной рукоятки (-1, 0, 1)
-    void setReversHandlePos(int pos);
+    void setReversHandlePos(std::int8_t pos);
 
     /// Положение реверсивной рукоятки
-    int getReversHandlePos() const;
+    std::int8_t getReversHandlePos() const;
 
     /// Задать положение контроллера для управления тяговыми позициями (-2, -1, 0, 1, 2)
-    void setControlPos(int pos);
+    void setControlPos(std::int8_t pos);
 
     /// Задать положение контроллера для управления ослаблением поля (0, 1, 2, 3, 4, 5)
-    void setFieldWeakPos(int pos);
+    void setFieldWeakPos(std::int8_t pos);
 
     /// Положение контроллера (-2 .. 2 или 0 .. 5)
-    int getMainPos() const;
+    std::int8_t getMainPos() const;
 
     /// Вдавленное состояние контроллера (0.0 .. 1.0)
     double getMainHeight() const;
@@ -102,25 +102,25 @@ private:
     bool old_key_state_fwd_or_bwd = false;
     bool old_key_state_inc_or_dec = false;
 
+    /// Положение реверсивной рукоятки
+    std::int8_t reverseState = 0;
+
+    /// Положение командного вала
+    std::int8_t mainShaftPos = 0;
+
+    /// Положение вала ослабления поля
+    std::int8_t fieldWeakShaft = 0;
+
     /// Состояние всех контактов
     ControllerState controlState;
 
-    /// Положение реверсивной рукоятки
-    int reverseState = 0;
-
-    /// Положение командного вала
-    int mainShaftPos = 0;
-
-    /// Положение вала ослабления поля
-    int fieldWeakShaft = 0;
+    bool lock_manual_control = false;
 
     /// Признак реверсивной рукоятки
     Trigger is_revers_handle;
 
     /// Счётчик и состояние звуков
     std::array <sound_state_t, NUM_SOUNDS> sounds;
-
-    bool lock_manual_control = false;
 };
 
 #endif // KM21KR2_H
