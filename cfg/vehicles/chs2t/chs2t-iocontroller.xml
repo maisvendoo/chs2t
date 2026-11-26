@@ -176,8 +176,8 @@
 		<Name>Освещение кабины и приборов</Name>
 		<Description>Переключение освещения кабины и приборов</Description>
 		<Type>Switcher</Type>
-		<value1>0</value1>
-		<value2>0</value2>
+		<value1>2</value1>
+		<value2>2</value2>
 		<KeyNameInc>KEY_K</KeyNameInc>
 		<KeyModIncName>Shift</KeyModIncName>
 		<KeyNameDec>KEY_K</KeyNameDec>
@@ -196,8 +196,8 @@
 		<Name>Буферный фонарь левый</Name>
 		<Description>Переключение левого буферного фонаря</Description>
 		<Type>Switcher</Type>
-		<value1>0</value1>
-		<value2>0</value2>
+		<value1>1</value1>
+		<value2>1</value2>
 		<KeyNameInc>KEY_G</KeyNameInc>
 		<KeyModIncName>Shift</KeyModIncName>
 		<KeyNameDec>KEY_G</KeyNameDec>
@@ -216,8 +216,8 @@
 		<Name>Буферный фонарь правый</Name>
 		<Description>Переключение правого буферного фонаря</Description>
 		<Type>Switcher</Type>
-		<value1>0</value1>
-		<value2>0</value2>
+		<value1>1</value1>
+		<value2>1</value2>
 		<KeyNameInc>KEY_J</KeyNameInc>
 		<KeyModIncName>Shift</KeyModIncName>
 		<KeyNameDec>KEY_J</KeyNameDec>
@@ -268,6 +268,36 @@
 		<PositionsNames>Выкл.,Вкл.</PositionsNames>
 		<ObjectNameCab1>Cab1_sw_EDT</ObjectNameCab1>
 		<ObjectNameCab2>Cab2_sw_EDT</ObjectNameCab2>
+	</Control>
+
+	<!-- ================= КЛЮЧ БЛОКИРОВКИ ПУЛЬТА ================= -->
+
+	<!-- Поворот ключа панели -->
+	<Control>
+		<ID>317</ID>
+		<Name>Ключ панели: поворот</Name>
+		<Description>Включение/выключение ключа панели переключателей</Description>
+		<Type>Toggle</Type>
+		<value1>0.0</value1>
+		<value2>0.0</value2>
+		<KeyName>KEY_Y</KeyName>
+		<KeyModOnName>Shift</KeyModOnName>
+		<KeyModOffName>Ctrl</KeyModOffName>
+		<ObjectNameCab1>Cab1_Switchers_key</ObjectNameCab1>
+		<ObjectNameCab2>Cab2_Switchers_key</ObjectNameCab2>
+	</Control>
+
+	<!-- Снятие/установка ключа панели (объект не задан, будет указан позже) -->
+	<Control>
+		<ID>318</ID>
+		<Name>Ключ панели: снятие/установка</Name>
+		<Description>Снять/установить ключ панели переключателей</Description>
+		<Type>Toggle</Type>
+		<value1>0.0</value1>
+		<value2>0.0</value2>
+		<KeyName>KEY_Y</KeyName>
+		<KeyModOnName>Alt</KeyModOnName>
+		<KeyModOffName>Alt</KeyModOffName>
 	</Control>
 
 	<!-- ================= КРАНЫ ================= -->

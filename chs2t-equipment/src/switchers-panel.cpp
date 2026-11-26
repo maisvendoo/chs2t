@@ -26,6 +26,10 @@ namespace
         311, // SPOTLIGHT
         312, // EDT
     };
+
+    // ID контроллов ключа блокировки пульта
+    constexpr uint16_t panel_key_turn_id     = 317;
+    constexpr uint16_t panel_key_presence_id = 318;
 }
 
 //------------------------------------------------------------------------------
@@ -227,7 +231,28 @@ void CHS2tSwitchers::ode_system(const state_vector_t &Y,
 //------------------------------------------------------------------------------
 void CHS2tSwitchers::step(double t, double dt)
 {
-    if (pressed_keys && getKeyState(*pressed_keys, key_symbol))
+    // Управление ключом панели из IOController
+    bool key_io = false;
+
+    if (iocontrols)
+    {
+        // Поворот ключа
+        if (iocontrols->contains(iocontrol_cab, panel_key_turn_id))
+        {
+            setKeyOn(iocontrols->getBool(iocontrol_cab, panel_key_turn_id));
+            key_io = true;
+        }
+
+        // Снятие/установка ключа
+        if (iocontrols->contains(iocontrol_cab, panel_key_presence_id))
+        {
+            insertKey(iocontrols->getBool(iocontrol_cab, panel_key_presence_id));
+            key_io = true;
+        }
+    }
+
+    // Клавиатурное управление ключом (запасной путь)
+    if (!key_io && pressed_keys && getKeyState(*pressed_keys, key_symbol))
     {
         // Управляем новым нажатием на клавишу
         if (!prev_key)
