@@ -575,6 +575,15 @@ private:
 
     TriggerControl shunting_mode_switcher[CABS_NUM];
 
+    /// Идентификаторы контролов IOController, читаемых в коде электровоза
+    enum
+    {
+        IO_CRANE_395 = 313,
+        IO_CRANE_254 = 314,
+        IO_AUTOSTART = 315,
+        IO_AUTOSTOP  = 316
+    };
+
 private slots:
 
     void slotAutostart();

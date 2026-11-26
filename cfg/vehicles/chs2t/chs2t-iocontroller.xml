@@ -270,4 +270,72 @@
 		<ObjectNameCab2>Cab2_sw_EDT</ObjectNameCab2>
 	</Control>
 
+	<!-- ================= КРАНЫ ================= -->
+
+	<!-- Кран машиниста 395 -->
+	<Control>
+		<ID>313</ID>
+		<Name>Кран машиниста усл.395</Name>
+		<Description>Рукоятка поездного крана</Description>
+		<Type>Switcher</Type>
+		<value1>0</value1>
+		<value2>0</value2>
+		<NumPositions>7</NumPositions>
+		<MinValue>0</MinValue>
+		<MaxValue>6</MaxValue>
+		<KeyNameInc>KEY_Quote</KeyNameInc>
+		<KeyNameDec>KEY_Semicolon</KeyNameDec>
+		<IncButtonName>RIGHT_BUTTON</IncButtonName>
+		<DecButtonName>LEFT_BUTTON</DecButtonName>
+		<PositionsNames>I,II,III,IV,IVa,IV,VI,</PositionsNames>
+		<ObjectNameCab1>Cab1_Kran395-ruk</ObjectNameCab1>
+		<ObjectNameCab2>Cab2_Kran395-ruk</ObjectNameCab2>
+	</Control>
+
+	<!-- Кран вспомогательного тормоза 254 -->
+	<Control>
+		<ID>314</ID>
+		<Name>Кран вспомогательного тормоза усл.254</Name>
+		<Description>Рукоятка крана вспомогательного тормоза</Description>
+		<Type>Axis</Type>
+		<MinValue>-0.03</MinValue>
+		<MaxValue>1.0</MaxValue>
+		<Speed>1.0</Speed>
+		<value1>1.0</value1>
+		<value2>1.0</value2>
+		<KeyNameInc>KEY_Rightbracket</KeyNameInc>
+		<KeyNameDec>KEY_Leftbracket</KeyNameDec>
+		<IncButtonName>RIGHT_BUTTON</IncButtonName>
+		<DecButtonName>LEFT_BUTTON</DecButtonName>
+		<SpringReturnLow>0.0</SpringReturnLow>
+		<ObjectNameCab1>Cab1_Kran254-ruk</ObjectNameCab1>
+		<ObjectNameCab2>Cab2_Kran254-ruk</ObjectNameCab2>
+	</Control>
+
+	<!-- ================= АВТОЗАПУСК / АВТОВЫКЛЮЧЕНИЕ (общие) ================= -->
+
+	<!-- Автозапуск -->
+	<Control>
+		<ID>315</ID>
+		<Name>Автозапуск</Name>
+		<Description>Запуск программы автоматической подготовки</Description>
+		<Type>Button</Type>
+		<value1>0.0</value1>
+		<value2>0.0</value2>
+		<KeyName>KEY_R</KeyName>
+		<KeyModOnName>Alt</KeyModOnName>
+	</Control>
+
+	<!-- Автовыключение -->
+	<Control>
+		<ID>316</ID>
+		<Name>Автовыключение</Name>
+		<Description>Запуск программы автоматического выключения</Description>
+		<Type>Button</Type>
+		<value1>0.0</value1>
+		<value2>0.0</value2>
+		<KeyName>KEY_T</KeyName>
+		<KeyModOnName>Alt</KeyModOnName>
+	</Control>
+
 </Config>

@@ -4,6 +4,8 @@
 #include    <brake-crane.h>
 #include    <loco-crane.h>
 
+#include    <cmath>
+
 //------------------------------------------------------------------------------
 //
 //------------------------------------------------------------------------------
@@ -27,26 +29,18 @@ void CHS2T::keyProcess(const simulator_time_t& t, const double& dt)
         return;
     }
 
-    if (getKeyState(KEY_R, CAB1) && isAlt(CAB1) && initAutostartProgram(CAB1))
-    {
-        autoStartTimer->start();
-        return;
-    }
+    // Активная кабина (там, где вставлена реверсивная рукоятка)
+    int active_cab = (km21KR2[CAB2].isReversHandle()) ? CAB2 : CAB1;
 
-    if (getKeyState(KEY_R, CAB2) && isAlt(CAB2) && initAutostartProgram(CAB2))
+    // Автозапуск
+    if (vc_inputs.getBool(active_cab, IO_AUTOSTART) && initAutostartProgram(active_cab))
     {
         autoStartTimer->start();
         return;
     }
 
     // Автовыключение
-    if (getKeyState(KEY_T, CAB1) && isAlt(CAB1) && initAutostopProgram(CAB1))
-    {
-        autoStopTimer->start();
-        return;
-    }
-
-    if (getKeyState(KEY_T, CAB2) && isAlt(CAB2) && initAutostopProgram(CAB2))
+    if (vc_inputs.getBool(active_cab, IO_AUTOSTOP) && initAutostopProgram(active_cab))
     {
         autoStopTimer->start();
         return;
@@ -55,9 +49,12 @@ void CHS2T::keyProcess(const simulator_time_t& t, const double& dt)
     for (size_t cab_idx : {CAB1, CAB2})
     {
         // Управляем краном, учитывая возможное наличие внешнего пульта
-        // TODO // перенести freejoy во вьювер, его команды передавать по сети,
-        // TODO // и также указывая индекс кабины
-        if (control_signals.analogSignal[CS_BRAKE_CRANE].is_active)
+        if (vc_inputs.contains(cab_idx, IO_CRANE_395))
+        {
+            int brake_crane_pos = static_cast<int>(std::lround(vc_inputs.getValue(cab_idx, IO_CRANE_395)));
+            brake_crane[cab_idx]->setHandlePosition(brake_crane_pos);
+        }
+        else if (control_signals.analogSignal[CS_BRAKE_CRANE].is_active)
         {
             int brake_crane_pos = static_cast<int>(control_signals.analogSignal[CS_BRAKE_CRANE].cur_value);
             brake_crane[cab_idx]->setHandlePosition(brake_crane_pos);
@@ -68,9 +65,13 @@ void CHS2T::keyProcess(const simulator_time_t& t, const double& dt)
         }
 
         // Управляем краном, учитывая возможное наличие внешнего пульта
-        // TODO // перенести freejoy во вьювер, его команды передавать по сети,
-        // TODO // и также указывая индекс кабины
-        if (control_signals.analogSignal[CS_LOCO_CRANE].is_active)
+        if (vc_inputs.contains(cab_idx, IO_CRANE_254))
+        {
+            double pos = vc_inputs.getValue(cab_idx, IO_CRANE_254);
+            loco_crane[cab_idx]->release(false);
+            loco_crane[cab_idx]->setHandlePosition(pos);
+        }
+        else if (control_signals.analogSignal[CS_LOCO_CRANE].is_active)
         {
             double pos = 0.0;
 
