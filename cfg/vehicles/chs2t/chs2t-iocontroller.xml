@@ -275,19 +275,25 @@
 	<!-- Кран машиниста 395 -->
 	<Control>
 		<ID>313</ID>
-		<Name>Кран машиниста усл.395</Name>
-		<Description>Рукоятка поездного крана</Description>
+		<Name>Поездной кран машиниста 395</Name>
+		<Description>Рукоятка крана. Управление тормозами поезда</Description>
 		<Type>Switcher</Type>
-		<value1>0</value1>
-		<value2>0</value2>
+		<value1>1</value1>
+		<value2>6</value2>
 		<NumPositions>7</NumPositions>
 		<MinValue>0</MinValue>
 		<MaxValue>6</MaxValue>
-		<KeyNameInc>KEY_Quote</KeyNameInc>
 		<KeyNameDec>KEY_Semicolon</KeyNameDec>
+		<KeyNameInc>KEY_Quote</KeyNameInc>
+		<PositionsNames>I,II,III,IV,IVa,IV,VI,</PositionsNames>
+
 		<IncButtonName>RIGHT_BUTTON</IncButtonName>
 		<DecButtonName>LEFT_BUTTON</DecButtonName>
-		<PositionsNames>I,II,III,IV,IVa,IV,VI,</PositionsNames>
+
+		<!-- Установки заданной позиции по комбинации -->
+		<PositionModkey>Alt</PositionModkey>
+		<PositionKeys>(KEY_1;0),(KEY_2;1),(KEY_3;2),(KEY_4;3),(KEY_5;4),(KEY_6;5),(KEY_7;6)</PositionKeys>
+
 		<ObjectNameCab1>Cab1_Kran395-ruk</ObjectNameCab1>
 		<ObjectNameCab2>Cab2_Kran395-ruk</ObjectNameCab2>
 	</Control>
