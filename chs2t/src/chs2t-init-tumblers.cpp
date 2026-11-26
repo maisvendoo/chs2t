@@ -171,4 +171,7 @@ void CHS2T::initControl(const QString &modules_dir, const QString &custom_cfg_di
         shunting_mode_switcher[cab_idx].setKeyModifierOff(MODIFIER_OnlyControl);
         shunting_mode_switcher[cab_idx].setControl(&pressed_keys_by_cabine[cab_idx]);
     }
+
+    // Первоначально ключ панели переключателей вставлен в первой кабине
+    sw_panel[CAB1].insertKey(true);
 }
