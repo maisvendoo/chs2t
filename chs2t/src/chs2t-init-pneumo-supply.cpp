@@ -39,10 +39,10 @@ void CHS2T::initPneumoSupply(const QString& modules_dir, const QString& custom_c
 
     // Рукава питательной магистрали
     hose_fl_fwd = new PneumoHose();
-    hose_fl_fwd->read_config("pneumo-hose-FL");
+    hose_fl_fwd->read_config("pneumo-hose-FL", custom_cfg_dir);
     forward_connectors.push_back(hose_fl_fwd);
 
     hose_fl_bwd = new PneumoHose();
-    hose_fl_bwd->read_config("pneumo-hose-FL");
+    hose_fl_bwd->read_config("pneumo-hose-FL", custom_cfg_dir);
     backward_connectors.push_back(hose_fl_bwd);
 }
