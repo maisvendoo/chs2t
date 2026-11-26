@@ -101,6 +101,17 @@ void CHS2T::keyProcess(const simulator_time_t& t, const double& dt)
         button_loco_release[cab_idx].step();
         button_sbros_cpc[cab_idx].step();
 
+        // Ключ ЭПК
+        if (vc_inputs.contains(cab_idx, IO_EPK_KEY_TURN))
+        {
+            epk[cab_idx]->setKeyOn(vc_inputs.getBool(cab_idx, IO_EPK_KEY_TURN));
+        }
+
+        if (vc_inputs.contains(cab_idx, IO_EPK_KEY_PRESENCE))
+        {
+            epk[cab_idx]->insertKey(vc_inputs.getBool(cab_idx, IO_EPK_KEY_PRESENCE));
+        }
+
         // Нажатие РБС
         // Если активна РБС на внешнем пульте
         // TODO // перенести freejoy во вьювер, его команды передавать по сети,

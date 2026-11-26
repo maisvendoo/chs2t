@@ -1,5 +1,16 @@
 #include "km-21kr2.h"
 
+#include <cmath>
+#include <vehicle-control-signals-container.h>
+
+//------------------------------------------------------------------------------
+//  ID контроллов IOController реверсивной рукоятки
+//------------------------------------------------------------------------------
+namespace
+{
+    constexpr uint16_t km_reverser_pos_id      = 320;
+    constexpr uint16_t km_reverser_presence_id = 321;
+}
 
 
 //------------------------------------------------------------------------------
@@ -8,6 +19,15 @@
 Km21KR2::Km21KR2(QObject* parent) : Device(parent)
 {
     y.resize(1);
+}
+
+//------------------------------------------------------------------------------
+//
+//------------------------------------------------------------------------------
+void Km21KR2::setIOControl(const VehiclesControlSignalsContainer *inputs, size_t cab_idx)
+{
+    iocontrols = inputs;
+    iocontrol_cab = cab_idx;
 }
 
 //------------------------------------------------------------------------------
@@ -277,6 +297,24 @@ void Km21KR2::stepKeysControl(double t, double dt)
     (void) t;
     (void) dt;
 
+    // Управление реверсивной рукояткой из IOController
+    bool reverser_io = false;
+
+    if (iocontrols)
+    {
+        if (iocontrols->contains(iocontrol_cab, km_reverser_presence_id))
+        {
+            insertReversHandle(iocontrols->getBool(iocontrol_cab, km_reverser_presence_id));
+            reverser_io = true;
+        }
+
+        if (iocontrols->contains(iocontrol_cab, km_reverser_pos_id))
+        {
+            setReversHandlePos(static_cast<std::int8_t>(std::lround(iocontrols->getValue(iocontrol_cab, km_reverser_pos_id))));
+            reverser_io = true;
+        }
+    }
+
     controlState.k01 = (reverseState == 1);
     controlState.k02 = (reverseState == -1);
 
@@ -315,7 +353,7 @@ void Km21KR2::stepKeysControl(double t, double dt)
     bool isShift = isModifier(*pressed_keys, MODIFIER_OnlyShift);
     bool isControl = isModifier(*pressed_keys, MODIFIER_OnlyControl);
 
-    if (key_fwd)
+    if (!reverser_io && key_fwd)
     {
         if (isShift)
         {
@@ -345,7 +383,7 @@ void Km21KR2::stepKeysControl(double t, double dt)
         return;
     }
 
-    if (key_bwd)
+    if (!reverser_io && key_bwd)
     {
         if (isControl)
         {

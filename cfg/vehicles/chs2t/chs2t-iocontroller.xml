@@ -300,6 +300,70 @@
 		<KeyModOffName>Alt</KeyModOffName>
 	</Control>
 
+	<!-- ================= РЕВЕРСИВНАЯ РУКОЯТКА И КЛЮЧ ЭПК ================= -->
+
+	<!-- Реверсивная рукоятка: положение -->
+	<Control>
+		<ID>320</ID>
+		<Name>Реверсивная рукоятка: положение</Name>
+		<Description>Положение реверсивной рукоятки: Назад/0/Вперёд</Description>
+		<Type>Switcher</Type>
+		<value1>0</value1>
+		<value2>0</value2>
+		<NumPositions>3</NumPositions>
+		<MinValue>-1</MinValue>
+		<MaxValue>1</MaxValue>
+		<KeyNameInc>KEY_W</KeyNameInc>
+		<KeyNameDec>KEY_S</KeyNameDec>
+		<ResetKey>KEY_S</ResetKey>
+		<ResetModkey>Ctrl</ResetModkey>
+		<PositionForReset>0</PositionForReset>
+		<PositionsNames>Назад,0,Вперёд</PositionsNames>
+		<ObjectNameCab1>Cab1_Reversor</ObjectNameCab1>
+		<ObjectNameCab2>Cab2_Reversor</ObjectNameCab2>
+	</Control>
+
+	<!-- Реверсивная рукоятка: снятие/установка (объект не задан) -->
+	<Control>
+		<ID>321</ID>
+		<Name>Реверсивная рукоятка: снятие/установка</Name>
+		<Description>Снять/установить реверсивную рукоятку</Description>
+		<Type>Toggle</Type>
+		<value1>0.0</value1>
+		<value2>0.0</value2>
+		<KeyName>KEY_W</KeyName>
+		<KeyModOnName>Shift</KeyModOnName>
+		<KeyModOffName>Ctrl</KeyModOffName>
+	</Control>
+
+	<!-- Ключ ЭПК: поворот -->
+	<Control>
+		<ID>322</ID>
+		<Name>Ключ ЭПК: поворот</Name>
+		<Description>Включение/выключение ключа ЭПК</Description>
+		<Type>Toggle</Type>
+		<value1>0.0</value1>
+		<value2>0.0</value2>
+		<KeyName>KEY_N</KeyName>
+		<KeyModOnName>Shift</KeyModOnName>
+		<KeyModOffName>Ctrl</KeyModOffName>
+		<ObjectNameCab1>Cab1_EPK_key</ObjectNameCab1>
+		<ObjectNameCab2>Cab2_EPK_key</ObjectNameCab2>
+	</Control>
+
+	<!-- Ключ ЭПК: снятие/установка (объект не задан) -->
+	<Control>
+		<ID>323</ID>
+		<Name>Ключ ЭПК: снятие/установка</Name>
+		<Description>Снять/установить ключ ЭПК</Description>
+		<Type>Toggle</Type>
+		<value1>0.0</value1>
+		<value2>0.0</value2>
+		<KeyName>KEY_N</KeyName>
+		<KeyModOnName>Alt</KeyModOnName>
+		<KeyModOffName>Alt</KeyModOffName>
+	</Control>
+
 	<!-- ================= КРАНЫ ================= -->
 
 	<!-- Кран машиниста 395 -->

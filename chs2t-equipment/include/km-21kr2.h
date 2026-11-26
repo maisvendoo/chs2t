@@ -5,6 +5,8 @@
 #include "km-21kr2-state.h"
 #include  "hardware-signals.h"
 
+class       VehiclesControlSignalsContainer;
+
 //------------------------------------------------------------------------------
 //
 //------------------------------------------------------------------------------
@@ -79,6 +81,9 @@ public:
         lock_manual_control = lock;
     }
 
+    /// Задать источник сигналов IOController и индекс кабины
+    void setIOControl(const VehiclesControlSignalsContainer *inputs, size_t cab_idx);
+
 private:
 
     void ode_system(const state_vector_t &Y, state_vector_t &dYdt, double t);
@@ -115,6 +120,12 @@ private:
     ControllerState controlState;
 
     bool lock_manual_control = false;
+
+    /// Источник сигналов IOController
+    const VehiclesControlSignalsContainer *iocontrols = nullptr;
+
+    /// Индекс кабины
+    size_t iocontrol_cab = 0;
 
     /// Признак реверсивной рукоятки
     Trigger is_revers_handle;

@@ -581,7 +581,9 @@ private:
         IO_CRANE_395 = 313,
         IO_CRANE_254 = 314,
         IO_AUTOSTART = 315,
-        IO_AUTOSTOP  = 316
+        IO_AUTOSTOP  = 316,
+        IO_EPK_KEY_TURN     = 322,
+        IO_EPK_KEY_PRESENCE = 323
     };
 
 private slots:
