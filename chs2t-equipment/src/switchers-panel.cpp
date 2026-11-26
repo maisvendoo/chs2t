@@ -1,6 +1,33 @@
 #include    "switchers-panel.h"
 #include    "hardware-signals.h"
 
+#include    <cmath>
+#include    <array>
+#include    <vehicle-control-signals-container.h>
+
+//------------------------------------------------------------------------------
+//  ID контроллов IOController для тумблеров панели (по порядковому индексу панели)
+//------------------------------------------------------------------------------
+namespace
+{
+    const std::array<uint16_t, 13> switcher_io_ids =
+    {
+        307, // EPB
+        303, // COMPR_1
+        300, // PANT_FWD
+        302, // FAST_SW
+        305, // FANS
+        304, // COMPR_2
+        301, // PANT_BWD
+        306, // BLINDS
+        308, // CAB_LIGHT
+        309, // BUFLIGHT_L
+        310, // BUFLIGHT_R
+        311, // SPOTLIGHT
+        312, // EDT
+    };
+}
+
 //------------------------------------------------------------------------------
 //
 //------------------------------------------------------------------------------
@@ -27,6 +54,15 @@ void CHS2tSwitchers::setControl(std::set<std::uint16_t> *keys, control_signals_t
     {
         switcher.setControl(pressed_keys);
     }
+}
+
+//------------------------------------------------------------------------------
+//
+//------------------------------------------------------------------------------
+void CHS2tSwitchers::setIOControl(const VehiclesControlSignalsContainer *inputs, size_t cab_idx)
+{
+    iocontrols = inputs;
+    iocontrol_cab = cab_idx;
 }
 
 //------------------------------------------------------------------------------
@@ -225,12 +261,29 @@ void CHS2tSwitchers::step(double t, double dt)
         prev_key = false; // Запоминаем, что клавиша отпущена
     }
 
+    // Применение позиций тумблеров из IOController;
+    // возвращает true, если позиция назначена из сигнала
+    auto applyIO = [this](std::size_t idx) -> bool
+    {
+        if (iocontrols && iocontrols->contains(iocontrol_cab, switcher_io_ids[idx]))
+        {
+            double v = iocontrols->getValue(iocontrol_cab, switcher_io_ids[idx]);
+            switchers[idx].setPosition(static_cast<std::uint16_t>(std::lround(v)));
+            return true;
+        }
+
+        return false;
+    };
+
     for (const auto& idx : locked_idx)
     {
         if (isKeyOn())
         {
             // При разблокированной панели управляем переключателями
-            switchers[idx].step(t, dt);
+            if (!applyIO(idx))
+            {
+                switchers[idx].step(t, dt);
+            }
         }
         else
         {
@@ -242,7 +295,10 @@ void CHS2tSwitchers::step(double t, double dt)
     for (const auto& idx : no_locked_idx)
     {
         // Управляем переключателями
-        switchers[idx].step(t, dt);
+        if (!applyIO(idx))
+        {
+            switchers[idx].step(t, dt);
+        }
     }
 
     if (control_signals)

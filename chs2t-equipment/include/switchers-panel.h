@@ -3,6 +3,8 @@
 
 #include    "device.h"
 
+class       VehiclesControlSignalsContainer;
+
 //------------------------------------------------------------------------------
 //
 //------------------------------------------------------------------------------
@@ -94,6 +96,9 @@ public:
     void setControl(std::set<std::uint16_t>* keys = nullptr,
                     control_signals_t* control_signals = nullptr) override;
 
+    /// Задать источник сигналов IOController и индекс кабины панели
+    void setIOControl(const VehiclesControlSignalsContainer *inputs, size_t cab_idx);
+
     void step(double t, double dt) override;
 
     /// Разрешить установить ключ (для реализации одного ключа на несколько кабин)
@@ -167,6 +172,12 @@ private:
 
     /// Переключатели
     SwitcherControl switchers[SWITCHERS_NUMBER];
+
+    /// Источник сигналов IOController
+    const VehiclesControlSignalsContainer *iocontrols = nullptr;
+
+    /// Индекс кабины панели
+    size_t iocontrol_cab = 0;
 
     void ode_system(const state_vector_t &Y, state_vector_t &dYdt, double t) override;
 

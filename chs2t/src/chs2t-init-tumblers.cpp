@@ -103,6 +103,7 @@ void CHS2T::initControl(const QString &modules_dir, const QString &custom_cfg_di
 
         // Панель переключателей
         sw_panel[cab_idx].setControl(&pressed_keys_by_cabine[cab_idx]/*, (cab_idx == CAB1) ? &control_signals : nullptr*/);
+        sw_panel[cab_idx].setIOControl(&vc_inputs, cab_idx);
 
         // Рукоятка задатчика тормозного усилия
         handleEDT[cab_idx]->setControl(&pressed_keys_by_cabine[cab_idx]/*, (cab_idx == CAB1) ? &control_signals : nullptr*/);

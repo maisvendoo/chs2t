@@ -5,4 +5,269 @@
 		<CabinesNum>2</CabinesNum>
 	</Common>
 
+	<!-- ================= ПАНЕЛЬ ТУМБЛЕРОВ (по 13 тумблеров на кабину) ================= -->
+
+	<!-- Передний токоприёмник -->
+	<Control>
+		<ID>300</ID>
+		<Name>Токоприёмник передний</Name>
+		<Description>Переключение переднего токоприёмника</Description>
+		<Type>Switcher</Type>
+		<value1>0</value1>
+		<value2>0</value2>
+		<KeyNameInc>KEY_I</KeyNameInc>
+		<KeyModIncName>Shift</KeyModIncName>
+		<KeyNameDec>KEY_I</KeyNameDec>
+		<KeyModDecName>Ctrl</KeyModDecName>
+		<NumPositions>4</NumPositions>
+		<MinValue>0</MinValue>
+		<MaxValue>3</MaxValue>
+		<SpringReturnHigh>3</SpringReturnHigh>
+		<PositionsNames>Заземл.,Опущен,Поднят,Вкл.</PositionsNames>
+		<ObjectNameCab1>Cab1_sw_Pnt1</ObjectNameCab1>
+		<ObjectNameCab2>Cab2_sw_Pnt1</ObjectNameCab2>
+	</Control>
+
+	<!-- Задний токоприёмник -->
+	<Control>
+		<ID>301</ID>
+		<Name>Токоприёмник задний</Name>
+		<Description>Переключение заднего токоприёмника</Description>
+		<Type>Switcher</Type>
+		<value1>0</value1>
+		<value2>0</value2>
+		<KeyNameInc>KEY_O</KeyNameInc>
+		<KeyModIncName>Shift</KeyModIncName>
+		<KeyNameDec>KEY_O</KeyNameDec>
+		<KeyModDecName>Ctrl</KeyModDecName>
+		<NumPositions>4</NumPositions>
+		<MinValue>0</MinValue>
+		<MaxValue>3</MaxValue>
+		<SpringReturnHigh>3</SpringReturnHigh>
+		<PositionsNames>Заземл.,Опущен,Поднят,Вкл.</PositionsNames>
+		<ObjectNameCab1>Cab1_sw_Pnt2</ObjectNameCab1>
+		<ObjectNameCab2>Cab2_sw_Pnt2</ObjectNameCab2>
+	</Control>
+
+	<!-- Быстродействующий выключатель -->
+	<Control>
+		<ID>302</ID>
+		<Name>Быстродействующий выключатель</Name>
+		<Description>Переключение БВ</Description>
+		<Type>Switcher</Type>
+		<value1>0</value1>
+		<value2>0</value2>
+		<KeyNameInc>KEY_P</KeyNameInc>
+		<KeyModIncName>Shift</KeyModIncName>
+		<KeyNameDec>KEY_P</KeyNameDec>
+		<KeyModDecName>Ctrl</KeyModDecName>
+		<NumPositions>4</NumPositions>
+		<MinValue>0</MinValue>
+		<MaxValue>3</MaxValue>
+		<SpringReturnHigh>3</SpringReturnHigh>
+		<PositionsNames>Ручн.,Выкл.,Работа,Вкл.</PositionsNames>
+		<ObjectNameCab1>Cab1_sw_BV</ObjectNameCab1>
+		<ObjectNameCab2>Cab2_sw_BV</ObjectNameCab2>
+	</Control>
+
+	<!-- Компрессор 1 -->
+	<Control>
+		<ID>303</ID>
+		<Name>Компрессор 1</Name>
+		<Description>Переключение компрессора 1</Description>
+		<Type>Switcher</Type>
+		<value1>0</value1>
+		<value2>0</value2>
+		<KeyNameInc>KEY_2</KeyNameInc>
+		<KeyModIncName>Shift</KeyModIncName>
+		<KeyNameDec>KEY_2</KeyNameDec>
+		<KeyModDecName>Ctrl</KeyModDecName>
+		<NumPositions>4</NumPositions>
+		<MinValue>0</MinValue>
+		<MaxValue>3</MaxValue>
+		<PositionsNames>Обогрев,Выкл.,Авто,Вкл.</PositionsNames>
+		<ObjectNameCab1>Cab1_sw_MK1</ObjectNameCab1>
+		<ObjectNameCab2>Cab2_sw_MK1</ObjectNameCab2>
+	</Control>
+
+	<!-- Компрессор 2 -->
+	<Control>
+		<ID>304</ID>
+		<Name>Компрессор 2</Name>
+		<Description>Переключение компрессора 2</Description>
+		<Type>Switcher</Type>
+		<value1>0</value1>
+		<value2>0</value2>
+		<KeyNameInc>KEY_3</KeyNameInc>
+		<KeyModIncName>Shift</KeyModIncName>
+		<KeyNameDec>KEY_3</KeyNameDec>
+		<KeyModDecName>Ctrl</KeyModDecName>
+		<NumPositions>4</NumPositions>
+		<MinValue>0</MinValue>
+		<MaxValue>3</MaxValue>
+		<PositionsNames>Обогрев,Выкл.,Авто,Вкл.</PositionsNames>
+		<ObjectNameCab1>Cab1_sw_MK2</ObjectNameCab1>
+		<ObjectNameCab2>Cab2_sw_MK2</ObjectNameCab2>
+	</Control>
+
+	<!-- Вентиляторы -->
+	<Control>
+		<ID>305</ID>
+		<Name>Вентиляторы</Name>
+		<Description>Переключение вентиляторов</Description>
+		<Type>Switcher</Type>
+		<value1>0</value1>
+		<value2>0</value2>
+		<KeyNameInc>KEY_1</KeyNameInc>
+		<KeyModIncName>Shift</KeyModIncName>
+		<KeyNameDec>KEY_1</KeyNameDec>
+		<KeyModDecName>Ctrl</KeyModDecName>
+		<NumPositions>3</NumPositions>
+		<MinValue>0</MinValue>
+		<MaxValue>2</MaxValue>
+		<PositionsNames>Вкл.,Выкл.,Авто</PositionsNames>
+		<ObjectNameCab1>Cab1_sw_MV</ObjectNameCab1>
+		<ObjectNameCab2>Cab2_sw_MV</ObjectNameCab2>
+	</Control>
+
+	<!-- Жалюзи и блокировки -->
+	<Control>
+		<ID>306</ID>
+		<Name>Жалюзи и блокировки</Name>
+		<Description>Переключение жалюзи и песочницы</Description>
+		<Type>Switcher</Type>
+		<value1>0</value1>
+		<value2>0</value2>
+		<KeyNameInc>KEY_4</KeyNameInc>
+		<KeyModIncName>Shift</KeyModIncName>
+		<KeyNameDec>KEY_4</KeyNameDec>
+		<KeyModDecName>Ctrl</KeyModDecName>
+		<NumPositions>5</NumPositions>
+		<MinValue>0</MinValue>
+		<MaxValue>4</MaxValue>
+		<PositionsNames>Вспом.к.,Автопесок,Открыты,Автожал.,Автож.+пес.</PositionsNames>
+		<ObjectNameCab1>Cab1_sw_VK</ObjectNameCab1>
+		<ObjectNameCab2>Cab2_sw_VK</ObjectNameCab2>
+	</Control>
+
+	<!-- ЭПТ -->
+	<Control>
+		<ID>307</ID>
+		<Name>ЭПТ</Name>
+		<Description>Переключение ЭПТ</Description>
+		<Type>Switcher</Type>
+		<value1>0</value1>
+		<value2>0</value2>
+		<KeyNameInc>KEY_V</KeyNameInc>
+		<KeyModIncName>Shift</KeyModIncName>
+		<KeyNameDec>KEY_V</KeyNameDec>
+		<KeyModDecName>Ctrl</KeyModDecName>
+		<NumPositions>2</NumPositions>
+		<MinValue>0</MinValue>
+		<MaxValue>1</MaxValue>
+		<PositionsNames>Выкл.,Вкл.</PositionsNames>
+		<ObjectNameCab1>Cab1_sw_EPT</ObjectNameCab1>
+		<ObjectNameCab2>Cab2_sw_EPT</ObjectNameCab2>
+	</Control>
+
+	<!-- Освещение кабины и приборов -->
+	<Control>
+		<ID>308</ID>
+		<Name>Освещение кабины и приборов</Name>
+		<Description>Переключение освещения кабины и приборов</Description>
+		<Type>Switcher</Type>
+		<value1>0</value1>
+		<value2>0</value2>
+		<KeyNameInc>KEY_K</KeyNameInc>
+		<KeyModIncName>Shift</KeyModIncName>
+		<KeyNameDec>KEY_K</KeyNameDec>
+		<KeyModDecName>Ctrl</KeyModDecName>
+		<NumPositions>5</NumPositions>
+		<MinValue>0</MinValue>
+		<MaxValue>4</MaxValue>
+		<PositionsNames>Приб.я.,Приб.с.,Выкл.,Каб.с.,Каб.я.</PositionsNames>
+		<ObjectNameCab1>Cab1_sw_Cab_Light</ObjectNameCab1>
+		<ObjectNameCab2>Cab2_sw_Cab_Light</ObjectNameCab2>
+	</Control>
+
+	<!-- Буферный фонарь левый -->
+	<Control>
+		<ID>309</ID>
+		<Name>Буферный фонарь левый</Name>
+		<Description>Переключение левого буферного фонаря</Description>
+		<Type>Switcher</Type>
+		<value1>0</value1>
+		<value2>0</value2>
+		<KeyNameInc>KEY_G</KeyNameInc>
+		<KeyModIncName>Shift</KeyModIncName>
+		<KeyNameDec>KEY_G</KeyNameDec>
+		<KeyModDecName>Ctrl</KeyModDecName>
+		<NumPositions>3</NumPositions>
+		<MinValue>0</MinValue>
+		<MaxValue>2</MaxValue>
+		<PositionsNames>Красн.,Выкл.,Белый</PositionsNames>
+		<ObjectNameCab1>Cab1_sw_BF_Left</ObjectNameCab1>
+		<ObjectNameCab2>Cab2_sw_BF_Left</ObjectNameCab2>
+	</Control>
+
+	<!-- Буферный фонарь правый -->
+	<Control>
+		<ID>310</ID>
+		<Name>Буферный фонарь правый</Name>
+		<Description>Переключение правого буферного фонаря</Description>
+		<Type>Switcher</Type>
+		<value1>0</value1>
+		<value2>0</value2>
+		<KeyNameInc>KEY_J</KeyNameInc>
+		<KeyModIncName>Shift</KeyModIncName>
+		<KeyNameDec>KEY_J</KeyNameDec>
+		<KeyModDecName>Ctrl</KeyModDecName>
+		<NumPositions>3</NumPositions>
+		<MinValue>0</MinValue>
+		<MaxValue>2</MaxValue>
+		<PositionsNames>Красн.,Выкл.,Белый</PositionsNames>
+		<ObjectNameCab1>Cab1_sw_BF_Right</ObjectNameCab1>
+		<ObjectNameCab2>Cab2_sw_BF_Right</ObjectNameCab2>
+	</Control>
+
+	<!-- Прожектор -->
+	<Control>
+		<ID>311</ID>
+		<Name>Прожектор</Name>
+		<Description>Переключение прожектора</Description>
+		<Type>Switcher</Type>
+		<value1>0</value1>
+		<value2>0</value2>
+		<KeyNameInc>KEY_H</KeyNameInc>
+		<KeyModIncName>Shift</KeyModIncName>
+		<KeyNameDec>KEY_H</KeyNameDec>
+		<KeyModDecName>Ctrl</KeyModDecName>
+		<NumPositions>3</NumPositions>
+		<MinValue>0</MinValue>
+		<MaxValue>2</MaxValue>
+		<PositionsNames>Выкл.,Слабый,Яркий</PositionsNames>
+		<ObjectNameCab1>Cab1_sw_Spot_Light</ObjectNameCab1>
+		<ObjectNameCab2>Cab2_sw_Spot_Light</ObjectNameCab2>
+	</Control>
+
+	<!-- ЭДТ -->
+	<Control>
+		<ID>312</ID>
+		<Name>ЭДТ</Name>
+		<Description>Переключение ЭДТ</Description>
+		<Type>Switcher</Type>
+		<value1>0</value1>
+		<value2>0</value2>
+		<KeyNameInc>KEY_F</KeyNameInc>
+		<KeyModIncName>Shift</KeyModIncName>
+		<KeyNameDec>KEY_F</KeyNameDec>
+		<KeyModDecName>Ctrl</KeyModDecName>
+		<NumPositions>2</NumPositions>
+		<MinValue>0</MinValue>
+		<MaxValue>1</MaxValue>
+		<PositionsNames>Выкл.,Вкл.</PositionsNames>
+		<ObjectNameCab1>Cab1_sw_EDT</ObjectNameCab1>
+		<ObjectNameCab2>Cab2_sw_EDT</ObjectNameCab2>
+	</Control>
+
 </Config>
