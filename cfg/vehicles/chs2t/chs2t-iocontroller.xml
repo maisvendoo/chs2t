@@ -13,8 +13,8 @@
 		<Name>Токоприёмник передний</Name>
 		<Description>Переключение переднего токоприёмника</Description>
 		<Type>Switcher</Type>
-		<value1>0</value1>
-		<value2>0</value2>
+		<value1>1</value1>
+		<value2>1</value2>
 		<KeyNameInc>KEY_I</KeyNameInc>
 		<KeyModIncName>Shift</KeyModIncName>
 		<KeyNameDec>KEY_I</KeyNameDec>
@@ -34,8 +34,8 @@
 		<Name>Токоприёмник задний</Name>
 		<Description>Переключение заднего токоприёмника</Description>
 		<Type>Switcher</Type>
-		<value1>0</value1>
-		<value2>0</value2>
+		<value1>1</value1>
+		<value2>1</value2>
 		<KeyNameInc>KEY_O</KeyNameInc>
 		<KeyModIncName>Shift</KeyModIncName>
 		<KeyNameDec>KEY_O</KeyNameDec>
@@ -55,8 +55,8 @@
 		<Name>Быстродействующий выключатель</Name>
 		<Description>Переключение БВ</Description>
 		<Type>Switcher</Type>
-		<value1>0</value1>
-		<value2>0</value2>
+		<value1>1</value1>
+		<value2>1</value2>
 		<KeyNameInc>KEY_P</KeyNameInc>
 		<KeyModIncName>Shift</KeyModIncName>
 		<KeyNameDec>KEY_P</KeyNameDec>
@@ -76,8 +76,8 @@
 		<Name>Компрессор 1</Name>
 		<Description>Переключение компрессора 1</Description>
 		<Type>Switcher</Type>
-		<value1>0</value1>
-		<value2>0</value2>
+		<value1>1</value1>
+		<value2>1</value2>
 		<KeyNameInc>KEY_2</KeyNameInc>
 		<KeyModIncName>Shift</KeyModIncName>
 		<KeyNameDec>KEY_2</KeyNameDec>
@@ -96,8 +96,8 @@
 		<Name>Компрессор 2</Name>
 		<Description>Переключение компрессора 2</Description>
 		<Type>Switcher</Type>
-		<value1>0</value1>
-		<value2>0</value2>
+		<value1>1</value1>
+		<value2>1</value2>
 		<KeyNameInc>KEY_3</KeyNameInc>
 		<KeyModIncName>Shift</KeyModIncName>
 		<KeyNameDec>KEY_3</KeyNameDec>
@@ -116,8 +116,8 @@
 		<Name>Вентиляторы</Name>
 		<Description>Переключение вентиляторов</Description>
 		<Type>Switcher</Type>
-		<value1>0</value1>
-		<value2>0</value2>
+		<value1>1</value1>
+		<value2>1</value2>
 		<KeyNameInc>KEY_1</KeyNameInc>
 		<KeyModIncName>Shift</KeyModIncName>
 		<KeyNameDec>KEY_1</KeyNameDec>
@@ -136,8 +136,8 @@
 		<Name>Жалюзи и блокировки</Name>
 		<Description>Переключение жалюзи и песочницы</Description>
 		<Type>Switcher</Type>
-		<value1>0</value1>
-		<value2>0</value2>
+		<value1>2</value1>
+		<value2>2</value2>
 		<KeyNameInc>KEY_4</KeyNameInc>
 		<KeyModIncName>Shift</KeyModIncName>
 		<KeyNameDec>KEY_4</KeyNameDec>
@@ -293,7 +293,7 @@
 		<Name>Ключ панели: снятие/установка</Name>
 		<Description>Снять/установить ключ панели переключателей</Description>
 		<Type>Toggle</Type>
-		<value1>0.0</value1>
+		<value1>1.0</value1>
 		<value2>0.0</value2>
 		<KeyName>KEY_Y</KeyName>
 		<KeyModOnName>Alt</KeyModOnName>
