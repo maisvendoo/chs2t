@@ -29,6 +29,9 @@
 
 		<CustomModulesDir>chs2t</CustomModulesDir>
 
+		<IOControllerModule>chs2t-iocontroller</IOControllerModule>
+		<IOControllerConfig>chs2t-iocontroller</IOControllerConfig>
+
 		<AutopilotModule>chs2t-autopilot</AutopilotModule>
 		<AutopilotConfig>chs2t-autopilot</AutopilotConfig>
 

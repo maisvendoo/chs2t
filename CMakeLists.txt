@@ -9,3 +9,4 @@ set(CMAKE_SHARED_LIBRARY_PREFIX "")
 
 add_subdirectory(chs2t)
 add_subdirectory(chs2t-autopilot)
+add_subdirectory(chs2t-iocontroller)
